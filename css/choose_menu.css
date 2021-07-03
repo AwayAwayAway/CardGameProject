@@ -1,0 +1,153 @@
+.wrapper2 {
+  width: 100vw;
+  height: 100vh;
+  background: url("images/backgrounds/warrior.jpg") center/cover no-repeat;
+  color: white;
+}
+
+.options {
+  position: absolute;
+  bottom: 25%;
+  left: 10%;
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+}
+
+.decision {
+  display: flex;
+  position: relative;
+  width: 14vw;
+  top: 78%;
+  left: 10%;
+}
+
+.decision-btn {
+  width: 14vw;
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 1rem;
+  font-size: 2rem;
+  background-color: rgba(25, 250, 104, 0.65);
+  cursor: pointer;
+  visibility: hidden;
+}
+
+.enterName {
+  width: 25rem;
+  border-radius: 20px;
+  border: none;
+  text-align: center;
+  margin-right: 2rem;
+  outline: none;
+  font-size: 2rem;
+}
+
+.warrior,
+.rogue,
+.mage {
+  border: 2px solid white;
+  border-radius: 20px;
+  padding: 1rem 5rem 1rem 5rem;
+  background-color: rgba(111, 93, 93, 0.65);
+  cursor: pointer;
+  transition: all .4s ease-in-out;
+}
+
+.in-focus-mage {
+  box-shadow: 5px 5px 50px #00fc2a;
+  transform: translateY(-1.5rem);
+}
+
+.in-focus-rogue {
+  box-shadow: 5px 5px 50px #00fc2a;
+  transform: translateY(-1.5rem);
+}
+
+.in-focus-warrior {
+  box-shadow: 5px 5px 50px #00fc2a;
+  transform: translateY(-1.5rem);
+}
+
+@media (max-width: 85.375rem) {
+  .playerChoose {
+    font-size: 2rem;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    bottom: 20%;
+    left: 5%;
+    font-size: 1.5rem;
+  }
+
+  .warrior,
+  .rogue,
+  .mage {
+    width: 25vw;
+    margin-bottom: 3rem;
+    font-size: 3rem;
+  }
+
+  .decision {
+    left: 5%;
+  }
+
+  .enterName {
+    padding: 1rem;
+  }
+}
+
+@media (max-height: 30.375rem) {
+  .playerChoose {
+    font-size: 2rem;
+  }
+
+  .warrior,
+  .rogue,
+  .mage {
+    width: 25vw;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+  }
+
+  .enterName {
+    height: 2rem;
+    padding: 0.5rem;
+  }
+
+  .decision-btn {
+    padding: 0.5rem;
+    font-size: 1.3rem;
+  }
+}
+
+
+.startGame {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  border-radius: 10px;
+  color: #f80606;
+  background-color: #333333;
+  animation: .5s linear 1s infinite alternate lets-battle;
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+@keyframes lets-battle {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.5);
+  }
+}

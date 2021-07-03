@@ -1,0 +1,72 @@
+[
+  {
+    "id": 0,
+    "role": "parent",
+    "tagName": "div",
+    "class": "wrapper2",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "options",
+    "content": null
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "div",
+    "class": "warrior",
+    "content": "Warrior"
+  },
+  {
+    "id": 3,
+    "role": "child",
+    "tagName": "div",
+    "class": "rogue",
+    "content": "Rogue"
+  },
+  {
+    "id": 4,
+    "role": "child",
+    "tagName": "div",
+    "class": "mage",
+    "content": "Mage"
+  },
+  {
+    "id": 5,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "startGame",
+    "content": "Let's battle"
+  },
+  {
+    "id": 6,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "playerChoose",
+    "content": "Player 1: Choose your character"
+  },
+  {
+    "id": 7,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "decision",
+    "content": null
+  },
+  {
+    "id": 8,
+    "role": "child",
+    "tagName": "input",
+    "class": "enterName",
+    "content": null
+  },
+  {
+    "id": 8,
+    "role": "child",
+    "tagName": "button",
+    "class": "decision-btn",
+    "content": "Confirm"
+  }
+]

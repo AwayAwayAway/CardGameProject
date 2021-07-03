@@ -1,0 +1,63 @@
+[
+  {
+    "id": 0,
+    "role": "parent",
+    "tagName": "div",
+    "class": "wrapper",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "main-menu",
+    "content": null
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "div",
+    "class": "startButton",
+    "content": "Start battle"
+  },
+  {
+    "id": 3,
+    "role": "child",
+    "tagName": "div",
+    "class": "aboutButton",
+    "content": "About game"
+  },
+  {
+    "id": 4,
+    "tagName": "object",
+    "source": "css/images/icons/icon-sound.svg",
+    "type": "image/svg+xml",
+    "class": "soundIcon",
+    "content": null
+  },
+  {
+    "id": 5,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/main-menu-theme.ogg",
+    "class": "background-music",
+    "content": null
+  },
+  {
+    "id": 6,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/btn-hover.ogg",
+    "class": "btn-hover",
+    "content": null
+  },
+  {
+    "id": 7,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/btn-click.ogg",
+    "class": "btn-click",
+    "content": null
+   }
+]
+
