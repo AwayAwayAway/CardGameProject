@@ -3,7 +3,7 @@
     "id": 0,
     "role": "parent",
     "tagName": "div",
-    "class": "wrapper2",
+    "class": "wrapper-choose-menu",
     "content": null
   },
   {
@@ -18,6 +18,8 @@
     "role": "child",
     "tagName": "div",
     "class": "warrior",
+    "data": "data-class",
+    "dataValue": 0,
     "content": "Warrior"
   },
   {
@@ -25,6 +27,8 @@
     "role": "child",
     "tagName": "div",
     "class": "rogue",
+    "data": "data-class",
+    "dataValue": 1,
     "content": "Rogue"
   },
   {
@@ -32,6 +36,8 @@
     "role": "child",
     "tagName": "div",
     "class": "mage",
+    "data": "data-class",
+    "dataValue": 2,
     "content": "Mage"
   },
   {
@@ -63,10 +69,49 @@
     "content": null
   },
   {
-    "id": 8,
+    "id": 9,
     "role": "child",
     "tagName": "button",
     "class": "decision-btn",
     "content": "Confirm"
+  },
+  {
+    "id": 4,
+    "role": "mainChild",
+    "tagName": "i",
+    "class": "fas fa-volume-up soundIcon hidden",
+    "content": null
+  },
+  {
+    "id": 11,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/warrior-selected.ogg",
+    "class": "warrior-selected",
+    "content": null
+  },
+  {
+    "id": 12,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/rogue-selected.ogg",
+    "class": "rogue-selected",
+    "content": null
+  },
+  {
+    "id": 13,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/mage-selected.ogg",
+    "class": "mage-selected",
+    "content": null
+  },
+  {
+    "id": 10,
+    "role": "parent",
+    "tagName": "script",
+    "class": "chooseMenuJs",
+    "source": "js/choose_menu.js",
+    "content": null
   }
 ]

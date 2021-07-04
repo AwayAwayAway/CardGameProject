@@ -36,9 +36,10 @@ document.addEventListener('click', function (e) {
 	}
 })
 
-// create page from JSON function
+// create page from JSON functions
 function createMainMenu (object) {
 	const body = document.querySelector('body');
+	body.removeChild(body.lastChild);
 	body.removeChild(body.lastChild);
 	let parent;
 	let mainChild;
@@ -75,6 +76,10 @@ function createElement(obj) {
 
 	if(obj.source) {
 		element.src = obj.source;
+	}
+
+	if(obj.data) {
+		element.setAttribute(`${obj.data}`, `${obj.dataValue}`)
 	}
 
 	return element;
