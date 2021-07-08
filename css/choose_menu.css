@@ -26,7 +26,7 @@
 }
 
 .decision-btn {
-  width: 10vw;
+  width: 10rem;
   border: 2px solid white;
   border-radius: 20px;
   padding: 1rem;
@@ -38,12 +38,12 @@
 
 .enterName {
   width: 25rem;
+  margin-right: 2rem;
   border-radius: 20px;
   border: none;
   text-align: center;
-  margin-right: 2rem;
-  outline: none;
   font-size: 2rem;
+  outline: none;
 }
 
 .warrior,
@@ -60,6 +60,25 @@
 .in-focus {
   box-shadow: 5px 5px 50px #00fc2a;
   transform: translateY(-1.5rem);
+}
+
+.description {
+  position: absolute;
+  left: 5%;
+  top: 20%;
+  width: 30%;
+  font-size: 2rem;
+  font-family: 'Oswald', sans-serif;
+}
+
+.description h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ff8400;
+}
+
+.description p {
+  padding-top: 1.5rem;
 }
 
 @media (max-width: 85.375rem) {
@@ -90,6 +109,21 @@
   .enterName {
     padding: 1rem;
   }
+
+  .in-focus {
+    box-shadow: 5px 5px 50px #00fc2a;
+    transform: translateX(1.5rem);
+  }
+}
+
+.back-to-main-menu {
+  background: url("./images/icons/back-to-main-menu-icon.png") center/cover no-repeat;
+  height: 85px;
+  width: 200px;
+  position: absolute;
+  left: 3%;
+  bottom: 3%;
+  cursor: pointer;
 }
 
 @media (max-height: 30.375rem) {
@@ -113,6 +147,22 @@
   .decision-btn {
     padding: 0.5rem;
     font-size: 1.3rem;
+  }
+
+  .in-focus {
+    box-shadow: 5px 5px 50px #00fc2a;
+    transform: translateX(1.5rem);
+  }
+
+  .description {
+    position: absolute;
+    left: 66%;
+    top: 20%;
+    font-size: 1.8rem;
+  }
+
+  .description h1 {
+    font-size: 2rem;
   }
 }
 
@@ -177,3 +227,4 @@
   left: 84%;
   color: #d4b7b7;
 }
+

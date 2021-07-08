@@ -1,0 +1,390 @@
+.wrapper-battle {
+  height: 100vh;
+  background: url("./images/backgrounds/battlefield.jpg") center/cover no-repeat ;
+}
+
+.visiible {
+  visibility: visible;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* Start Счетчик набранных карт и Alert если выбранно слишком много */
+.card-counter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding-top: 2rem;
+  color: white;
+}
+
+.card-counter h2 {
+  color: white;
+}
+
+.count {
+  color:white;
+}
+
+.accept {
+  display: block;
+  border-radius: 20px;
+  background: linear-gradient(#4992dc, #16dcef);
+  height: 50px;
+  width: 200px;
+  font-size: 2rem;
+  color: white;
+  padding-bottom: 1rem;
+  margin-top: 1.5rem;
+  cursor: pointer;
+}
+.player-name-choosing {
+  margin-bottom: 1.5rem;
+}
+
+.card-alert {
+  margin-left: 1rem;
+  border: 1px solid #ff0000;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 50px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s linear;
+  z-index: 110;
+}
+
+.card-alert-visible {
+  color: white;
+  visibility: visible;
+  opacity: 1;
+}
+
+.many-cards {
+  display: flex;
+  margin-left: 13rem;
+  margin-bottom: 2rem;
+}
+/* End Счетчик набранных карт и Alert если выбранно слишком много */
+
+.cards-choose-field {
+  width: 70vw;
+  position: absolute;
+  top: 10%;;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  z-index: 110;
+}
+
+.card-in-hand {
+  position: absolute;
+  bottom: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.battle-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+}
+/* End поле выбора карт и карт в руке */
+
+
+/* Start Настройка моделек героев */
+.player-1 {
+  position: relative;
+  top: 60%;
+  left: 16%;
+  width: 139px;
+  height: 204px;
+}
+
+.player-2 {
+  position: relative;
+  top: 60%;
+  right: 20%;
+  width: 140px;
+  height: 204px;
+}
+
+.player-1__model,
+.player-2__model {
+  width: 500px;
+  height: 500px;
+}
+
+.player-1__name,
+.player-2__name {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -58%;
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  width: 100%;
+}
+.player-1__hp,
+.player-2__hp {
+  display: flex;
+  position: absolute;
+  top: 97%;
+  left: 30%;
+}
+
+.player-1__hp-bar,
+.player-2__hp-bar {
+  position: relative;
+  display: block;
+  height: 20px;
+  width: 100px;
+  border: 1px solid black;
+}
+
+.player-1__hp-value,
+.player-2__hp-value{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: bold;
+}
+
+.player-1__hp-bar-inner,
+.player-2__hp-bar-inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: red;
+}
+
+.player-1__stamina {
+  background: url("./images/icons/Icon_stamina.png") center/cover no-repeat ;
+  height: 119px;
+  width: 100px;
+  position: absolute;
+  top: 100%;
+  left: -70%;
+}
+
+.player-2__stamina {
+  background: url("./images/icons/Icon_stamina.png") center/cover no-repeat ;
+  height: 119px;
+  width: 100px;
+  position: absolute;
+  top: 100%;
+  right: -120%;
+}
+
+.player-1__stamina-value {
+  font-size: 2rem;
+  color: red;
+  position: absolute;
+  top: 31%;
+  left: 29%;
+  font-weight: bold;
+}
+
+.player-2__stamina-value {
+  font-size: 2rem;
+  color: red;
+  position: absolute;
+  top: 31%;
+  left: 29%;
+  font-weight: bold;
+}
+
+.player-1__stamina-maxvalue {
+  position: absolute;
+  top: 32%;
+  left: 48%;
+  font-size: 2rem;
+  color: red;
+  font-weight: bold;
+}
+
+.player-2__stamina-maxvalue {
+  position: absolute;
+  top: 32%;
+  left: 48%;
+  font-size: 2rem;
+  color: red;
+  font-weight: bold;
+}
+
+.player-1__defence {
+  background: url("./images/icons/Icon_Block.png") center/cover no-repeat;
+  position: absolute;
+  top: 90%;
+  left: 115%;
+  color: white;
+  width: 50px;
+  height: 50px;
+}
+.player-2__defence {
+  background: url("./images/icons/Icon_Block.png") center/cover no-repeat;
+  position: absolute;
+  top: 90%;
+  left: -12%;
+  color: white;
+  width: 50px;
+  height: 50px;
+}
+.player-1__defence-value {
+  position: absolute;
+  top: 28%;
+  left: 41%;
+}
+.player-2__defence-value {
+  position: absolute;
+  top: 28%;
+  left: 41%;
+}
+
+/* End Настройка моделек героев */
+
+.game-turns {
+  position: absolute;
+  left: 10%;
+  top: 42%;
+}
+
+/* Start Настройка Карт при выборе*/
+.cards {
+  position: relative;
+  width: 14rem;
+  height: 18rem;
+  margin-right: 2rem;
+  margin-top: 5rem;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  background: center/cover no-repeat;
+  /*background-size: cover;*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  outline: none;
+  border: none;
+
+}
+
+.card-border {
+  border: none;
+  outline: none;
+  background-color: #0015cf;
+  box-shadow: 0 0 70px #0015cf;
+  border-radius: 10px;
+  /*transform: scale(1.2);*/
+}
+
+
+.cards-to-play {
+  position: relative;
+  width: 12.4rem;
+  height: 16rem;
+  transition: all .3s ease-in-out;
+  background: center/cover no-repeat;
+  /*background-size: cover;*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  outline: none;
+  border: none;
+}
+
+.card-to-action {
+  border: none;
+  outline: none;
+  /*box-shadow: 0px 0px 30px #1aff00;*/
+  transform: translateY(-10%);
+}
+
+.hold {
+  /*box-shadow: 0px 0px 30px #ffbf00;*/
+  cursor: grabbing;
+}
+
+.invinsible {
+  /*visibility: hidden;*/
+  opacity: 0;
+}
+
+.play-field {
+  width: 43%;
+  height: 30%;
+  position: relative;
+  top: 36%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+[draggable = true] {
+  cursor: grab;
+}
+
+[draggable = true]:active {
+  cursor: grabbing;
+}
+
+img {
+  width:64px;
+  height:64px;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 5%;
+  left: 35%;
+}
+
+h3 {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.accept1 {
+  position: relative;
+  left: 52%;
+  height: 30px;
+  width: 100px;
+  padding-bottom: 1rem;
+  z-index: 100;
+}
+.accept2 {
+  position: relative;
+  left: 52%;
+  height: 30px;
+  width: 100px;
+  padding-bottom: 1rem;
+  z-index: 100;
+}
+.end-of-turn {
+  border-radius: 50%;
+}
+.end-of-turn-btn {
+  position: relative;
+  left: 52%;
+  height: 30px;
+  width: 100px;
+  padding-bottom: 1rem;
+  z-index: 100;
+}
+.players-action {
+  position: absolute;
+  bottom: 70%;
+  left: 50%;
+  color: white;
+  font-size: 3rem;
+  transform: translateX(-50%);
+}
+/* End Настройка Карт при выборе*/

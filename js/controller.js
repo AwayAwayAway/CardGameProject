@@ -1,7 +1,7 @@
 // first page load
 const xhr = new XMLHttpRequest();
 
-xhr.open('get', 'js/main_menu.json');
+xhr.open('get', 'js/battle.json');
 xhr.onload = function () {
 	let resObj = {};
 	if(this.status === 200) {
@@ -36,6 +36,50 @@ document.addEventListener('click', function (e) {
 	}
 })
 
+document.addEventListener('click', function (e) {
+
+	if(e.target.classList.contains('back-to-main-menu')) {
+		const xhr = new XMLHttpRequest();
+
+		xhr.open('get', 'js/main_menu.json');
+
+		xhr.onload = function () {
+			let resObj = {};
+			if(this.status === 200) {
+				document.title = 'Card game - choose menu'
+				resObj = JSON.parse(xhr.responseText);
+				createMainMenu(resObj);
+			} else {
+				console.log('json doesnt loaded')
+			}
+		}
+
+		xhr.send();
+	}
+})
+
+document.addEventListener('click', function (e) {
+
+	if(e.target.classList.contains('startGame')) {
+		const xhr = new XMLHttpRequest();
+
+		xhr.open('get', 'js/battle.json');
+
+		xhr.onload = function () {
+			let resObj = {};
+			if(this.status === 200) {
+				document.title = 'Card game - choose menu'
+				resObj = JSON.parse(xhr.responseText);
+				createMainMenu(resObj);
+			} else {
+				console.log('json doesnt loaded')
+			}
+		}
+
+		xhr.send();
+	}
+})
+
 // create page from JSON functions
 function createMainMenu (object) {
 	const body = document.querySelector('body');
@@ -44,6 +88,8 @@ function createMainMenu (object) {
 	let parent;
 	let mainChild;
 	let child;
+	let subChild;
+	let lowestChild;
 
 	for(let i = 0; i < object.length; i++) {
 		for(let key in object[i]) {
@@ -60,9 +106,13 @@ function createMainMenu (object) {
 					child = createElement(object[i]);
 					mainChild.appendChild( child );
 					break;
-				case 'object':
-					mainChild = createSvg(object[i]);
-					parent.appendChild( mainChild );
+				case 'subChild':
+					subChild = createElement(object[i]);
+					child.appendChild( subChild );
+					break;
+				case 'lowestChild':
+					lowestChild = createElement(object[i]);
+					subChild.appendChild( lowestChild );
 					break;
 			}
 		}
@@ -80,6 +130,10 @@ function createElement(obj) {
 
 	if(obj.data) {
 		element.setAttribute(`${obj.data}`, `${obj.dataValue}`)
+	}
+
+	if(obj.type) {
+		element.setAttribute(`${obj.type}`, `${obj.typeValue}`)
 	}
 
 	return element;

@@ -7,83 +7,118 @@
     "content": null
   },
   {
-    "id": 1,
-    "role": "mainChild",
-    "tagName": "div",
-    "class": "options",
-    "content": null
-  },
-  {
-    "id": 2,
-    "role": "child",
-    "tagName": "div",
-    "class": "warrior",
-    "data": "data-class",
-    "dataValue": 0,
-    "content": "Warrior"
-  },
-  {
-    "id": 3,
-    "role": "child",
-    "tagName": "div",
-    "class": "rogue",
-    "data": "data-class",
-    "dataValue": 1,
-    "content": "Rogue"
-  },
-  {
-    "id": 4,
-    "role": "child",
-    "tagName": "div",
-    "class": "mage",
-    "data": "data-class",
-    "dataValue": 2,
-    "content": "Mage"
-  },
-  {
-    "id": 5,
-    "role": "mainChild",
-    "tagName": "div",
-    "class": "startGame",
-    "content": "Let's battle"
-  },
-  {
-    "id": 6,
+    "id": 10,
     "role": "mainChild",
     "tagName": "div",
     "class": "playerChoose",
     "content": "Player 1: Choose your character"
   },
   {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "description",
+    "content": null
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "h1",
+    "class": "description-title",
+    "content": "The Viking"
+  },
+  {
+    "id": 3,
+    "role": "child",
+    "tagName": "p",
+    "class": "description-profile",
+    "content": "The remaining soldier of the Ironclads. Sold his soul to harness demonic energies"
+  },
+  {
+    "id": 4,
+    "role": "child",
+    "tagName": "p",
+    "class": "description-pross",
+    "content": "Losing health goes into a rage. Becomes stronger when the enemy has a lot of health"
+  },
+  {
+    "id": 5,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "options",
+    "content": null
+  },
+  {
+    "id": 6,
+    "role": "child",
+    "tagName": "div",
+    "class": "warrior",
+    "data": "data-class",
+    "dataValue": "warrior",
+    "content": "Warrior"
+  },
+  {
     "id": 7,
+    "role": "child",
+    "tagName": "div",
+    "class": "rogue",
+    "data": "data-class",
+    "dataValue": "rogue",
+    "content": "Rogue"
+  },
+  {
+    "id": 8,
+    "role": "child",
+    "tagName": "div",
+    "class": "mage",
+    "data": "data-class",
+    "dataValue": "mage",
+    "content": "Mage"
+  },
+  {
+    "id": 9,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "startGame",
+    "content": "Let's battle"
+  },
+  {
+    "id": 11,
     "role": "mainChild",
     "tagName": "div",
     "class": "decision",
     "content": null
   },
   {
-    "id": 8,
+    "id": 12,
     "role": "child",
     "tagName": "input",
     "class": "enterName",
     "content": null
   },
   {
-    "id": 9,
+    "id": 13,
     "role": "child",
     "tagName": "button",
     "class": "decision-btn",
     "content": "Confirm"
   },
   {
-    "id": 4,
+    "id": 14,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "back-to-main-menu",
+    "content": null
+  },
+  {
+    "id": 14,
     "role": "mainChild",
     "tagName": "i",
     "class": "fas fa-volume-up soundIcon hidden",
     "content": null
   },
   {
-    "id": 11,
+    "id": 15,
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/warrior-selected.ogg",
@@ -91,7 +126,7 @@
     "content": null
   },
   {
-    "id": 12,
+    "id": 16,
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/rogue-selected.ogg",
@@ -99,7 +134,7 @@
     "content": null
   },
   {
-    "id": 13,
+    "id": 17,
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/mage-selected.ogg",
@@ -107,7 +142,7 @@
     "content": null
   },
   {
-    "id": 10,
+    "id": 18,
     "role": "parent",
     "tagName": "script",
     "class": "chooseMenuJs",

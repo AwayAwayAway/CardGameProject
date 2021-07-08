@@ -1,0 +1,284 @@
+[
+  {
+    "id": 0,
+    "role": "parent",
+    "tagName": "div",
+    "class": "wrapper-battle",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "card-counter",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "div",
+    "class": "player-name-choosing",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "span",
+    "class": "count",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "span",
+    "class": "max-count",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "button",
+    "class": "accept",
+    "content": "Confirm"
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "cards-choose-field",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "play-field",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "battle-field hidden",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "div",
+    "class": "player-1",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-1__name",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-1__hp",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-1__hp-bar",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "i",
+    "class": "player-1__hp-bar-inner",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-1__hp-value",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-1__stamina",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-1__stamina-value",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-1__stamina-maxvalue",
+    "content": "/4"
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-1__defence",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-1__defence-value",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "object",
+    "class": "player-1__model",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "div",
+    "class": "player-2",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-2__name",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-2__hp",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-2__hp-bar",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "i",
+    "class": "player-2__hp-bar-inner",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-2__hp-value",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-2__stamina",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-2__stamina-value",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-2__stamina-maxvalue",
+    "content": "/4"
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-2__defence",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "lowestChild",
+    "tagName": "span",
+    "class": "player-2__defence-value",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "object",
+    "class": "player-2__model",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "div",
+    "class": "game-turns end-of-turn-btn",
+    "content": "End turn"
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "div",
+    "class": "players-action",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "div",
+    "class": "card-in-hand",
+    "content": null
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "cardsJS",
+    "source": "js/cards.js",
+    "content": null,
+    "type":"defer",
+    "typeValue": true
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "playersJs",
+    "source": "js/players.js",
+    "content": null,
+    "type":"defer",
+    "typeValue": true
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "battleJs",
+    "source": "js/battle.js",
+    "content": null,
+    "type":"defer",
+    "typeValue": true
+  }
+]
