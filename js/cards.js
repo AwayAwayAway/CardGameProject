@@ -21,7 +21,6 @@ const ironWave = new CreateCardSkills(8,'defendAndAttack',1, 5, "css/images/card
 const warcry = new CreateCardSkills(9,'defendDrawDiscard',0, 1, "css/images/cards/warrior/Warcry.png", 'warcry');
 const bloodletting = new CreateCardSkills(10,'defendDrawDiscard',3, 1, "css/images/cards/warrior/Bloodletting.png", 'bloodletting');
 const entrench = new CreateCardSkills(11,'defendAddEffect',2, 2, "css/images/cards/warrior/Entrench.png", 'entrench', () => gameController.activePlayer.defendPoints * 2 - gameController.activePlayer.defendPoints );
-//END CREATING WARRIOR'S CARDS
 
 //START CREATING ROGUE'S CARDS
 const strike_r = new CreateCardSkills(0,'attack',1, 6,"css/images/cards/rogue/Strike_G.png", 'strike_r');
@@ -36,9 +35,6 @@ const backFlip = new CreateCardSkills(8,'defendDrawDiscard',1, 2, "css/images/ca
 const prepared = new CreateCardSkills(9,'defendDrawDiscard',0, 1, "css/images/cards/rogue/Prepared.png", 'prepared');
 const expertise = new CreateCardSkills(10,'defendDrawDiscard',1, 5, "css/images/cards/rogue/Expertise.png", 'expertise');
 const dash = new CreateCardSkills(11,'defendAndAttack',2, 10, "css/images/cards/rogue/Dash.png", 'dash', () => 8);
-//END CREATING ROGUE'S CARDS
-//
-// START CREATING ROGUE'S CARDS
 
 //START CREATING MAGE'S CARDS
 const strike_m = new CreateCardSkills(0,'attack',1, 6,"css/images/cards/mage/Strike_P.png", 'strike_m');
@@ -53,7 +49,7 @@ const meditate = new CreateCardSkills(8,'defendAddEffect',1, 3, "css/images/card
 const thirdEye = new CreateCardSkills(9,'defendDrawDiscard',1, 7, "css/images/cards/mage/ThirdEye.png", 'thirdEye');
 const nirvana = new CreateCardSkills(10,'defendAddEffect',1, 0, "css/images/cards/mage/Nirvana.png", 'nirvana', () => gameController.passivePlayer.defendPoints);
 const alpha = new CreateCardSkills(11,'defendDrawDiscard',1, 4, "css/images/cards/mage/Alpha.png", 'alpha');
-//END CREATING MAGE'S CARDS
+
 
 // список строго упорядочен, менять НЕЛЬЗЯ!!!, индекс согласно класа игрока выбранного игроком в "меню выбора персонажа"
 const skillCollection = {

@@ -1,13 +1,77 @@
-function Players(healthPoints, staminaPoints, defendPoints) {
-	this.healthPoints = healthPoints;
-	this.staminaPoints = staminaPoints;
-	this.defendPoints = defendPoints;
+function Players() {
+	this.healthPoints = 100;
+	this.staminaPoints = 4;
+	this.defendPoints = 7;
+
+	let playerView = null;
+
+	this.init = function (view) {
+		playerView = view;
+		this.updateView();
+	}
+
+	this.updateView = function () {
+		playerView.updateViewPlayer1()
+		playerView.updateViewPlayer2()
+	}
 }
 
-let player1 = new Players(100,4,7);
-let player2 = new Players(100,4,7);
+function PlayersView() {
+	let playerModel = null;
+	let playerContainer = null;
 
-Players.prototype.standartAttack= function (card) {
+	let player1HP = null;                          // red line HP player 1
+	let player1HPValue = null;                    // value(number) HP player 1
+	let player1DefenceValue = null;              // defend(number) value player 1
+	let player1StaminaValue = null;             // stamina(number) value player 1
+
+	let player2HP = null;                      // red line HP player 2
+	let player2HPValue = null;                // value(number) HP player 2
+	let player2DefenceValue = null;          // defend(number) value player 2
+	let player2StaminaValue = null;         // stamina(number) value player 2
+
+	this.init = function (model, container) {
+		playerModel = model;
+		playerContainer = container;
+
+		player1HP = playerContainer.querySelector('.player-1__hp-bar-inner');
+		player1HPValue = playerContainer.querySelector('.player-1__hp-value');
+		player1DefenceValue = playerContainer.querySelector('.player-1__defence-value');
+		player1StaminaValue = playerContainer.querySelector('.player-1__stamina-value');
+
+		player2HP = playerContainer.querySelector('.player-2__hp-bar-inner');
+		player2HPValue = playerContainer.querySelector('.player-2__hp-value');
+		player2DefenceValue = playerContainer.querySelector('.player-2__defence-value');
+		player2StaminaValue = playerContainer.querySelector('.player-2__stamina-value');
+	}
+
+	// устанавливаем первые параметры здоровье, защита, стамина
+	this.updateViewPlayer1 = function () {
+		this.player1HPValue.textContent = playerModel.healthPoints;
+		this.player1DefenceValue.textContent = playerModel.defendPoints;
+		this.player1StaminaValue.textContent = playerModel.staminaPoints;
+	}
+
+		this.updateViewPlayer2 = function () {
+		this.player2HPValue.textContent = playerModel.healthPoints;
+		this.player2DefenceValue.textContent = playerModel.defendPoints;
+		this.player2StaminaValue.textContent = playerModel.staminaPoints;
+	}
+
+}
+
+
+
+
+
+
+
+
+
+let player1 = new Players();
+let player2 = new Players();
+
+Players.prototype.standartAttack = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ')
@@ -39,7 +103,7 @@ Players.prototype.standartAttack= function (card) {
 	gameController.activePlayer.staminaPoints -= card.cost;
 	staminaValueActivePlayer.textContent = gameController.activePlayer.staminaPoints;
 }
-Players.prototype.sideEffectAttack= function (card) {
+Players.prototype.sideEffectAttack = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ');
@@ -104,7 +168,7 @@ Players.prototype.sideEffectAttack= function (card) {
 	gameController.activePlayer.staminaPoints -= card.cost;
 	staminaValueActivePlayer.textContent = gameController.activePlayer.staminaPoints;
 }
-Players.prototype.attackDrawDiscard= function (card) {
+Players.prototype.attackDrawDiscard = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ')
@@ -186,7 +250,7 @@ Players.prototype.attackDrawDiscard= function (card) {
 	staminaValueActivePlayer.textContent = gameController.activePlayer.staminaPoints;
 }
 
-Players.prototype.standartDefend= function (card) {
+Players.prototype.standartDefend = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ');
@@ -198,7 +262,7 @@ Players.prototype.standartDefend= function (card) {
 	gameController.activePlayer.staminaPoints -= card.cost;
 	staminaValueActivePlayer.textContent = gameController.activePlayer.staminaPoints;
 }
-Players.prototype.sideEffectDefend= function (card) {
+Players.prototype.sideEffectDefend = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ');
@@ -247,7 +311,7 @@ Players.prototype.sideEffectDefend= function (card) {
 		staminaValueActivePlayer.textContent = gameController.activePlayer.staminaPoints;
 	}
 }
-Players.prototype.defendWithAttack= function (card) {
+Players.prototype.defendWithAttack = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ');
@@ -259,7 +323,7 @@ Players.prototype.defendWithAttack= function (card) {
 	gameController.activePlayer.staminaPoints += card.cost;
 	staminaValueActivePlayer.textContent = gameController.activePlayer.staminaPoints;
 }
-Players.prototype.defendDrawDiscard= function (card) {
+Players.prototype.defendDrawDiscard = function (card) {
 	if(gameController.activePlayer.staminaPoints < card.cost) { return }
 
 	const staminaValueActivePlayer = document.querySelector('.activ');

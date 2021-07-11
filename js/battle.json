@@ -25,14 +25,14 @@
     "role": "child",
     "tagName": "span",
     "class": "count",
-    "content": null
+    "content": "0 "
   },
   {
     "id": 1,
     "role": "child",
     "tagName": "span",
     "class": "max-count",
-    "content": null
+    "content": "/ 8"
   },
   {
     "id": 1,
