@@ -41,7 +41,7 @@ const strike_m = new CreateCardSkills(0,'attack',1, 6,"css/images/cards/mage/Str
 const cutThroughFate = new CreateCardSkills(1, 'attackDrawDiscard',1, 7,"css/images/cards/mage/CutThroughFate.png", 'cutThroughFate', () => 2);
 const reachHeaven = new CreateCardSkills(2, 'attack',2, 10,"css/images/cards/mage/ReachHeaven.png", 'reachHeaven');
 const signatureMove = new CreateCardSkills(3,'attackAddEffect',2, 0, "css/images/cards/mage/SignatureMove.png", 'signatureMove', () => gameController.passivePlayer.defendPoints);
-const tantrum = new CreateCardSkills(4,'attackAddEffect',1, 3, "css/images/cards/mage/Tantrum.png", 'tantrum', () => 3 + Math.floor(Math.random() * 6));
+const tantrum = new CreateCardSkills(4,'attackAddEffect',1, 3, "css/images/cards/mage/Tantrum.png", 'tantrum', () => 3 + ( Math.floor(Math.random() * (6-1)) + 1) );
 const judjment = new CreateCardSkills(5,'attackAddEffect',2, 0, "css/images/cards/mage/Judgment.png", 'judjment', () => { let effect; if(gameController.passivePlayer.healthPoints <= 15) { effect = 0 } return effect });
 const masterReality = new CreateCardSkills(6,'defendAddEffect',1, 5, "css/images/cards/mage/MasterReality.png", 'masterReality', () => { let effect; if(gameController.activePlayer.defendPoints == 0) { effect = 10 } else { effect = 5 } return effect });
 const defend_m = new CreateCardSkills(7,'defend',1, 5, "css/images/cards/mage/Defend_P.png", 'defend_m');

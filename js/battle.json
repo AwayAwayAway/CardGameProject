@@ -265,6 +265,16 @@
     "id": 18,
     "role": "parent",
     "tagName": "script",
+    "class": "battleJs",
+    "source": "js/battle.js",
+    "content": null,
+    "type":"defer",
+    "typeValue": true
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
     "class": "playersJs",
     "source": "js/players.js",
     "content": null,
@@ -275,10 +285,22 @@
     "id": 18,
     "role": "parent",
     "tagName": "script",
-    "class": "battleJs",
-    "source": "js/battle.js",
+    "class": "testBoard",
+    "source": "js/events.js",
+    "content": null,
+    "type":"defer",
+    "typeValue": true
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "testBoard",
+    "source": "js/board.js",
     "content": null,
     "type":"defer",
     "typeValue": true
   }
+
+
 ]

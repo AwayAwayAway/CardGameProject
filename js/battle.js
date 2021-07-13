@@ -1,86 +1,86 @@
 const btnAccept = document.querySelector('.accept');               // player accept cards he chose
-const decWrapper = document.querySelector('.cards-choose-field');      // field for cards at the start when players are choosing
+// const decWrapper = document.querySelector('.cards-choose-field');      // field for cards at the start when players are choosing
 const cardsChooseCounter = document.querySelector('.count');      // counter for amount of cards have been chosen(needs for alert)
-const cardInHand = document.querySelector('.card-in-hand');      // field for cards in hand each player
+// const cardInHand = document.querySelector('.card-in-hand');      // field for cards in hand each player
 const battleField = document.querySelector('.battle-field');     // play field
 const endTurn = document.querySelector('.end-of-turn-btn');     // end turn button
 const cardsPlayField = document.querySelector('.play-field');    // area for cards to drop and play their actions
-const turnInfo = document.querySelector('.players-action'); // info which turn is now
+// const turnInfo = document.querySelector('.players-action'); // info which turn is now
 
-let playerUI = {
-	player1HP: document.querySelector('.player-1__hp-bar-inner'),        // red line HP player 1
-	player1HPValue: document.querySelector('.player-1__hp-value'),          // value(number) HP player 1
-	player1DefenceValue: document.querySelector('.player-1__defence-value'),    // defend(number) value player 1
-	player1StaminaValue: document.querySelector('.player-1__stamina-value'),    // stamina(number) value player 1
-
-	player2HP: document.querySelector('.player-2__hp-bar-inner'),        // red line HP player 2
-	player2HPValue: document.querySelector('.player-2__hp-value'),          // value(number) HP player 2
-	player2DefenceValue: document.querySelector('.player-2__defence-value'),    // defend(number) value player 2
-	player2StaminaValue: document.querySelector('.player-2__stamina-value'),    // stamina(number) value player 2
-
-	// устанавливаем первые параметры здоровье, защита, стамина по умолчанию
-	setPlayercharacteristic() {
-		this.player1HPValue.textContent = player1.healthPoints;
-		this.player1DefenceValue.textContent = player1.defendPoints;
-		this.player1StaminaValue.textContent = player1.staminaPoints;
-		this.player2HPValue.textContent = player2.healthPoints;
-		this.player2DefenceValue.textContent = player2.defendPoints;
-		this.player2StaminaValue.textContent = player2.staminaPoints;
-	},
-
-	//устанавливает классы активного и пассивного игрока, чтобы игра понимала куда наносить урон или добавлять защиту
-	setActivePassiveClasses: function() {
-		if(gameController.playerTwoTurn) {
-			this.player1StaminaValue.textContent = player1.staminaPoints;
-			// turnInfo.textContent = `${playersInfo.playerTwoName}'s turn`;
-
-			this.player1StaminaValue.classList.remove('activ');
-			this.player1DefenceValue.classList.remove('activDefend');
-			this.player1HP.classList.remove('activHPbar');
-			this.player1HPValue.classList.remove('activHPvalue');
-
-			this.player2StaminaValue.classList.add('activ');
-			this.player2DefenceValue.classList.add('activDefend');
-			this.player2HP.classList.add('activHPbar');
-			this.player2HPValue.classList.add('activHPvalue');
-
-			this.player1HP.classList.add('passive-HPbar');
-			this.player1HPValue.classList.add('passive-HPval');
-			this.player1DefenceValue.classList.add('passive-Def');
-
-			this.player2HP.classList.remove('passive-HPbar');
-			this.player2HPValue.classList.remove('passive-HPval');
-			this.player2DefenceValue.classList.remove('passive-Def');
-		} else {
-			this.player2StaminaValue.textContent = player2.staminaPoints;
-			// turnInfo.textContent = `${playersInfo.playerOneName}'s turn`;
-
-			this.player2StaminaValue.classList.remove('activ');
-			this.player2DefenceValue.classList.remove('activDefend');
-			this.player2HP.classList.remove('activHPbar');
-			this.player2HPValue.classList.remove('activHPvalue');
-
-			this.player1StaminaValue.classList.add('activ');
-			this.player1DefenceValue.classList.add('activDefend');
-			this.player1HP.classList.add('activHPbar');
-			this.player1HPValue.classList.add('activHPvalue');
-
-			this.player2HP.classList.add('passive-HPbar');
-			this.player2HPValue.classList.add('passive-HPval');
-			this.player2DefenceValue.classList.add('passive-Def');
-
-			this.player1HP.classList.remove('passive-HPbar');
-			this.player1HPValue.classList.remove('passive-HPval');
-			this.player1DefenceValue.classList.remove('passive-Def');
-		}
-	}
-}
+// let playerUI = {
+// 	player1HP: document.querySelector('.player-1__hp-bar-inner'),        // red line HP player 1
+// 	player1HPValue: document.querySelector('.player-1__hp-value'),          // value(number) HP player 1
+// 	player1DefenceValue: document.querySelector('.player-1__defence-value'),    // defend(number) value player 1
+// 	player1StaminaValue: document.querySelector('.player-1__stamina-value'),    // stamina(number) value player 1
+//
+// 	player2HP: document.querySelector('.player-2__hp-bar-inner'),        // red line HP player 2
+// 	player2HPValue: document.querySelector('.player-2__hp-value'),          // value(number) HP player 2
+// 	player2DefenceValue: document.querySelector('.player-2__defence-value'),    // defend(number) value player 2
+// 	player2StaminaValue: document.querySelector('.player-2__stamina-value'),    // stamina(number) value player 2
+//
+// 	// устанавливаем первые параметры здоровье, защита, стамина по умолчанию
+// 	setPlayercharacteristic() {
+// 		this.player1HPValue.textContent = player1.healthPoints;
+// 		this.player1DefenceValue.textContent = player1.defendPoints;
+// 		this.player1StaminaValue.textContent = player1.staminaPoints;
+// 		this.player2HPValue.textContent = player2.healthPoints;
+// 		this.player2DefenceValue.textContent = player2.defendPoints;
+// 		this.player2StaminaValue.textContent = player2.staminaPoints;
+// 	},
+//
+// 	//устанавливает классы активного и пассивного игрока, чтобы игра понимала куда наносить урон или добавлять защиту
+// 	setActivePassiveClasses: function() {
+// 		if(gameController.playerTwoTurn) {
+// 			this.player1StaminaValue.textContent = player1.staminaPoints;
+// 			// turnInfo.textContent = `${playersInfo.playerTwoName}'s turn`;
+//
+// 			this.player1StaminaValue.classList.remove('activ');
+// 			this.player1DefenceValue.classList.remove('activDefend');
+// 			this.player1HP.classList.remove('activHPbar');
+// 			this.player1HPValue.classList.remove('activHPvalue');
+//
+// 			this.player2StaminaValue.classList.add('activ');
+// 			this.player2DefenceValue.classList.add('activDefend');
+// 			this.player2HP.classList.add('activHPbar');
+// 			this.player2HPValue.classList.add('activHPvalue');
+//
+// 			this.player1HP.classList.add('passive-HPbar');
+// 			this.player1HPValue.classList.add('passive-HPval');
+// 			this.player1DefenceValue.classList.add('passive-Def');
+//
+// 			this.player2HP.classList.remove('passive-HPbar');
+// 			this.player2HPValue.classList.remove('passive-HPval');
+// 			this.player2DefenceValue.classList.remove('passive-Def');
+// 		} else {
+// 			this.player2StaminaValue.textContent = player2.staminaPoints;
+// 			// turnInfo.textContent = `${playersInfo.playerOneName}'s turn`;
+//
+// 			this.player2StaminaValue.classList.remove('activ');
+// 			this.player2DefenceValue.classList.remove('activDefend');
+// 			this.player2HP.classList.remove('activHPbar');
+// 			this.player2HPValue.classList.remove('activHPvalue');
+//
+// 			this.player1StaminaValue.classList.add('activ');
+// 			this.player1DefenceValue.classList.add('activDefend');
+// 			this.player1HP.classList.add('activHPbar');
+// 			this.player1HPValue.classList.add('activHPvalue');
+//
+// 			this.player2HP.classList.add('passive-HPbar');
+// 			this.player2HPValue.classList.add('passive-HPval');
+// 			this.player2DefenceValue.classList.add('passive-Def');
+//
+// 			this.player1HP.classList.remove('passive-HPbar');
+// 			this.player1HPValue.classList.remove('passive-HPval');
+// 			this.player1DefenceValue.classList.remove('passive-Def');
+// 		}
+// 	}
+// }
 
 let gameController = {
 	gameStarted: true,
 
-	activePlayer: player1,               //активный игрок на данный момент кто будет наносить урон
-	passivePlayer: player2,               //пассивный игрок на данный момент кто будет получать урон
+	activePlayer: null,               //активный игрок на данный момент кто будет наносить урон
+	passivePlayer: null,               //пассивный игрок на данный момент кто будет получать урон
 
 	playerOneTurn: true,
 	playerTwoTurn: false,
@@ -97,7 +97,7 @@ let gameController = {
 		this.init();
 
 		this.setTextChooseInfo();
-		this.createCardsForChoose(this.playersInfo);
+		// this.createCardsForChoose(this.playersInfo);
 	},
 
 	init() {
@@ -106,8 +106,13 @@ let gameController = {
 		this.setPlayersNames();
 		this.setPlayersModels(this.playersInfo.playerOneClass, this.playersInfo.playerTwoClass);
 
-		playerUI.setActivePassiveClasses();
-		playerUI.setPlayercharacteristic();
+		// playerUI.setActivePassiveClasses();
+		// playerUI.setPlayercharacteristic();
+	},
+
+	setActivePassivePlayer() {
+		this.activePlayer = player1;
+		this.passivePlayer = player2;
 	},
 
 	// устанавливаем приоритет хода игрока
@@ -188,46 +193,46 @@ let gameController = {
 	},
 
 	// создаем деку в начале игры для игрока согласно классу
-	createCardsForChoose(playerClassInfo) {
-		if(this.playerOneTurn) {
-			switch (playerClassInfo.playerOneClass) {
-				case 'warrior':
-					for(let i = 0; i < skillCollection.warrior.length; i++) {
-						this.createDeck( skillCollection.warrior[i] );
-					}
-					break;
-				case 'rogue':
-					for(let i = 0; i < skillCollection.rogue.length; i++) {
-						this.createDeck( skillCollection.rogue[i] );
-					}
-					break;
-				case 'mage':
-					for(let i = 0; i < skillCollection.mage.length; i++) {
-						this.createDeck( skillCollection.mage[i] );
-					}
-					break;
-			}
-		} else {
-			switch (playerClassInfo.playerTwoClass) {
-				case 'warrior':
-					for(let i = 0; i < skillCollection.warrior.length; i++) {
-						this.createDeck( skillCollection.warrior[i] );
-					}
-					break;
-				case 'rogue':
-					for(let i = 0; i < skillCollection.rogue.length; i++) {
-						this.createDeck( skillCollection.rogue[i] );
-					}
-					break;
-				case 'mage':
-					for(let i = 0; i < skillCollection.mage.length; i++) {
-						this.createDeck( skillCollection.mage[i] );
-					}
-					break;
-			}
-		}
-
-	},
+	// createCardsForChoose(playerClassInfo) {
+	// 	if(this.playerOneTurn) {
+	// 		switch (playerClassInfo.playerOneClass) {
+	// 			case 'warrior':
+	// 				for(let i = 0; i < skillCollection.warrior.length; i++) {
+	// 					this.createDeck( skillCollection.warrior[i] );
+	// 				}
+	// 				break;
+	// 			case 'rogue':
+	// 				for(let i = 0; i < skillCollection.rogue.length; i++) {
+	// 					this.createDeck( skillCollection.rogue[i] );
+	// 				}
+	// 				break;
+	// 			case 'mage':
+	// 				for(let i = 0; i < skillCollection.mage.length; i++) {
+	// 					this.createDeck( skillCollection.mage[i] );
+	// 				}
+	// 				break;
+	// 		}
+	// 	} else {
+	// 		switch (playerClassInfo.playerTwoClass) {
+	// 			case 'warrior':
+	// 				for(let i = 0; i < skillCollection.warrior.length; i++) {
+	// 					this.createDeck( skillCollection.warrior[i] );
+	// 				}
+	// 				break;
+	// 			case 'rogue':
+	// 				for(let i = 0; i < skillCollection.rogue.length; i++) {
+	// 					this.createDeck( skillCollection.rogue[i] );
+	// 				}
+	// 				break;
+	// 			case 'mage':
+	// 				for(let i = 0; i < skillCollection.mage.length; i++) {
+	// 					this.createDeck( skillCollection.mage[i] );
+	// 				}
+	// 				break;
+	// 		}
+	// 	}
+	//
+	// },
 
 	//создает карты доска выбора
 	createDeck(card) {
@@ -382,9 +387,9 @@ let gameController = {
 
 gameController.start();
 
-decWrapper.addEventListener('click', cardChooseAnim)
-cardInHand.addEventListener('mouseover', cardChooseAnimInHandAdd)
-cardInHand.addEventListener('mouseout', cardChooseAnimInHandRemove)
+// decWrapper.addEventListener('click', cardChooseAnim)
+// cardInHand.addEventListener('mouseover', cardChooseAnimInHandAdd)
+// cardInHand.addEventListener('mouseout', cardChooseAnimInHandRemove)
 btnAccept.addEventListener('click', () => { gameController.definePlayersCardSet() });
 
 //анимация подсветки выбранной карты плюс счетчик сколько набранно карт
@@ -435,9 +440,9 @@ let draggedItem;
 // карта передается как аргумент в функции для реализации способности карты
 let tempCard;
 
-cardInHand.addEventListener('dragstart', dragCardStart)
-cardInHand.addEventListener('dragstart', letFindOut)
-cardInHand.addEventListener('dragend', dragCardEnd)
+// cardInHand.addEventListener('dragstart', dragCardStart)
+// cardInHand.addEventListener('dragstart', letFindOut)
+// cardInHand.addEventListener('dragend', dragCardEnd)
 
 cardsPlayField.addEventListener('dragenter', testDragenter)
 cardsPlayField.addEventListener('dragover', testDragover)
@@ -497,25 +502,25 @@ function letFindOut() {
 function doAction() {
 	switch(tempCard.type) {
 		case 'attack':
-			Players.prototype.standartAttack(tempCard);
+			player1.standartAttack(tempCard);
 			break;
 		case 'attackDrawDiscard':
-			Players.prototype.attackDrawDiscard(tempCard);
+			player1.attackDrawDiscard(tempCard);
 			break;
 		case 'attackAddEffect':
-			Players.prototype.sideEffectAttack(tempCard);
+			player1.sideEffectAttack(tempCard);
 			break;
 		case 'defend':
-			Players.prototype.standartDefend(tempCard);
+			player1.standartDefend(tempCard);
 			break;
 		case 'defendAddEffect':
-			Players.prototype.sideEffectDefend(tempCard);
+			player1.sideEffectDefend(tempCard);
 			break;
 		case 'defendDrawDiscard':
-			Players.prototype.defendDrawDiscard(tempCard);
+			player1.defendDrawDiscard(tempCard);
 			break;
 		case 'defendAndAttack':
-			Players.prototype.defendWithAttack(tempCard);
+			player1.defendWithAttack(tempCard);
 	}
 }
 
@@ -537,7 +542,6 @@ endTurn.addEventListener('click', () => { gameController.pullRandomCardsInHand()
 //обновляет стамину и меняет кнопку действия игрока
 function EndTurn() {
 	gameController.turnEndsNextPlayerTurn();
-	playerUI.setActivePassiveClasses();
 }
 
 //кладем случайные карты в руку после каждого завершения кода
