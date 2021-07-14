@@ -457,8 +457,8 @@ let player2 = new Players();
 let playersView = new PlayersView()
 
 playersView.init(player1, player2, battleContainer);
-player1.init(playersView, gameController);
-player2.init(playersView, gameController);
+player1.init(playersView, gameController1);
+player2.init(playersView, gameController1);
 
 
 

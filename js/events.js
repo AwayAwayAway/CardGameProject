@@ -5,9 +5,9 @@ function Events() {
 		this.listeners.push(listener);
 	}
 
-	this.notify = function(args) {
+	this.notify = function(arg1, arg2) {
 		this.listeners.forEach((listener, index) => {
-			this.listeners[index](args)
+			this.listeners[index](arg1, arg2)
 		})
 	}
 }

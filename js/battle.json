@@ -255,41 +255,31 @@
     "id": 18,
     "role": "parent",
     "tagName": "script",
-    "class": "cardsJS",
-    "source": "js/cards.js",
-    "content": null,
-    "type":"defer",
-    "typeValue": true
-  },
-  {
-    "id": 18,
-    "role": "parent",
-    "tagName": "script",
-    "class": "battleJs",
-    "source": "js/battle.js",
-    "content": null,
-    "type":"defer",
-    "typeValue": true
-  },
-  {
-    "id": 18,
-    "role": "parent",
-    "tagName": "script",
-    "class": "playersJs",
-    "source": "js/players.js",
-    "content": null,
-    "type":"defer",
-    "typeValue": true
-  },
-  {
-    "id": 18,
-    "role": "parent",
-    "tagName": "script",
     "class": "testBoard",
     "source": "js/events.js",
     "content": null,
-    "type":"defer",
-    "typeValue": true
+    "type":"defer"
+
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "cardsJS",
+    "source": "js/cards.js",
+    "content": null,
+    "type":"defer"
+
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "gameTestJS",
+    "source": "js/game.js",
+    "content": null,
+    "type":"defer"
+
   },
   {
     "id": 18,
@@ -298,9 +288,31 @@
     "class": "testBoard",
     "source": "js/board.js",
     "content": null,
-    "type":"defer",
-    "typeValue": true
+    "type":"defer"
+
+  },
+
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "battleJs",
+    "source": "js/battle.js",
+    "content": null,
+    "type":"defer"
+
+  },
+  {
+    "id": 18,
+    "role": "parent",
+    "tagName": "script",
+    "class": "playersJs",
+    "source": "js/players.js",
+    "content": null,
+    "type":"defer"
+
   }
+
 
 
 ]
