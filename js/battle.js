@@ -1,4 +1,4 @@
-const btnAccept = document.querySelector('.accept');               // player accept cards he chose
+// const btnAccept = document.querySelector('.accept');               // player accept cards he chose
 // const decWrapper = document.querySelector('.cards-choose-field');      // field for cards at the start when players are choosing
 const cardsChooseCounter = document.querySelector('.count');      // counter for amount of cards have been chosen(needs for alert)
 // const cardInHand = document.querySelector('.card-in-hand');      // field for cards in hand each player
@@ -393,52 +393,52 @@ const cardsPlayField = document.querySelector('.play-field');    // area for car
 // btnAccept.addEventListener('click', () => { gameController.definePlayersCardSet() });
 
 //анимация подсветки выбранной карты плюс счетчик сколько набранно карт
-function cardChooseAnim(e) {
-	let targ = e.target;
-
-	if (targ !== decWrapper) {
-		targ.classList.toggle('card-border');
-	}
-
-	let counter = document.getElementsByClassName('card-border').length;
-	cardsChooseCounter.textContent = counter;
-
-	if (counter > 8) {
-		cardsChooseCounter.style = 'color: red';
-	} else if (counter == 8) {
-		cardsChooseCounter.style = 'color: green';
-	} else if (counter > 0 && counter < 8){
-		cardsChooseCounter.style = 'color: cyan';
-	} else {
-		cardsChooseCounter.style = 'color: white';
-	}
-
-}
-
-//анимация выбора только одной карты для игры в руке
-function cardChooseAnimInHandAdd(e) {
-	let targ = e.target;
-
-	if (targ !== cardInHand) {
-		targ.classList.add('card-to-action');
-	}
-}
+// function cardChooseAnim(e) {
+// 	let targ = e.target;
+//
+// 	if (targ !== decWrapper) {
+// 		targ.classList.toggle('card-border');
+// 	}
+//
+// 	let counter = document.getElementsByClassName('card-border').length;
+// 	cardsChooseCounter.textContent = counter;
+//
+// 	if (counter > 8) {
+// 		cardsChooseCounter.style = 'color: red';
+// 	} else if (counter == 8) {
+// 		cardsChooseCounter.style = 'color: green';
+// 	} else if (counter > 0 && counter < 8){
+// 		cardsChooseCounter.style = 'color: cyan';
+// 	} else {
+// 		cardsChooseCounter.style = 'color: white';
+// 	}
+//
+// }
 
 //анимация выбора только одной карты для игры в руке
-function cardChooseAnimInHandRemove(e) {
-	let targ = e.target;
+// function cardChooseAnimInHandAdd(e) {
+// 	let targ = e.target;
+//
+// 	if (targ !== cardInHand) {
+// 		targ.classList.add('card-to-action');
+// 	}
+// }
 
-	if (targ !== cardInHand) {
-		targ.classList.remove('card-to-action');
-	}
-}
+//анимация выбора только одной карты для игры в руке
+// function cardChooseAnimInHandRemove(e) {
+// 	let targ = e.target;
+//
+// 	if (targ !== cardInHand) {
+// 		targ.classList.remove('card-to-action');
+// 	}
+// }
 
 
 // START DRAG N DROP PLAY CARDS
 // сохраняет какая карта перетягивается
-let draggedItem;
+// let draggedItem;
 // карта передается как аргумент в функции для реализации способности карты
-let tempCard;
+// let tempCard;
 
 // cardInHand.addEventListener('dragstart', dragCardStart)
 // cardInHand.addEventListener('dragstart', letFindOut)
@@ -450,25 +450,25 @@ cardsPlayField.addEventListener('drop', deletePlayedCard) //сначала эт�
 cardsPlayField.addEventListener('drop', doAction) //если поставить этот listener раньше, он убирает выносливость игрока согласно стоимость карты и мы уже не сможем удалить карту из руки, т.к. не пройдет проверку
 
 //добавляем стили для перетаскивания
-function dragCardStart(e) {
-	let targ = e.target;
-
-	if (targ !== cardInHand) {
-		targ.classList.add('hold');  // может стоит удлаить
-		setTimeout(() => targ.classList.add('invinsible'), 0);
-		draggedItem = targ;
-	}
-}
+// function dragCardStart(e) {
+// 	let targ = e.target;
+//
+// 	if (targ !== cardInHand) {
+// 		targ.classList.add('hold');  // может стоит удлаить
+// 		setTimeout(() => targ.classList.add('invinsible'), 0);
+// 		draggedItem = targ;
+// 	}
+// }
 
 //убираем стили для перетаскивания
-function dragCardEnd(e) {
-	let targ = e.target;
-
-	if (targ !== cardInHand) {
-		targ.classList.remove('hold');   // может стоит удлаить
-		targ.classList.remove('invinsible');
-	}
-}
+// function dragCardEnd(e) {
+// 	let targ = e.target;
+//
+// 	if (targ !== cardInHand) {
+// 		targ.classList.remove('hold');   // может стоит удлаить
+// 		targ.classList.remove('invinsible');
+// 	}
+// }
 
 //обязательные функцияя preventDefault() для события drop, чтобы оно прошло
 function testDragenter(e) {
@@ -481,21 +481,21 @@ function testDragover(e) {
 }
 
 //узнаем какая карта была взята для игры и сыграна
-function letFindOut() {
-	if(gameController.playerOneTurn) {
-		for(let i = 0; i < gameController.playerOnePullOfCards.length; i++) {
-			if(gameController.playerOnePullOfCards[i].id == draggedItem.dataset.info) {
-				tempCard = gameController.playerOnePullOfCards[i];
-			}
-		}
-	} else {
-		for(let i = 0; i < gameController.playerTwoPullOfCards.length; i++) {
-			if(gameController.playerTwoPullOfCards[i].id == draggedItem.dataset.info) {
-				tempCard = gameController.playerTwoPullOfCards[i];
-			}
-		}
-	}
-}
+// function letFindOut() {
+// 	if(gameController.playerOneTurn) {
+// 		for(let i = 0; i < gameController.playerOnePullOfCards.length; i++) {
+// 			if(gameController.playerOnePullOfCards[i].id == draggedItem.dataset.info) {
+// 				tempCard = gameController.playerOnePullOfCards[i];
+// 			}
+// 		}
+// 	} else {
+// 		for(let i = 0; i < gameController.playerTwoPullOfCards.length; i++) {
+// 			if(gameController.playerTwoPullOfCards[i].id == draggedItem.dataset.info) {
+// 				tempCard = gameController.playerTwoPullOfCards[i];
+// 			}
+// 		}
+// 	}
+// }
 // END DRAG N DROP PLAY CARDS
 
 // играем карту

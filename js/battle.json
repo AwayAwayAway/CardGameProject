@@ -291,17 +291,6 @@
     "type":"defer"
 
   },
-
-  {
-    "id": 18,
-    "role": "parent",
-    "tagName": "script",
-    "class": "battleJs",
-    "source": "js/battle.js",
-    "content": null,
-    "type":"defer"
-
-  },
   {
     "id": 18,
     "role": "parent",

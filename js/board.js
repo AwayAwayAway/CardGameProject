@@ -12,9 +12,8 @@
 		this.endTurn = document.querySelector('.end-of-turn-btn');             // end turn button
 		this.cardsPlayField = document.querySelector('.play-field');           // area for cards to drop and play their actions
 
-
-		let draggedItem = null;
-		let tempCard = null;
+		this.draggedItem = null;
+		this.tempCard = null;
 
 		// создаем событие на создание карт
 		this.onCreateCards = new Events();
@@ -59,6 +58,7 @@
 			this.onCreateCards.notify(elDiv, 'hand');
 		};
 
+		// кидаем карты в руку
 		this.pullRandomCardsInHand = function () {
 
 			this.removeExtraCards('hand');
@@ -102,6 +102,7 @@
 			this.removeCards.notify(orderToRemove, place);
 		}
 
+		// подсветка выбранных карт
 		this.cardChooseAnim = function (eventTarget) {
 			let target = eventTarget;
 
@@ -126,9 +127,46 @@
 
 			this.onCounterChange.notify(counterInfo);
 		};
+
+		//анимация выбора только одной карты для игры в руке
+		this.cardChooseAnimInHandAdd = function(eventTarget) {
+			let target = eventTarget;
+
+			if (target !== this.cardInHand) {
+				target.classList.add('card-to-action');
+			}
+		}
+
+		//анимация выбора только одной карты для игры в руке
+		this.cardChooseAnimInHandRemove = function(eventTarget) {
+			let target = eventTarget;
+
+			if (target !== this.cardInHand) {
+				target.classList.remove('card-to-action');
+			}
+		}
+
+		//добавляем стили для перетаскивания
+		this.dragCardStart = function(eventTarget) {
+			let target = eventTarget;
+
+			if (target !== this.cardInHand) {
+				setTimeout(() => target.classList.add('invinsible'), 0);
+
+			}
+		}
+
+		//убираем стили для перетаскивания
+		this.dragCardEnd = function(eventTarget) {
+			let target = eventTarget;
+
+			if (target !== this.cardInHand) {
+				target.classList.remove('invinsible');
+			}
+		}
+
+
 	}
-
-
 
 	function BoardView(board, game, selector) {
 
@@ -147,6 +185,13 @@
 		// событие на проверку набрали ли игроки карты
 		this.submitCardCheckChoose = new Events;
 
+		// навели убрали мышку на карту в руке
+		this.cardInHandChoosen = new Events();
+
+		// навели убрали мышку на карту в руке
+		this.grabCardStart = new Events();
+		this.grabCardEnd = new Events();
+
 		// подписываемся на событие в модели
 		// boardModel создала карты надо их отобразить
 		boardModel.onCreateCards.attach((card, place) => this.drawCards(card, place));
@@ -160,14 +205,30 @@
 		// событие на удаление лишних карт
 		boardModel.removeCards.attach((cards, place) => this.extraCardsToRemove(cards, place));
 
+		// событие на отображение инфо кто выбирает карты
+		gameModel.choosePlayerInfo.attach((text) => this.playerChooseInfoUpdate(text));
+
+		// событие на отображение никнеймов игроков
+		gameModel.updatePlayersNames.attach((name1, name2) => this.playerNameUpdate(name1, name2));
+
+		// событие на отображение моделек персонажей
+		gameModel.updatePlayersModels.attach((modelPlayer1, modelPlayer2) => this.playerModelsUpdate(modelPlayer1, modelPlayer2));
+
 
 		// событие клик кнопки подтверждения выбора карт разсылаем уведомление что событие сработало
 		boardModel.btnAccept.addEventListener('click', () => this.onDefineCards.notify());
 		boardModel.btnAccept.addEventListener('click', () => this.submitCardCheckChoose.notify());
 
+		boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify( event.target, 'focus' ))
+		boardModel.cardInHand.addEventListener('mouseout', (event) => this.cardInHandChoosen.notify( event.target, 'blur' ))
+
+		boardModel.cardInHand.addEventListener('dragstart', (event) => this.grabCardStart.notify( event.target, 'focus' ))
+		boardModel.cardInHand.addEventListener('dragend', (event) => this.grabCardEnd.notify( event.target, 'blur' ))
+
+
+
 		// событие клик подстветка выбора карт
 		boardModel.decWrapper.addEventListener('click', (event) => this.onAnimCards.notify(event.target));
-
 
 		// need for start render cards when page is loaded
 		this.init = function () {
@@ -183,23 +244,10 @@
 					boardModel.cardInHand.appendChild(card);
 					break;
 			}
+
+			boardModel.cardsChooseCounter.textContent = 0;
+			boardModel.cardsChooseCounter.style = 'color: white';
 		};
-
-		this.deleteCards = function(card, place) {
-
-		}
-
-		this.counterUpdate = function (info) {
-			boardModel.cardsChooseCounter.textContent = info.number;
-			boardModel.cardsChooseCounter.style = `color: ${info.color}`;
-		};
-
-		this.selectionEndUpdate = function () {
-				boardModel.decWrapper.style.display = 'none';
-				boardModel.battleField.classList.remove('hidden');
-				boardSelector.querySelector('.card-counter').classList.add('hidden');
-				boardSelector.querySelector('.card-counter').style.display = 'none';
-		}
 
 		this.extraCardsToRemove = function (cards, place) {
 
@@ -216,8 +264,65 @@
 			}
 		}
 
-	}
+		this.counterUpdate = function (info) {
+			boardModel.cardsChooseCounter.textContent = info.number;
+			boardModel.cardsChooseCounter.style = `color: ${info.color}`;
+		};
 
+		this.selectionEndUpdate = function () {
+				boardModel.decWrapper.style.display = 'none';
+				boardModel.battleField.classList.remove('hidden');
+				boardSelector.querySelector('.card-counter').classList.add('hidden');
+				boardSelector.querySelector('.card-counter').style.display = 'none';
+		}
+
+		this.playerChooseInfoUpdate = function (text) {
+			selector.querySelector('.player-name-choosing').textContent = text;
+		}
+
+		this.playerNameUpdate = function (name1, name2) {
+			selector.querySelector('.player-1__name').textContent = name1;
+			selector.querySelector('.player-2__name').textContent = name2;
+		}
+
+		this.playerModelsUpdate = function (modelPlayer1, modelPlayer2) {
+			const player1Model = selector.querySelector('.player-1__model');
+			const player2Model = selector.querySelector('.player-2__model');
+
+			player1Model.type = 'image/svg+xml'
+			player2Model.type = 'image/svg+xml'
+
+			switch (modelPlayer1) {
+				case 'warrior':
+					player1Model.data = 'css/images/models/viking.svg';
+					break;
+				case 'rogue':
+					player1Model.data = 'css/images/models/rogue.svg';
+					break;
+				case 'mage':
+					player1Model.data = 'css/images/models/mage.svg';
+					break;
+				default:
+					console.log('models not found');
+			}
+
+			switch (modelPlayer2) {
+				case 'warrior':
+					player2Model.data = 'css/images/models/viking.svg';
+					break;
+				case 'rogue':
+					player2Model.data = 'css/images/models/rogue.svg';
+					break;
+				case 'mage':
+					player2Model.data = 'css/images/models/mage.svg';
+					break;
+				default:
+					console.log('models not found');
+			}
+		}
+
+
+}
 
 	function BoardController(gamemodel, boardmodel, view) {
 
@@ -230,7 +335,19 @@
 		}
 
 		if (boardModelView.hasOwnProperty('onAnimCards')) {
-			boardModelView.onAnimCards.attach((event) => this.cardAnimation(event));
+			boardModelView.onAnimCards.attach((event) => this.cardAnimBoard(event));
+		}
+
+		if (boardModelView.hasOwnProperty('cardInHandChoosen')) {
+			boardModelView.cardInHandChoosen.attach((event, state) => this.cardAnimHand(event, state));
+		}
+
+		if (boardModelView.hasOwnProperty('grabCardStart')) {
+			boardModelView.grabCardStart.attach((event, state) => this.grabbedCardAnim(event, state));
+		}
+
+		if (boardModelView.hasOwnProperty('grabCardEnd')) {
+			boardModelView.grabCardEnd.attach((event, state) => this.grabbedCardAnim(event, state));
 		}
 
 		if (gameModel.hasOwnProperty('selectionContinue')) {
@@ -245,15 +362,42 @@
 			boardModel.createCardsForChoose(gameModel);
 		};
 
-		this.cardAnimation = function (event) {
+		this.cardAnimBoard = function (event) {
 			boardModel.cardChooseAnim(event);
 		};
+
+		this.cardAnimHand = function (event, state) {
+			switch (state) {
+				case 'focus':
+					boardModel.cardChooseAnimInHandAdd(event);
+					break;
+				case 'blur':
+					boardModel.cardChooseAnimInHandRemove(event);
+					break;
+			}
+		}
 
 		this.createCardsInHand = function () {
 			boardModel.pullRandomCardsInHand();
 		};
+
+		this.grabbedCardAnim = function (event, state) {
+			switch (state) {
+				case 'focus':
+					boardModel.dragCardStart(event);
+					break;
+				case 'blur':
+					boardModel.dragCardEnd(event);
+					break;
+			}
+		}
 	}
 }
+
+
+
+
+
 
 let boardModel = new Board(gameController1);
 
@@ -261,9 +405,16 @@ let boardView = new BoardView(boardModel, gameController1, document.querySelecto
 
 let boardController = new BoardController(gameController1, boardModel, boardView);
 
+
+
+
+
+gameController1.start();
+
 boardView.init(true);
 
 // this belongs to game.js refactor later
 let gameObserver = new GameController(gameController1);
 
 gameObserver.init(boardView);
+

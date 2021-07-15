@@ -257,16 +257,16 @@
 /* Start Настройка Карт при выборе*/
 .cards {
   position: relative;
-  width: 14rem;
-  height: 18rem;
-  margin-right: 2rem;
-  margin-top: 5rem;
+  width: 11rem;
+  height: 14rem;
+  margin-right: 1rem;
+  margin-top: 4rem;
   cursor: pointer;
   transition: all .3s ease-in-out;
   background: center/cover no-repeat;
-  /*background-size: cover;*/
-  /*background-position: center;*/
-  /*background-repeat: no-repeat;*/
+  /* background-size: cover; */
+  /* background-position: center; */
+  /* background-repeat: no-repeat; */
   outline: none;
   border: none;
 
