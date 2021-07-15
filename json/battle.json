@@ -14,294 +14,337 @@
     "content": null
   },
   {
-    "id": 1,
+    "id": 2,
     "role": "child",
     "tagName": "div",
     "class": "player-name-choosing",
     "content": null
   },
   {
-    "id": 1,
+    "id": 3,
     "role": "child",
     "tagName": "span",
     "class": "count",
     "content": "0 "
   },
   {
-    "id": 1,
+    "id": 4,
     "role": "child",
     "tagName": "span",
     "class": "max-count",
     "content": "/ 8"
   },
   {
-    "id": 1,
+    "id": 5,
     "role": "child",
     "tagName": "button",
     "class": "accept",
     "content": "Confirm"
   },
   {
-    "id": 1,
+    "id": 6,
     "role": "mainChild",
     "tagName": "div",
     "class": "cards-choose-field",
     "content": null
   },
   {
-    "id": 1,
+    "id": 7,
     "role": "mainChild",
     "tagName": "div",
     "class": "play-field",
     "content": null
   },
   {
-    "id": 1,
+    "id": 8,
     "role": "mainChild",
     "tagName": "div",
     "class": "battle-field hidden",
     "content": null
   },
   {
-    "id": 1,
+    "id": 9,
     "role": "child",
     "tagName": "div",
     "class": "player-1",
     "content": null
   },
   {
-    "id": 1,
+    "id": 10,
     "role": "subChild",
     "tagName": "div",
     "class": "player-1__name",
     "content": null
   },
   {
-    "id": 1,
+    "id": 11,
     "role": "subChild",
     "tagName": "div",
     "class": "player-1__hp",
     "content": null
   },
   {
-    "id": 1,
+    "id": 12,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-1__hp-bar",
     "content": null
   },
   {
-    "id": 1,
+    "id": 13,
     "role": "lowestChild",
     "tagName": "i",
     "class": "player-1__hp-bar-inner",
     "content": null
   },
   {
-    "id": 1,
+    "id": 14,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-1__hp-value",
     "content": null
   },
   {
-    "id": 1,
+    "id": 15,
     "role": "subChild",
     "tagName": "div",
     "class": "player-1__stamina",
     "content": null
   },
   {
-    "id": 1,
+    "id": 16,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-1__stamina-value",
     "content": null
   },
   {
-    "id": 1,
+    "id": 17,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-1__stamina-maxvalue",
     "content": "/4"
   },
   {
-    "id": 1,
+    "id": 18,
     "role": "subChild",
     "tagName": "div",
     "class": "player-1__defence",
     "content": null
   },
   {
-    "id": 1,
+    "id": 19,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-1__defence-value",
     "content": null
   },
   {
-    "id": 1,
+    "id": 20,
     "role": "subChild",
     "tagName": "object",
     "class": "player-1__model",
     "content": null
   },
   {
-    "id": 1,
+    "id": 21,
     "role": "child",
     "tagName": "div",
     "class": "player-2",
     "content": null
   },
   {
-    "id": 1,
+    "id": 22,
     "role": "subChild",
     "tagName": "div",
     "class": "player-2__name",
     "content": null
   },
   {
-    "id": 1,
+    "id": 23,
     "role": "subChild",
     "tagName": "div",
     "class": "player-2__hp",
     "content": null
   },
   {
-    "id": 1,
+    "id": 24,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-2__hp-bar",
     "content": null
   },
   {
-    "id": 1,
+    "id": 25,
     "role": "lowestChild",
     "tagName": "i",
     "class": "player-2__hp-bar-inner",
     "content": null
   },
   {
-    "id": 1,
+    "id": 26,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-2__hp-value",
     "content": null
   },
   {
-    "id": 1,
+    "id": 27,
     "role": "subChild",
     "tagName": "div",
     "class": "player-2__stamina",
     "content": null
   },
   {
-    "id": 1,
+    "id": 28,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-2__stamina-value",
     "content": null
   },
   {
-    "id": 1,
+    "id": 29,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-2__stamina-maxvalue",
     "content": "/4"
   },
   {
-    "id": 1,
+    "id": 30,
     "role": "subChild",
     "tagName": "div",
     "class": "player-2__defence",
     "content": null
   },
   {
-    "id": 1,
+    "id": 31,
     "role": "lowestChild",
     "tagName": "span",
     "class": "player-2__defence-value",
     "content": null
   },
   {
-    "id": 1,
+    "id": 32,
     "role": "subChild",
     "tagName": "object",
     "class": "player-2__model",
     "content": null
   },
   {
-    "id": 1,
+    "id": 33,
     "role": "child",
     "tagName": "div",
     "class": "game-turns end-of-turn-btn",
     "content": "End turn"
   },
   {
-    "id": 1,
+    "id": 34,
     "role": "child",
     "tagName": "div",
     "class": "players-action",
     "content": null
   },
   {
-    "id": 1,
+    "id": 35,
     "role": "child",
     "tagName": "div",
     "class": "card-in-hand",
     "content": null
   },
   {
-    "id": 18,
+    "id": 36,
     "role": "parent",
     "tagName": "script",
-    "class": "testBoard",
-    "source": "js/events.js",
-    "content": null,
-    "type":"defer"
-
+    "class": "events",
+    "source": "js/events-module/eventsModel.js",
+    "content": null
   },
   {
-    "id": 18,
+    "id": 37,
     "role": "parent",
     "tagName": "script",
-    "class": "cardsJS",
+    "class": "cardsModel",
+    "source": "js/cardsModel-Module/cardsModel.js",
+    "content": null
+  },
+  {
+    "id": 38,
+    "role": "parent",
+    "tagName": "script",
+    "class": "cardsObject",
     "source": "js/cards.js",
-    "content": null,
-    "type":"defer"
-
+    "content": null
   },
   {
-    "id": 18,
+    "id": 39
     "role": "parent",
     "tagName": "script",
-    "class": "gameTestJS",
-    "source": "js/game.js",
-    "content": null,
-    "type":"defer"
-
+    "class": "gameModel",
+    "source": "js/gameModel-module/gameModel.js",
+    "content": null
   },
   {
-    "id": 18,
+    "id": 40,
     "role": "parent",
     "tagName": "script",
-    "class": "testBoard",
-    "source": "js/board.js",
-    "content": null,
-    "type":"defer"
-
+    "class": "gameController",
+    "source": "js/gameController-module/gameController.js",
+    "content": null
   },
   {
-    "id": 18,
+    "id": 41,
     "role": "parent",
     "tagName": "script",
-    "class": "playersJs",
-    "source": "js/players.js",
-    "content": null,
-    "type":"defer"
-
+    "class": "boardModel",
+    "source": "js/boardModel-module/boardModel.js",
+    "content": null
+  },
+  {
+    "id": 42,
+    "role": "parent",
+    "tagName": "script",
+    "class": "boardView",
+    "source": "js/boardView-module/boardView.js",
+    "content": null
+  },
+  {
+    "id": 43,
+    "role": "parent",
+    "tagName": "script",
+    "class": "boardController",
+    "source": "js/boardController-module/boardController.js",
+    "content": null
+  },
+  {
+    "id": 44,
+    "role": "parent",
+    "tagName": "script",
+    "class": "playerModel",
+    "source": "js/playerModel-module/playerModel.js",
+    "content": null
+  },
+  {
+    "id": 45,
+    "role": "parent",
+    "tagName": "script",
+    "class": "playerView",
+    "source": "js/playerView-module/playerView.js",
+    "content": null
+  },
+  {
+    "id": 46,
+    "role": "parent",
+    "tagName": "script",
+    "class": "playerController",
+    "source": "js/playerController-module/playerController.js",
+    "content": null
+  },
+  {
+    "id": 47,
+    "role": "parent",
+    "tagName": "script",
+    "class": "battle",
+    "source": "js/battle.js",
+    "content": null
   }
-
-
-
 ]

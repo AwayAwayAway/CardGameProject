@@ -373,6 +373,7 @@ h3 {
   padding-bottom: 1rem;
   z-index: 100;
   color: #cccccc;
+  cursor: pointer;
 }
 .players-action {
   position: absolute;

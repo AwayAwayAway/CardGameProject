@@ -1,7 +1,7 @@
 // first page load
 const xhr = new XMLHttpRequest();
 
-xhr.open('get', 'js/battle.json');
+xhr.open('get', 'json/battle.json');
 xhr.onload = function () {
 	let resObj = {};
 	if(this.status === 200) {
@@ -19,7 +19,7 @@ document.addEventListener('click', function (e) {
 	if(e.target.classList.contains('startButton')) {
 		const xhr = new XMLHttpRequest();
 
-		xhr.open('get', 'js/choose_menu.json');
+		xhr.open('get', 'json/choose_menu.json');
 
 		xhr.onload = function () {
 			let resObj = {};
@@ -41,7 +41,7 @@ document.addEventListener('click', function (e) {
 	if(e.target.classList.contains('back-to-main-menu')) {
 		const xhr = new XMLHttpRequest();
 
-		xhr.open('get', 'js/main_menu.json');
+		xhr.open('get', 'json/main_menu.json');
 
 		xhr.onload = function () {
 			let resObj = {};
@@ -63,7 +63,7 @@ document.addEventListener('click', function (e) {
 	if(e.target.classList.contains('startGame')) {
 		const xhr = new XMLHttpRequest();
 
-		xhr.open('get', 'js/battle.json');
+		xhr.open('get', 'json/battle.json');
 
 		xhr.onload = function () {
 			let resObj = {};
@@ -83,8 +83,8 @@ document.addEventListener('click', function (e) {
 // create page from JSON functions
 function createMainMenu (object) {
 	const body = document.querySelector('body');
-	body.removeChild(body.lastChild);
-	body.removeChild(body.lastChild);
+	// body.removeChild(body.lastChild);
+	// body.removeChild(body.lastChild);
 	let parent;
 	let mainChild;
 	let child;
@@ -136,14 +136,18 @@ function createElement(obj) {
 		element.setAttribute(`${obj.type}`, `${obj.typeValue}`)
 	}
 
-	return element;
-}
-
-function createSvg(obj) {
-	let element = document.createElement(obj.tagName);
-	element.setAttribute('class', obj.class);
-	element.setAttribute('type', obj.type);
-	element.setAttribute('data', obj.source);
+	if(obj.tagName === 'script') {
+		element.setAttribute('defer', 'defer')
+	}
 
 	return element;
 }
+
+// function createSvg(obj) {
+// 	let element = document.createElement(obj.tagName);
+// 	element.setAttribute('class', obj.class);
+// 	element.setAttribute('type', obj.type);
+// 	element.setAttribute('data', obj.source);
+//
+// 	return element;
+// }
