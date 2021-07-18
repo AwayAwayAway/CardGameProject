@@ -15,22 +15,24 @@
 		this.player2DefenceValue = playerContainer.querySelector('.player-2__defence-value');
 		this.player2StaminaValue = playerContainer.querySelector('.player-2__stamina-value');
 
-		modelPlayer1.playerViewUpdate.attach(() => this.updateViewPlayer1());
-		modelPlayer2.playerViewUpdate.attach(() => this.updateViewPlayer2());
+		modelPlayer1.playerViewUpdate.attach(() => this.updateViewPlayer() );
+		modelPlayer2.playerViewUpdate.attach(() => this.updateViewPlayer() );
 
 		// устанавливаем первые параметры здоровье, защита, стамина
-		this.updateViewPlayer1 = function () {
+		this.updateViewPlayer = function () {
 			this.player1HPValue.textContent = modelPlayer1.healthPoints;
 			this.player1DefenceValue.textContent = modelPlayer1.defendPoints;
 			this.player1StaminaValue.textContent = modelPlayer1.staminaPoints;
 			this.player1HP.style.width = modelPlayer1.healthPoints + '%';
-		};
 
-		this.updateViewPlayer2 = function () {
 			this.player2HPValue.textContent = modelPlayer2.healthPoints;
 			this.player2DefenceValue.textContent = modelPlayer2.defendPoints;
 			this.player2StaminaValue.textContent = modelPlayer2.staminaPoints;
 			this.player2HP.style.width = modelPlayer2.healthPoints + '%';
 		};
+
+		// this.updateViewPlayer2 = function () {
+		//
+		// };
 	}
 }

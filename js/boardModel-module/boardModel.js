@@ -1,40 +1,77 @@
 {
 	function Board(model) {
-
-		// let boardView = null;
 		const gameModel = model;
 
 		this.decWrapper = document.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
 		this.btnAccept = document.querySelector('.accept');               // player accept cards he chose
 		this.cardsChooseCounter = document.querySelector('.count');             // counter for amount of cards have been chosen(needs for alert)
-		this.cardInHand = document.querySelector('.card-in-hand');              // field for cards in hand each player
+		this.cardInHand = document.querySelector('.card-in-hand-field');              // field for cards in hand each player
 		this.battleField = document.querySelector('.battle-field');            // play field
 		this.endTurn = document.querySelector('.end-of-turn-btn');             // end turn button
 		this.cardsPlayField = document.querySelector('.play-field');           // area for cards to drop and play their actions
+
+		this.playersOverlay = document.querySelector('.players-overlay');
+		this.playersDeck = document.querySelector('.players-overlay__cards');
+		this.playersDeckClose = document.querySelector('.overlay__close');
+
+		this.showDeckPlayer1 = document.querySelector('.player-1__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
+		this.showDeckPlayer2 = document.querySelector('.player-2__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
 
 		// создаем событие на создание карт
 		this.onCreateCards = new Events();
 		this.onCounterChange = new Events();
 		this.removeCards = new Events();
 		this.removeActionCard = new Events();
+		this.openCloseOverlay = new Events()
 
 		// создаем деку в начале игры для игрока согласно классу
 		this.createCardsForChoose = function (playerClassInfo) {
-			this.removeExtraCards('board')
+			this.removeExtraCards('board');
 
 			if (gameModel.playerOneTurn) {
 				for (let i = 0; i < skillCollection[playerClassInfo.playerOneClass].length; i++) {
-					this.createDeck(skillCollection[playerClassInfo.playerOneClass][i]);
+					this.createCards(skillCollection[playerClassInfo.playerOneClass][i]);
 				}
 			} else {
 				for (let i = 0; i < skillCollection[playerClassInfo.playerTwoClass].length; i++) {
-					this.createDeck(skillCollection[playerClassInfo.playerTwoClass][i]);
+					this.createCards(skillCollection[playerClassInfo.playerTwoClass][i]);
 				}
 			}
-		};
+		}
+
+		this.showCardsForPlayers = function (eventTarget) {
+			this.removeExtraCards('overlay');
+
+			let target = eventTarget;
+
+			if (target.classList.contains('player-1__pile-of-car')) {
+
+				for (let i = 0; i < gameModel.playerOnePullOfCards.length; i++) {
+					this.createCardsInOverlay(gameModel.playerOnePullOfCards[i]);
+				}
+			}
+
+			if (target.classList.contains('player-2__pile-of-car')) {
+
+				for (let i = 0; i < gameModel.playerTwoPullOfCards.length; i++) {
+					this.createCardsInOverlay(gameModel.playerTwoPullOfCards[i]);
+				}
+			}
+		}
+
+		this.openCloseOverlay = function (state) {
+			switch (state) {
+				case 'open':
+					this.playersOverlay.classList.remove('hidden');
+					break;
+				case 'close':
+					this.playersOverlay.classList.add('hidden');
+					break;
+			}
+		}
 
 		//создает карты доска выбора
-		this.createDeck = function (card) {
+		this.createCards = function (card) {
 			let elDiv = document.createElement('div');
 
 			elDiv.setAttribute('class', 'cards');
@@ -42,7 +79,7 @@
 			elDiv.style.backgroundImage = `url(${card.icon})`;
 
 			this.onCreateCards.notify(elDiv, 'board');
-		};
+		}
 
 		//создает карты в руке
 		this.createCardsInHand = function (card) {
@@ -54,11 +91,20 @@
 			elDiv.style.backgroundImage = `url(${card.icon})`;
 
 			this.onCreateCards.notify(elDiv, 'hand');
-		};
+		}
+
+		this.createCardsInOverlay = function (card) {
+			let elDiv = document.createElement('div');
+
+			elDiv.setAttribute('class', 'cards');
+			elDiv.setAttribute('data-info', `${card.id}`);
+			elDiv.style.backgroundImage = `url(${card.icon})`;
+
+			this.onCreateCards.notify(elDiv, 'overlay');
+		}
 
 		// кидаем карты в руку
 		this.pullRandomCardsInHand = function () {
-
 			this.removeExtraCards('hand');
 
 			let tempIndex = [];
@@ -95,17 +141,26 @@
 					break;
 				case 'hand':
 					orderToRemove = [...this.cardInHand.children];
+					break;
+				case 'overlay':
+					orderToRemove = [...this.playersDeck.children];
+					break;
 			}
 
 			this.removeCards.notify(orderToRemove, place);
 		}
 
 		//удаляем сыгранные карты из руки с проверкой
-		this.deletePlayedCard = function() {
-			if(gameModel.tempCard.cost > gameModel.activePlayer.staminaPoints) {
-				return
-			} else {
-				this.removeActionCard.notify(gameModel.dragCard)
+		this.deletePlayedCard = function(condition, card) {
+			if(gameModel.tempCard.cost > gameModel.activePlayer.staminaPoints) { return }
+
+			switch (condition) {
+				case 'playedCard':
+					this.removeActionCard.notify(gameModel.dragCard);
+					break;
+				case 'randomCard':
+					this.removeActionCard.notify(card);
+					break;
 			}
 		}
 
@@ -114,10 +169,10 @@
 			let target = eventTarget;
 
 			if (target !== this.decWrapper) {
-				target.classList.toggle('card-border');
+				target.classList.toggle('card-to-select');
 			}
 
-			let counter = document.getElementsByClassName('card-border').length;
+			let counter = document.getElementsByClassName('card-to-select').length;
 
 			let counterInfo = {};
 			counterInfo.number = counter;
@@ -133,7 +188,7 @@
 			}
 
 			this.onCounterChange.notify(counterInfo);
-		};
+		}
 
 		//анимация выбора только одной карты для игры в руке
 		this.cardChooseAnimInHandAdd = function(eventTarget) {
@@ -173,10 +228,7 @@
 		}
 
 		this.dragPreventAction = function (event) {
-			console.log('dragEnter');
 			event.preventDefault();
 		}
-
-
 	}
 }

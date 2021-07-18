@@ -10,6 +10,27 @@
     "id": 1,
     "role": "mainChild",
     "tagName": "div",
+    "class": "players-overlay hidden",
+    "content": null
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "i",
+    "class": "far fa-times-circle overlay__close",
+    "content": null
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "div",
+    "class": "players-overlay__cards",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
     "class": "card-counter",
     "content": null
   },
@@ -105,6 +126,13 @@
     "content": null
   },
   {
+    "id": 14,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-1__pile-of-car",
+    "content": null
+  },
+  {
     "id": 15,
     "role": "subChild",
     "tagName": "div",
@@ -189,6 +217,13 @@
     "content": null
   },
   {
+    "id": 26,
+    "role": "subChild",
+    "tagName": "div",
+    "class": "player-2__pile-of-car",
+    "content": null
+  },
+  {
     "id": 27,
     "role": "subChild",
     "tagName": "div",
@@ -234,7 +269,7 @@
     "id": 33,
     "role": "child",
     "tagName": "div",
-    "class": "game-turns end-of-turn-btn",
+    "class": "end-of-turn-btn",
     "content": "End turn"
   },
   {
@@ -248,7 +283,7 @@
     "id": 35,
     "role": "child",
     "tagName": "div",
-    "class": "card-in-hand",
+    "class": "card-in-hand-field",
     "content": null
   },
   {
@@ -276,7 +311,7 @@
     "content": null
   },
   {
-    "id": 39
+    "id": 39,
     "role": "parent",
     "tagName": "script",
     "class": "gameModel",
@@ -345,6 +380,14 @@
     "tagName": "script",
     "class": "battle",
     "source": "js/battle.js",
+    "content": null
+  },
+  {
+    "id": 48,
+    "role": "parent",
+    "tagName": "script",
+    "class": "battle",
+    "source": "js/observerModel/observerModel.js",
     "content": null
   }
 ]

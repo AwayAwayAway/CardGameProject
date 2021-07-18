@@ -1,14 +1,3 @@
-// {
-// 	function CreateCardSkills(id, type, cost, effect, icon, name, sideEffect) {
-// 		this.id = id;
-// 		this.cost = cost;
-// 		this.type = type;
-// 		this.effect = effect;
-// 		this.icon = icon;
-// 		this.name = name;
-// 		this.sideEffect = sideEffect;
-// 	}
-// }
 
 //START CREATING WARRIOR'S CARDS
 const strike_w = new CreateCardSkills(0, 'attack', 1, 6, 'css/images/cards/warrior/Strike.png', 'strike_w');
@@ -18,7 +7,7 @@ const bash = new CreateCardSkills(1, 'attack', 1, 8, 'css/images/cards/warrior/B
 const anger = new CreateCardSkills(2, 'attackAddEffect', 1, 6, 'css/images/cards/warrior/Anger.png', 'anger',
 	() => {
 		let effect;
-		if (gameController1.activePlayer.healthPoints < 50) {
+		if (gameObserver.activePlayer.healthPoints < 50) {
 			effect = 13;
 		} else {
 			effect = 6;
@@ -28,8 +17,8 @@ const anger = new CreateCardSkills(2, 'attackAddEffect', 1, 6, 'css/images/cards
 
 const bodySlam = new CreateCardSkills(3, 'attackAddEffect', 2, 0, 'css/images/cards/warrior/BodySlam.png', 'bodySlam', () => {
 	let effect;
-	if (gameController1.activePlayer.defendPoints > 0) {
-		effect = gameController1.activePlayer.defendPoints;
+	if (gameObserver.activePlayer.defendPoints > 0) {
+		effect = gameObserver.activePlayer.defendPoints;
 	} else {
 		effect = 0;
 	}
@@ -40,7 +29,7 @@ const perfecedStrike = new CreateCardSkills(4, 'attackAddEffect', 1, 6, 'css/ima
 
 const bludgeon = new CreateCardSkills(5, 'attackAddEffect', 3, 12, 'css/images/cards/warrior/Bludgeon.png', 'bludgeon', () => {
 	let effect;
-	if (gameController1.passivePlayer.healthPoints > 50) {
+	if (gameObserver.passivePlayer.healthPoints > 50) {
 		effect = 17;
 	} else {
 		effect = 12;
@@ -52,7 +41,7 @@ const defend_w = new CreateCardSkills(6, 'defend', 1, 5, 'css/images/cards/warri
 
 const armaments = new CreateCardSkills(7, 'defendAddEffect', 1, 5, 'css/images/cards/warrior/Armaments.png', 'armaments', () => {
 	let effect;
-	if (gameController1.activePlayer.defendPoints === 0) {
+	if (gameObserver.activePlayer.defendPoints === 0) {
 		effect = 7;
 	} else {
 		effect = 5;
@@ -66,7 +55,7 @@ const warcry = new CreateCardSkills(9, 'defendDrawDiscard', 0, 1, 'css/images/ca
 
 const bloodletting = new CreateCardSkills(10, 'defendDrawDiscard', 3, 1, 'css/images/cards/warrior/Bloodletting.png', 'bloodletting');
 
-const entrench = new CreateCardSkills(11, 'defendAddEffect', 2, 2, 'css/images/cards/warrior/Entrench.png', 'entrench', () => gameController1.activePlayer.defendPoints * 2 - gameController1.activePlayer.defendPoints);
+const entrench = new CreateCardSkills(11, 'defendAddEffect', 2, 2, 'css/images/cards/warrior/Entrench.png', 'entrench', () => gameObserver.activePlayer.defendPoints * 2 - gameObserver.activePlayer.defendPoints);
 
 //START CREATING ROGUE'S CARDS
 const strike_r = new CreateCardSkills(0, 'attack', 1, 6, 'css/images/cards/rogue/Strike_G.png', 'strike_r');
@@ -100,13 +89,13 @@ const cutThroughFate = new CreateCardSkills(1, 'attackDrawDiscard', 1, 7, 'css/i
 
 const reachHeaven = new CreateCardSkills(2, 'attack', 2, 10, 'css/images/cards/mage/ReachHeaven.png', 'reachHeaven');
 
-const signatureMove = new CreateCardSkills(3, 'attackAddEffect', 2, 0, 'css/images/cards/mage/SignatureMove.png', 'signatureMove', () => gameController1.passivePlayer.defendPoints);
+const signatureMove = new CreateCardSkills(3, 'attackAddEffect', 2, 0, 'css/images/cards/mage/SignatureMove.png', 'signatureMove', () => gameObserver.passivePlayer.defendPoints);
 
 const tantrum = new CreateCardSkills(4, 'attackAddEffect', 1, 3, 'css/images/cards/mage/Tantrum.png', 'tantrum', () => 3 + (Math.floor(Math.random() * (6 - 1)) + 1));
 
 const judjment = new CreateCardSkills(5, 'attackAddEffect', 2, 0, 'css/images/cards/mage/Judgment.png', 'judjment', () => {
 	let effect;
-	if (gameController1.passivePlayer.healthPoints <= 15) {
+	if (gameObserver.passivePlayer.healthPoints <= 15) {
 		effect = 0;
 	}
 	return effect;
@@ -114,7 +103,7 @@ const judjment = new CreateCardSkills(5, 'attackAddEffect', 2, 0, 'css/images/ca
 
 const masterReality = new CreateCardSkills(6, 'defendAddEffect', 1, 5, 'css/images/cards/mage/MasterReality.png', 'masterReality', () => {
 	let effect;
-	if (gameController1.activePlayer.defendPoints == 0) {
+	if (gameObserver.activePlayer.defendPoints == 0) {
 		effect = 10;
 	} else {
 		effect = 5;
@@ -128,7 +117,7 @@ const meditate = new CreateCardSkills(8, 'defendAddEffect', 1, 3, 'css/images/ca
 
 const thirdEye = new CreateCardSkills(9, 'defendDrawDiscard', 1, 7, 'css/images/cards/mage/ThirdEye.png', 'thirdEye');
 
-const nirvana = new CreateCardSkills(10, 'defendAddEffect', 1, 0, 'css/images/cards/mage/Nirvana.png', 'nirvana', () => gameController1.passivePlayer.defendPoints);
+const nirvana = new CreateCardSkills(10, 'defendAddEffect', 1, 0, 'css/images/cards/mage/Nirvana.png', 'nirvana', () => gameObserver.passivePlayer.defendPoints);
 
 const alpha = new CreateCardSkills(11, 'defendDrawDiscard', 1, 4, 'css/images/cards/mage/Alpha.png', 'alpha');
 

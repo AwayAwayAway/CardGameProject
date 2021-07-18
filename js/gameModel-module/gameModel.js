@@ -78,7 +78,7 @@
 			}
 		}
 
-		// линкуем player1 & player2 в gamemodel (ЗАПУСКАЕТСЯ В PLAYERS MODEL INIT !!!!)
+		// линкуем player1 & player2 в gamemodel
 		this.setActivePassivePlayer = function () {
 			this.activePlayer = player1;
 			this.passivePlayer = player2;
@@ -100,19 +100,17 @@
 			let cards = document.querySelectorAll('.cards');
 
 			//счетчик выбранных карт
-			let counter = document.getElementsByClassName('card-border').length;
+			let counter = document.getElementsByClassName('card-to-select').length;
 
 			// если выбрано больше или недобор указанных карт запрещает пулить в переменную
-			if (counter < 8 || counter >= 9) {
-				return;
-			}
+			if (counter < 8 || counter >= 9) { return }
 
 			let tempCardChoosePlayer = [];
 
 			//пушим карты 1го игрока в массив
 			if (this.playerOneTurn) {
 				for (let i = 0; i < cards.length; i++) {
-					if (cards[i].classList.contains('card-border')) {
+					if (cards[i].classList.contains('card-to-select')) {
 						tempCardChoosePlayer.push(cards[i].dataset.info);
 					}
 				}
@@ -123,7 +121,7 @@
 			//пушим карты 2го игрока в массив
 			if (this.playerTwoTurn) {
 				for (let i = 0; i < cards.length; i++) {
-					if (cards[i].classList.contains('card-border')) {
+					if (cards[i].classList.contains('card-to-select')) {
 						tempCardChoosePlayer.push(cards[i].dataset.info);
 					}
 				}
@@ -134,12 +132,12 @@
 			this.setTurnPriority();
 
 			this.checkCardsSelectionEnd();
-
 		}
 
 		// передаем массив из выбранных согласно ID карты и класс выбранного персонажа для поиска в SkillCollection его типа карт
 		this.checkOnSelectedCards = function (datainfo, search) {
 			let temp = [];
+
 			for (let i = 0; i < skillCollection[search].length; i++) {
 				for (let j = 0; j < datainfo.length; j++) {
 					if (skillCollection[search][i]['id'] == datainfo[j]) {
@@ -152,12 +150,10 @@
 
 		//проверяем игроки набрали карты скрываем меню выбора карт, открываем игровое поле
 		this.checkCardsSelectionEnd = function () {
-			let counter = document.getElementsByClassName('card-border').length;
+			let counter = document.getElementsByClassName('card-to-select').length;
 
 			// если выбрано больше или недобор указанных карт запрещает пулить в переменную
-			if (counter < 8 || counter >= 9) {
-				return;
-			}
+			if (counter < 8 || counter >= 9) { return }
 
 			if (this.playerOnePullOfCards.length > 1 && this.playerTwoPullOfCards.length > 1) {
 				this.selectionEnd.notify();
@@ -199,6 +195,6 @@
 				this.activePlayer = player1;
 				this.passivePlayer = player2;
 			}
-		};
+		}
 	}
 }

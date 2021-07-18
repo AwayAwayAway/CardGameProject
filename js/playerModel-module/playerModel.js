@@ -1,12 +1,15 @@
 {
-	function Players(model) {
+	function Players(game, board) {
 		this.healthPoints = 100;
 		this.staminaPoints = 4;
 		this.defendPoints = 7;
 
-		const gameModel = model;
+		const gameModel = game;
+		const boardModel = board;
 
 		this.playerViewUpdate = new Events();
+		this.cardDraw = new Events();
+		this.cardDiscard = new Events();
 
 		this.init = function () {
 			this.updateView();
@@ -48,10 +51,52 @@
 			}
 		};
 
-		this.standartAttack = function (card) {
-			if (gameModel.activePlayer.staminaPoints < card.cost) {
-				return;
+		this.randomCardDraw = function () {
+			let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
+
+			if (gameModel.playerOneTurn) {
+				this.cardDraw.notify(gameModel.playerOnePullOfCards[randomCardDraw]);
+			} else {
+				this.cardDraw.notify(gameModel.playerTwoPullOfCards[randomCardDraw]);
 			}
+		}
+
+		this.randomCardDiscard = function () {
+			let randomDiscard = Math.floor(Math.random() * boardModel.cardInHand.children.length);
+
+			//it will be error if you use DaggerThrow as the last card in hand so w check on this
+			if (boardModel.cardInHand.children.length > 0) {
+				this.cardDiscard.notify(boardModel.cardInHand.children[randomDiscard]);
+			}
+		}
+
+		// we take condition only for card "expertise"
+		this.massiveRandomDraw = function (card, condition) {
+			let tempIndex = [];
+
+			//делаем проверку чтобы карты в руке не повторялись
+			for (let i = 0; i < card.effect - condition; i++) {                  // количество карт в руку
+				let n = Math.floor(Math.random() * 8);            // количество набранных карт
+				if (tempIndex.indexOf(n) === -1) {
+					tempIndex.push(n);
+				} else {
+					i--;
+				}
+			}
+
+			if (gameModel.playerOneTurn) {
+				for (let i = 0; i < tempIndex.length; i++) {
+					this.cardDraw.notify(gameModel.playerOnePullOfCards[tempIndex[i]]);
+				}
+			} else {
+				for (let i = 0; i < tempIndex.length; i++) {
+					this.cardDraw.notify(gameModel.playerTwoPullOfCards[tempIndex[i]]);
+				}
+			}
+		}
+
+		this.standartAttack = function (card) {
+			if (gameModel.activePlayer.staminaPoints < card.cost) { return }
 
 			if (gameModel.passivePlayer.defendPoints) {
 				let test = gameModel.passivePlayer.defendPoints - card.effect;
@@ -61,7 +106,6 @@
 
 					test = Math.abs(test);
 					gameModel.passivePlayer.healthPoints -= test;
-
 				} else {
 					gameModel.passivePlayer.defendPoints = test;
 				}
@@ -75,9 +119,9 @@
 		};
 
 		this.sideEffectAttack = function (card) {
-			if (gameModel.activePlayer.staminaPoints < card.cost) {
-				return;
-			}
+			// some of cards have special side effect, so we do additional if check
+			// to make for them special methods
+			if (gameModel.activePlayer.staminaPoints < card.cost) { return }
 
 			if (card.name == 'riddleWithHoles') {
 				gameModel.passivePlayer.healthPoints -= card.effect;
@@ -92,9 +136,7 @@
 			if (card.name == 'judjment') {
 				let sideEffect = card.sideEffect();
 
-				if (sideEffect == undefined) {
-					return;
-				}
+				if (sideEffect == undefined) { return }
 
 				gameModel.passivePlayer.healthPoints = sideEffect;
 
@@ -103,21 +145,20 @@
 				return;
 			}
 
+			// some of cards havee common side effect so we can grooup it in one method
 			if (card.sideEffect) {
 				let sideEffect = card.sideEffect();
 
 				if (gameModel.passivePlayer.defendPoints) {
-					test = gameModel.passivePlayer.defendPoints - sideEffect;
+					let test = gameModel.passivePlayer.defendPoints - sideEffect;
 
 					if (test < 0) {
 						gameModel.passivePlayer.defendPoints = 0;
 
 						test = Math.abs(test);
 						gameModel.passivePlayer.healthPoints -= test;
-
 					} else {
 						gameModel.passivePlayer.defendPoints = test;
-
 					}
 				} else {
 					if (sideEffect) {
@@ -134,9 +175,9 @@
 		};
 
 		this.attackDrawDiscard = function (card) {
-			if (gameModel.activePlayer.staminaPoints < card.cost) {
-				return;
-			}
+			// some of cards have special side effect, so we do additional if check
+			// to make for them special methods
+			if (gameModel.activePlayer.staminaPoints < card.cost) { return }
 
 			if (gameModel.passivePlayer.defendPoints) {
 				let test = gameModel.passivePlayer.defendPoints - card.effect;
@@ -152,46 +193,21 @@
 				}
 			} else {
 				gameModel.passivePlayer.healthPoints -= card.effect;
-				gameModel.activePlayer.staminaPoints -= card.cost;
 			}
 
 			if (card.name == 'daggerThrow') {
-				let randomDiscard = Math.floor(Math.random() * cardInHand.children.length);
-				let randomCardDraw = Math.floor(Math.random() * gameController.playerOnePullOfCards.length);
-
-				//it will be error if you use DaggerThrow as the last card in hand so w check on this
-				if (cardInHand.children.length > 0) {
-					cardInHand.removeChild(cardInHand.children[randomDiscard]);
-				}
-
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDiscard();
+				this.randomCardDraw();
 			}
 
 			if (card.name == 'quickSlash') {
-				let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
-
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDraw();
 			}
 
 			if (card.name == 'cutThroughFate') {
-				let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
 				let sideEffect = card.sideEffect();
-
 				gameModel.activePlayer.defendPoints += sideEffect;
-
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDraw();
 			}
 
 			gameModel.activePlayer.staminaPoints -= card.cost;
@@ -200,18 +216,17 @@
 		};
 
 		this.standartDefend = function (card) {
-			if (gameModel.activePlayer.staminaPoints < card.cost) {
-				return;
-			}
+			if (gameModel.activePlayer.staminaPoints < card.cost) { return }
 
 			gameModel.activePlayer.defendPoints += card.effect;
-
 			gameModel.activePlayer.staminaPoints -= card.cost;
 
 			this.updateView();
 		};
 
 		this.sideEffectDefend = function (card) {
+			// some of cards have special side effect, so we do additional if check
+			// to make for them special methods
 			if (gameModel.activePlayer.staminaPoints < card.cost) {
 				return;
 			}
@@ -220,7 +235,6 @@
 				let sideEffect = card.sideEffect();
 
 				gameModel.activePlayer.defendPoints = sideEffect;
-
 				gameModel.activePlayer.staminaPoints -= card.cost;
 
 				this.updateView();
@@ -233,11 +247,9 @@
 
 				if (test > 4) {
 					gameModel.activePlayer.staminaPoints -= card.cost;
-
 					gameModel.activePlayer.staminaPoints = 4;
 				} else {
 					gameModel.activePlayer.staminaPoints -= card.cost;
-
 					gameModel.activePlayer.staminaPoints += card.effect;
 				}
 
@@ -250,7 +262,6 @@
 				let sideEffect = card.sideEffect();
 
 				gameModel.activePlayer.defendPoints += sideEffect;
-
 				gameModel.activePlayer.staminaPoints -= card.cost;
 
 				this.updateView();
@@ -259,9 +270,7 @@
 		};
 
 		this.defendWithAttack = function (card) {
-			if (gameModel.activePlayer.staminaPoints < card.cost) {
-				return;
-			}
+			if (gameModel.activePlayer.staminaPoints < card.cost) { return }
 
 			this.sideEffectAttack(card);
 			this.standartDefend(card);
@@ -273,57 +282,31 @@
 		};
 
 		this.defendDrawDiscard = function (card) {
-			if (gameModel.activePlayer.staminaPoints < card.cost) {
-				return;
-			}
+			// some of cards have special side effect, so we do additional if check
+			// to make for them special methods
+			if (gameModel.activePlayer.staminaPoints < card.cost) { return }
 
 			if (card.name == 'prepared') {
-				let randomDiscard = Math.floor(Math.random() * cardInHand.children.length);
-				let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
-
-				if (cardInHand.children.length > 0) {
-					cardInHand.removeChild(cardInHand.children[randomDiscard]);
-				} //it will be error if you use DaggerThrow as the last card in hand so w check on this
-
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDiscard();
+				this.randomCardDraw();
 
 				return;
 			}
 
 			if (card.name == 'warcry') {
-				let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
-
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDraw();
 
 				return;
 			}
 
 			if (card.name == 'survivor') {
-				let randomDiscard = Math.floor(Math.random() * cardInHand.children.length);
-
-				if (cardInHand.children.length > 0) {
-					cardInHand.removeChild(cardInHand.children[randomDiscard]);
-				} //it will be error if you use any discard card as the last card in hand so check on this
+				this.randomCardDiscard();
 
 				gameModel.activePlayer.defendPoints += card.effect;
 			}
 
 			if (card.name == 'bloodletting') {
-				let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
-
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDraw();
 
 				gameModel.activePlayer.healthPoints -= card.cost;
 
@@ -333,97 +316,33 @@
 			}
 
 			if (card.name == 'expertise') {
-				let tempIndex = [];
-
-				//делаем проверку чтобы карты в руке не повторялись
-				for (let i = 0; i < card.effect - cardInHand.children.length; i++) {                  // количество карт в руку
-					let n = Math.floor(Math.random() * 8);            // количество набранных карт
-					if (tempIndex.indexOf(n) === -1) {
-						tempIndex.push(n);
-					} else {
-						i--;
-					}
-				}
-
-				if (gameModel.playerOneTurn) {
-					for (let i = 0; i < tempIndex.length; i++) {
-						gameModel.createCardsInHand(gameModel.playerOnePullOfCards[tempIndex[i]]);
-					}
-				} else {
-					for (let i = 0; i < tempIndex.length; i++) {
-						gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[tempIndex[i]]);
-					}
-				}
+				this.massiveRandomDraw(card, boardModel.cardInHand.children.length)
 			}
 
 			if (card.name == 'alpha') {
-				let tempIndex = [];
 
 				// убираем лишние карты из руки
-				for (let i = 0; i < cardInHand.children.length; i++) {
-					if (cardInHand.children[i].classList.contains('cards-to-play')) {
-						cardInHand.removeChild(cardInHand.children[i]);
+				for (let i = 0; i < boardModel.cardInHand.children.length; i++) {
+					if (boardModel.cardInHand.children[i].classList.contains('cards-to-play')) {
+						this.randomCardDiscard(boardModel.cardInHand.children[i]);
 						i--;
 					}
 				}
 
-				//делаем проверку чтобы карты в руке не повторялись
-				for (let i = 0; i < card.effect; i++) {                  // количество карт в руку
-					let n = Math.floor(Math.random() * 8);            // количество набранных карт
-					if (tempIndex.indexOf(n) === -1) {
-						tempIndex.push(n);
-					} else {
-						i--;
-					}
-				}
-
-				if (gameModel.playerOneTurn) {
-					for (let i = 0; i < tempIndex.length; i++) {
-						gameModel.createCardsInHand(gameModel.playerOnePullOfCards[tempIndex[i]]);
-					}
-				} else {
-					for (let i = 0; i < tempIndex.length; i++) {
-						gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[tempIndex[i]]);
-					}
-				}
+				this.massiveRandomDraw(card, 0)
 			}
 
 			if (card.name == 'backFlip') {
 				let sideEffect = card.sideEffect();
 				gameModel.activePlayer.defendPoints += sideEffect;
 
-				let tempIndex = [];
-
-				//делаем проверку чтобы карты в руке не повторялись
-				for (let i = 0; i < card.effect; i++) {                  // количество карт в руку
-					let n = Math.floor(Math.random() * 8);            // количество набранных карт
-					if (tempIndex.indexOf(n) === -1) {
-						tempIndex.push(n);
-					} else {
-						i--;
-					}
-				}
-
-				if (gameModel.playerOneTurn) {
-					for (let i = 0; i < tempIndex.length; i++) {
-						gameModel.createCardsInHand(gameModel.playerOnePullOfCards[tempIndex[i]]);
-					}
-				} else {
-					for (let i = 0; i < tempIndex.length; i++) {
-						gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[tempIndex[i]]);
-					}
-				}
+				this.massiveRandomDraw(card, 0)
 			}
 
 			if (card.name == 'thirdEye') {
-				let randomCardDraw = Math.floor(Math.random() * gameModel.playerOnePullOfCards.length);
 				gameModel.activePlayer.defendPoints += card.effect;
 
-				if (gameModel.playerOneTurn) {
-					gameModel.createCardsInHand(gameModel.playerOnePullOfCards[randomCardDraw]);
-				} else {
-					gameModel.createCardsInHand(gameModel.playerTwoPullOfCards[randomCardDraw]);
-				}
+				this.randomCardDraw();
 			}
 
 			gameModel.activePlayer.staminaPoints -= card.cost;

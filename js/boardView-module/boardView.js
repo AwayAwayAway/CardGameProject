@@ -1,6 +1,5 @@
 {
 	function BoardView(board, game, selector) {
-
 		const boardModel = board;
 		const gameModel = game;
 		const boardSelector = selector;
@@ -33,6 +32,9 @@
 
 		this.endTurn = new Events();
 
+		this.showPlayerDeck = new Events();
+		this.deckPlayer2 = new Events();
+
 		// подписываемся на событие в модели
 		// boardModel создала карты надо их отобразить
 		boardModel.onCreateCards.attach((card, place) => this.drawCards(card, place));
@@ -55,9 +57,6 @@
 		// событие на отображение моделек персонажей
 		gameModel.updatePlayersModels.attach((modelPlayer1, modelPlayer2) => this.playerModelsUpdate(modelPlayer1, modelPlayer2));
 
-		//preventDefault
-		gameModel.updatePlayersModels.attach((modelPlayer1, modelPlayer2) => this.playerModelsUpdate(modelPlayer1, modelPlayer2));
-
 		// удаление сыгранной карты
 		boardModel.removeActionCard.attach((card) => this.deleteActionCard(card));
 
@@ -67,6 +66,10 @@
 
 		// событие клик подстветка выбора карт
 		boardModel.decWrapper.addEventListener('click', (event) => this.onAnimCards.notify(event.target));
+
+		// показываем карты какие наюрал игрок на этапе выбора
+		boardModel.battleField.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target))
+		boardModel.playersDeckClose.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target))
 
 		// анимация карт в руке при наведении
 		boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify( event.target, 'focus' ))
@@ -86,8 +89,6 @@
 
 		boardModel.endTurn.addEventListener('click', () => this.endTurn.notify() )
 
-
-
 		// need for start render cards when page is loaded
 		this.init = function () {
 			this.onLoadCreate.notify();
@@ -100,6 +101,9 @@
 					break;
 				case 'hand':
 					boardModel.cardInHand.appendChild(card);
+					break;
+				case 'overlay':
+					boardModel.playersDeck.appendChild(card);
 					break;
 			}
 
@@ -118,6 +122,12 @@
 			if (place == 'hand' && cards.length > 0) {
 				for (let i = 0; i < cards.length; i++) {
 					boardModel.cardInHand.removeChild(cards[i]);
+				}
+			}
+
+			if (place == 'overlay' && cards.length > 0) {
+				for (let i = 0; i < cards.length; i++) {
+					boardModel.playersDeck.removeChild(cards[i]);
 				}
 			}
 		}
@@ -182,8 +192,5 @@
 					console.log('models not found');
 			}
 		}
-
-
-
 	}
 }

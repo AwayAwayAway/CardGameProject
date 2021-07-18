@@ -8,14 +8,14 @@
 	const rogue = document.querySelector('.rogue');             // choose rogue button
 	const mage = document.querySelector('.mage');               // choose mage button
 
-	const charactersData = document.querySelector('.description')   // dedescription of each characther text
+	const charactersData = document.querySelector('.description');   // dedescription of each characther text
 	const inputMenu = document.querySelector('.decision');        // div with input and submit button
 	const enterName = document.querySelector('.enterName');       // input for nickname
 	const applyChoose = document.querySelector('.decision-btn');  // submit button for input
 
 	const announcer = document.querySelector('.playerChoose');    // announcement which player choose now
 
-// check on sound on/off icon
+	// check on sound on/off icon
 	if (audioC.paused) {
 		soundOffOnC.className = 'fas fa-volume-mute soundIcon';
 	} else {
@@ -24,7 +24,7 @@
 
 	enterName.placeholder = 'Enter your nickname';
 
-//save all info about what players chose and  functions with how to choose
+	//save all info about what players chose and  functions with how to choose
 	let playersChoice = {
 		playerOneTurn: true,
 		playerTwoTurn: false,
@@ -39,7 +39,7 @@
 		playersChooseCharacter() {
 			//check if input is empty
 			if (enterName.value.length < 1 || enterName.value == 'You forgot enter name') {
-				return
+				return;
 			}
 
 			// help myself with 'data' attribute to set which character player choose
@@ -57,7 +57,7 @@
 			} else {
 				this.playerTwoClass = temp[0].dataset.class;
 				announcer.textContent = 'Players chose their characters';
-				enterName.value = ''
+				enterName.value = '';
 			}
 
 			this.playerOneTurn = false;
@@ -76,7 +76,7 @@
 				localStorage.setItem('playersInfo', JSON.stringify(playersChoice));
 
 				setTimeout(function () {
-					document.querySelector('.startGame').classList.add('visible')
+					document.querySelector('.startGame').classList.add('visible');
 				}, 500);
 			} else {
 				return;
@@ -87,7 +87,7 @@
 		playersChooseName() {
 			// alert if input is empty
 			if (enterName.value.length < 1) {
-				allertEmptyName()
+				allertEmptyName();
 			}
 
 			if (this.playerOneTurn && enterName.value.length > 0 && enterName.value !== 'You forgot enter name') {
@@ -96,7 +96,7 @@
 				this.playerTwoName = enterName.value;
 			}
 		}
-	}
+	};
 
 	const characterDescription = [
 		{
@@ -114,74 +114,74 @@
 			profile: 'A blind ascetic who has come to "Evaluate" the Spire. Master of the divine Stances',
 			pross: 'Massive magic  can destroy the enemy in a matter of seconds'
 		}
-	]
+	];
 
-//backgorund change
+	//backgorund change
 	warrior.addEventListener('click', () => {
 		removeStyles();
 		warrior.classList.add('in-focus');
 		setCharacterDescription('warrior');
 
-		wrapper.style.backgroundImage = "url('css/images/backgrounds/warrior.jpg')"
-	})
+		wrapper.style.backgroundImage = 'url(\'css/images/backgrounds/warrior.jpg\')';
+	});
 
 	rogue.addEventListener('click', () => {
 		removeStyles();
 		rogue.classList.add('in-focus');
 		setCharacterDescription('rogue');
 
-		wrapper.style.backgroundImage = "url('css/images/backgrounds/rogue.jpg')";
-	})
+		wrapper.style.backgroundImage = 'url(\'css/images/backgrounds/rogue.jpg\')';
+	});
 
 	mage.addEventListener('click', () => {
 		removeStyles();
 		mage.classList.add('in-focus');
 		setCharacterDescription('mage');
 
-		wrapper.style.backgroundImage = "url('css/images/backgrounds/mage.jpg')"
-	})
+		wrapper.style.backgroundImage = 'url(\'css/images/backgrounds/mage.jpg\')';
+	});
 
-//run function to choose character or  alert empty input name
-	applyChoose.addEventListener('click', checkPlayersChoose)
+	//run function to choose character or  alert empty input name
+	applyChoose.addEventListener('click', checkPlayersChoose);
 
-//remove anim
+	//remove anim
 	applyChoose.addEventListener('click', removeStyles);
 
-// sound and shake animation when character selected
+	// sound and shake animation when character selected
 	options.addEventListener('click', startVisualAndSoundEffect);
 
 	soundOffOnC.addEventListener('click', stopPlayBackgroundMusic);
 
-// run function to choose character and save nickname or  alert empty input name
+	// run function to choose character and save nickname or  alert empty input name
 	function checkPlayersChoose() {
 		playersChoice.playersChooseName();
 		playersChoice.playersChooseCharacter();
 	}
 
-// alert for empty input
+	// alert for empty input
 	function allertEmptyName() {
-		enterName.value = 'You forgot enter name'
+		enterName.value = 'You forgot enter name';
 		enterName.style.color = 'red';
 		enterName.style.fontSize = '2rem';
 
 		setTimeout(setEmptyInput, 1000);
 	}
 
-// set back font color, size and empty input after alert
+	// set back font color, size and empty input after alert
 	function setEmptyInput() {
-		enterName.value = ''
+		enterName.value = '';
 		enterName.style.color = 'black';
 		enterName.style.fontSize = '2rem';
 	}
 
-// remove styles 'in-focus' on character's button
+	// remove styles 'in-focus' on character's button
 	function removeStyles() {
 		[...options.children].forEach((child) => {
-			child.classList.remove('in-focus')
+			child.classList.remove('in-focus');
 		});
 	}
 
-// function trigger audio and shake animation
+	// function trigger audio and shake animation
 	function startVisualAndSoundEffect(e) {
 		if (e.target.classList.contains('warrior')) {
 			shakeAnimation();
@@ -197,7 +197,7 @@
 		}
 	}
 
-// audio effect when character choosed
+	// audio effect when character choosed
 	function playAudioCharacterSelected(character) {
 		let warriorSelected = document.querySelector('.warrior-selected');
 		let rogueSelected = document.querySelector('.rogue-selected');
@@ -216,20 +216,20 @@
 		}
 	}
 
-// shake display when character choosed
+	// shake display when character choosed
 	function shakeAnimation() {
 		// run immedeatly
 		setTimeout(() => {
-			wrapper.classList.add('shake')
+			wrapper.classList.add('shake');
 		}, 0);
 
 		//remove class cuz we want run animation again and use delay we need animation runs and ends
 		setTimeout(() => {
-			wrapper.classList.remove('shake')
+			wrapper.classList.remove('shake');
 		}, 400);
 	}
 
-// pause backgorundMusic
+	// pause backgorundMusic
 	function stopPlayBackgroundMusic() {
 		if (!audioC.paused) {
 			audioC.pause();
@@ -240,7 +240,7 @@
 		}
 	}
 
-// set text to describe each character
+	// set text to describe each character
 	function setCharacterDescription(character) {
 		const title = document.querySelector('.description-title');
 		const profile = document.querySelector('.description-profile');
