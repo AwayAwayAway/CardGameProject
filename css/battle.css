@@ -63,10 +63,10 @@
 
 .card-in-hand-field {
   position: absolute;
+  width: 100vw;
   bottom: 1%;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
+  justify-content: center;
 }
 
 .cards-to-play {
@@ -140,7 +140,7 @@
 .player-2 {
   position: relative;
   top: 34%;
-  left: 15%;
+  left: -8%;
   width: 500px;
   height: 500px;
 }
@@ -310,32 +310,49 @@
   z-index: 100;
 }
 
-.end-of-turn-btn {
+.players-action {
+  height: 10rem;
+  width: 100%;
+  color: white;
   position: absolute;
   left: 0;
-  top: 0;
-  height: 30px;
-  width: 100px;
-  padding-bottom: 1rem;
-  z-index: 100;
-  color: #cccccc;
-  cursor: pointer;
+  top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.end-of-turn-btn {
+position: absolute;
+display: flex;
+left: 5%;
+top: 30%;
+height: 100px;
+width: 100px;
+z-index: 100;
+color: white;
+cursor: pointer;
+font-size: 1.5rem;
+border-radius: 50%;
+border: 5px solid white;
+text-align: center;
+align-items: center;
 }
 
 .hold {
-  cursor: grabbing;
+cursor: grabbing;
 }
 
 .invinsible {
-  opacity: 0;
+opacity: 0;
 }
 
 [draggable = true] {
-  cursor: grab;
+cursor: grab;
 }
 
 .hidden {
-  visibility: hidden;
+visibility: hidden;
 }
 
 /* End игровое поле */

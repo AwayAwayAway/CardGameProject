@@ -39,7 +39,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/btn-hover.ogg",
-    "class": "btn-hover",
+    "class": "btn-hover-audio",
     "content": null
   },
   {
@@ -47,7 +47,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/btn-click.ogg",
-    "class": "btn-click",
+    "class": "btn-click-audio",
     "content": null
   },
   {

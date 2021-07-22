@@ -2,20 +2,50 @@ let gameConstructor = {};
 
 document.addEventListener('DOMContentLoaded', gameConstructorInit);
 
-// load page on click
+// change hash
 document.addEventListener('click', (event) => gameNavigator(event));
+
+window.addEventListener('hashchange', renderPage);
+
+function renderPage() {
+	const hash = window.location.hash;
+	const state = decodeURIComponent(hash.substr(1));
+
+	switch (state) {
+		case '':
+			loading('mainMenuLoad');
+			document.title = 'Main menu'
+			createMainMenu(gameConstructor.mainMenu);
+			break;
+		case 'choose-menu':
+			loading('chooseMenuLoad');
+			setTimeout(() => createMainMenu(gameConstructor.chooseMenu), 500);
+			break;
+		case 'main-menu':
+			loading('mainMenuLoad');
+			setTimeout(() => createMainMenu(gameConstructor.mainMenu), 500);
+			break;
+		case 'battle-field':
+			loading('battleFieldLoad');
+			setTimeout(() => createMainMenu(gameConstructor.battle), 500);
+			break;
+	}
+}
 
 function gameNavigator(event) {
 	if (event.target.classList.contains('startButton')) {
-		createMainMenu(gameConstructor.chooseMenu);
+		document.title = 'Choose menu'
+		location.hash = decodeURIComponent('choose-menu');
 	}
 
 	if (event.target.classList.contains('back-to-main-menu')) {
-		createMainMenu(gameConstructor.mainMenu);
+		document.title = 'Main menu'
+		location.hash = decodeURIComponent('main-menu');
 	}
 
 	if (event.target.classList.contains('startGame')) {
-		createMainMenu(gameConstructor.battle);
+		document.title = 'Battlefield'
+		location.hash = decodeURIComponent('battle-field');
 	}
 }
 
@@ -63,7 +93,7 @@ function saveChooseMenu(data) {
 function saveBattle(data) {
 	gameConstructor.battle = data;
 
-	createMainMenu(gameConstructor.mainMenu);
+	renderPage();
 }
 
 function errorHandler(jqXHR, statusStr, errorStr) {
@@ -107,6 +137,8 @@ function createMainMenu(object) {
 			}
 		}
 	}
+
+	// body.appendChild(parent);
 }
 
 function createElement(obj) {

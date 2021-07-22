@@ -1,6 +1,6 @@
 {
 	const wrapper = document.querySelector('.wrapper-choose-menu');
-	const soundOffOnC = document.querySelector('.soundIcon');
+	const soundOffOn = document.querySelector('.soundIcon');
 	const audioC = document.querySelector('.background-music');
 
 	const options = document.querySelector('.options');         // div with characters buttons
@@ -14,12 +14,14 @@
 	const applyChoose = document.querySelector('.decision-btn');  // submit button for input
 
 	const announcer = document.querySelector('.playerChoose');    // announcement which player choose now
+	const backToMain = document.querySelector('.back-to-main-menu');    // announcement which player choose now
+	const startGameBtn = document.querySelector('.startGame');    // announcement which player choose now
 
 	// check on sound on/off icon
 	if (audioC.paused) {
-		soundOffOnC.className = 'fas fa-volume-mute soundIcon';
+		soundOffOn.className = 'fas fa-volume-mute soundIcon';
 	} else {
-		soundOffOnC.className = 'fas fa-volume-up soundIcon';
+		soundOffOn.className = 'fas fa-volume-up soundIcon';
 	}
 
 	enterName.placeholder = 'Enter your nickname';
@@ -150,7 +152,24 @@
 	// sound and shake animation when character selected
 	options.addEventListener('click', startVisualAndSoundEffect);
 
-	soundOffOnC.addEventListener('click', stopPlayBackgroundMusic);
+	soundOffOn.addEventListener('click', playBackgroundMusic);
+
+	[...options.children].forEach((hover) => {
+		hover.addEventListener('mouseover', playBtnHover);
+	});
+
+	applyChoose.addEventListener('mouseover', playBtnHover);
+	applyChoose.addEventListener('click', playBtnClicked);
+
+	backToMain.addEventListener('mouseover', playBtnHover);
+	backToMain.addEventListener('click', playBtnClicked);
+
+	backToMain.addEventListener('mouseover', playBtnHover);
+	backToMain.addEventListener('click', playBtnClicked);
+
+	startGameBtn.addEventListener('mouseover', playBtnHover);
+	startGameBtn.addEventListener('click', playBtnClicked);
+
 
 	// run function to choose character and save nickname or  alert empty input name
 	function checkPlayersChoose() {
@@ -233,10 +252,10 @@
 	function stopPlayBackgroundMusic() {
 		if (!audioC.paused) {
 			audioC.pause();
-			soundOffOnC.className = 'fas fa-volume-mute soundIcon';
+			soundOffOn.className = 'fas fa-volume-mute soundIcon';
 		} else {
 			audioC.play();
-			soundOffOnC.className = 'fas fa-volume-up soundIcon';
+			soundOffOn.className = 'fas fa-volume-up soundIcon';
 		}
 	}
 
