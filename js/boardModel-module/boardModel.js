@@ -8,6 +8,7 @@
 		this.cardInHand = document.querySelector('.card-in-hand-field');              // field for cards in hand each player
 		this.battleField = document.querySelector('.battle-field');            // play field
 		this.endTurn = document.querySelector('.end-of-turn-btn');             // end turn button
+		this.playersTurnInfo = document.querySelector('.players-action')
 		this.cardsPlayField = document.querySelector('.play-field');           // area for cards to drop and play their actions
 
 		this.playersOverlay = document.querySelector('.players-overlay');
@@ -229,6 +230,20 @@
 
 		this.dragPreventAction = function (event) {
 			event.preventDefault();
+		}
+
+		this.showWhichTurn = function () {
+			if(gameModel.playerOneTurn) {
+				this.playersTurnInfo.textContent = `${gameModel.playersInfo.playerOneName}'s Turn`;
+				this.playersTurnInfo.classList.add('players-turn-info');
+
+				setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 3100);
+			} else {
+				this.playersTurnInfo.textContent = `${gameModel.playersInfo.playerTwoName}'s Turn`;
+
+				this.playersTurnInfo.classList.add('players-turn-info');
+				setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 3100)
+			}
 		}
 	}
 }

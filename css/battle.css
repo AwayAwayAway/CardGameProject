@@ -312,47 +312,48 @@
 
 .players-action {
   height: 10rem;
-  width: 100%;
   color: white;
   position: absolute;
-  left: 0;
+  left: 50%;
+  transform: translateX(-50%);
   top: 5%;
+  z-index: 1500;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .end-of-turn-btn {
-position: absolute;
-display: flex;
-left: 5%;
-top: 30%;
-height: 100px;
-width: 100px;
-z-index: 100;
-color: white;
-cursor: pointer;
-font-size: 1.5rem;
-border-radius: 50%;
-border: 5px solid white;
-text-align: center;
-align-items: center;
+  position: absolute;
+  display: flex;
+  left: 5%;
+  top: 30%;
+  height: 100px;
+  width: 100px;
+  z-index: 100;
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border: 5px solid white;
+  text-align: center;
+  align-items: center;
 }
 
 .hold {
-cursor: grabbing;
+  cursor: grabbing;
 }
 
 .invinsible {
-opacity: 0;
+  opacity: 0;
 }
 
 [draggable = true] {
-cursor: grab;
+  cursor: grab;
 }
 
 .hidden {
-visibility: hidden;
+  visibility: hidden;
 }
 
 /* End игровое поле */

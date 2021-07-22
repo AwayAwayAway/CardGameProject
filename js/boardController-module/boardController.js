@@ -37,6 +37,7 @@
 
 		if (boardView.hasOwnProperty('endTurn')) {
 			boardView.endTurn.attach(() => this.createCardsInHand());
+			boardView.endTurn.attach(() => this.setPlayersTurnInfo());
 		}
 
 
@@ -53,6 +54,7 @@
 
 		if (gameModel.hasOwnProperty('selectionEnd')) {
 			gameModel.selectionEnd.attach( () => this.createCardsInHand());
+			gameModel.selectionEnd.attach( () => this.setPlayersTurnInfo());
 		}
 
 		if (player1.hasOwnProperty('cardDraw')) {
@@ -133,6 +135,10 @@
 				boardModel.openCloseOverlay('close');
 			}
 
+		}
+
+		this.setPlayersTurnInfo = function () {
+			boardModel.showWhichTurn()
 		}
 	}
 }

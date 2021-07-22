@@ -31,6 +31,10 @@
   animation: loadingBottom 1s ease-in-out forwards;
 }
 
+.players-turn-info {
+  animation: turn-info-animate 3s ease-in-out forwards;
+}
+
 @keyframes loadingLeftRight {
   0% {
     width: 0;
@@ -58,5 +62,37 @@
   }
   100% {
     height: 0;
+  }
+}
+
+@keyframes turn-info-animate {
+  0% {
+    top: 30%;
+    width: 100%;
+    text-align:center;
+    background: #16dcef;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+  50% {
+    top: 30%;
+    width: 100%;
+    background: #16dcef;
+    text-align:center;
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+  }
+  99% {
+    width: 100%;
+    text-align:center;
+  }
+  100% {
+    top: 5%;
+    background: none;
+    border: none;
   }
 }
