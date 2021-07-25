@@ -3,7 +3,7 @@
     "id": 0,
     "role": "parent",
     "tagName": "div",
-    "class": "wrapper-battle",
+    "class": "wrapper-battle wrapper",
     "content": null
   },
   {
@@ -288,9 +288,9 @@
   },
   {
     "id": 38,
-    "role": "parent",
+    "role": "script",
     "tagName": "script",
-    "class": "cardsObject",
+    "class": "script",
     "source": "dist/main.bundle.js",
     "content": null
   }

@@ -22,7 +22,7 @@ const playerController = new PlayersController(player1, boardView);
 
 const boardController = new BoardController(gameObserver, boardModel, player1, player2, boardView);
 
-gameObserver.init(boardView);
+// gameObserver.init(boardView);
 
 player1.init();
 player2.init();

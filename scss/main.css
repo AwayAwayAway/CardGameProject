@@ -917,7 +917,8 @@ textarea {
 
 .card-in-hand-field {
   position: absolute;
-  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 1%;
   display: flex;
   justify-content: center;

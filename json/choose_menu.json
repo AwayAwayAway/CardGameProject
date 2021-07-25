@@ -3,7 +3,7 @@
     "id": 0,
     "role": "parent",
     "tagName": "div",
-    "class": "wrapper-choose-menu",
+    "class": "wrapper-choose-menu wrapper",
     "content": null
   },
   {
@@ -159,9 +159,9 @@
   },
   {
     "id": 18,
-    "role": "parent",
+    "role": "script",
     "tagName": "script",
-    "class": "chooseMenuJs",
+    "class": "script",
     "source": "js/game_navigation/choose_menu.js",
     "content": null
   }

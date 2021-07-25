@@ -34,11 +34,11 @@ export default class Board {
 
 			if (gameModel.playerOneTurn) {
 				for (let i = 0; i < skillCollection[playerClassInfo.playerOneClass].length; i++) {
-					this.createCards(skillCollection[playerClassInfo.playerOneClass][i]);
+					setTimeout(() => this.createCards(skillCollection[playerClassInfo.playerOneClass][i]), 500) ;
 				}
 			} else {
 				for (let i = 0; i < skillCollection[playerClassInfo.playerTwoClass].length; i++) {
-					this.createCards(skillCollection[playerClassInfo.playerTwoClass][i]);
+					setTimeout( () => this.createCards(skillCollection[playerClassInfo.playerTwoClass][i]), 500) ;
 				}
 			}
 		}

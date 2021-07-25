@@ -13,20 +13,20 @@ function renderPage() {
 
 	switch (state) {
 		case '':
-			// loading('mainMenuLoad');
-			document.title = 'Main menu'
+			loading('mainMenuLoad');
+			document.title = 'Main menu';
 			createMainMenu(gameConstructor.mainMenu);
 			break;
 		case 'choose-menu':
-			// loading('chooseMenuLoad');
+			loading('chooseMenuLoad');
 			setTimeout(() => createMainMenu(gameConstructor.chooseMenu), 500);
 			break;
 		case 'main-menu':
-			// loading('mainMenuLoad');
+			loading('mainMenuLoad');
 			setTimeout(() => createMainMenu(gameConstructor.mainMenu), 500);
 			break;
 		case 'battle-field':
-			// loading('battleFieldLoad');
+			loading('battleFieldLoad');
 			setTimeout(() => createMainMenu(gameConstructor.battle), 500);
 			break;
 	}
@@ -34,17 +34,17 @@ function renderPage() {
 
 function gameNavigator(event) {
 	if (event.target.classList.contains('startButton')) {
-		document.title = 'Choose menu'
+		document.title = 'Choose menu';
 		location.hash = decodeURIComponent('choose-menu');
 	}
 
 	if (event.target.classList.contains('back-to-main-menu')) {
-		document.title = 'Main menu'
+		document.title = 'Main menu';
 		location.hash = decodeURIComponent('main-menu');
 	}
 
 	if (event.target.classList.contains('startGame')) {
-		document.title = 'Battlefield'
+		document.title = 'Battlefield';
 		location.hash = decodeURIComponent('battle-field');
 	}
 }
@@ -103,20 +103,22 @@ function errorHandler(jqXHR, statusStr, errorStr) {
 // create page from JSON functions
 function createMainMenu(object) {
 	const body = document.querySelector('body');
-	body.removeChild(body.lastChild);
-	body.removeChild(body.lastChild);
+	const wrapperEl = document.querySelector('.wrapper');
+	const scriptEl = document.querySelector('.script');
+
 	let parent;
 	let mainChild;
 	let child;
 	let subChild;
 	let lowestChild;
+	let script;
 
 	for (let i = 0; i < object.length; i++) {
 		for (let key in object[i]) {
 			switch (object[i][key]) {
 				case 'parent':
 					parent = createElement(object[i]);
-					body.appendChild(parent);
+					// body.appendChild(parent);
 					break;
 				case 'mainChild':
 					mainChild = createElement(object[i]);
@@ -134,11 +136,24 @@ function createMainMenu(object) {
 					lowestChild = createElement(object[i]);
 					subChild.appendChild(lowestChild);
 					break;
+				case 'script':
+					script = createElement(object[i]);
+					break;
 			}
 		}
 	}
 
-	// body.appendChild(parent);
+	if (wrapperEl) {
+		body.replaceChild(parent, wrapperEl);
+	} else {
+		body.appendChild(parent);
+	}
+
+	if (scriptEl) {
+		body.replaceChild(script, scriptEl);
+	} else {
+		body.appendChild(script);
+	}
 }
 
 function createElement(obj) {

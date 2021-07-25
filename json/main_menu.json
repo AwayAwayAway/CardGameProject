@@ -3,7 +3,7 @@
     "id": 0,
     "role": "parent",
     "tagName": "div",
-    "class": "wrapper-main-menu",
+    "class": "wrapper-main-menu wrapper",
     "content": null
   },
   {
@@ -52,9 +52,9 @@
   },
   {
     "id": 8,
-    "role": "parent",
+    "role": "script",
     "tagName": "script",
-    "class": "mainMenuJs",
+    "class": "script",
     "source": "js/game_navigation/main_menu.js",
     "content": null
    }
