@@ -1,0 +1,107 @@
+.wrapper-battle {
+  height: 100vh;
+  background: url("../images/backgrounds/battlefield.jpg") center/cover no-repeat;
+}
+
+/* Start Счетчик набранных карт */
+.card-counter {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  padding-top: 2rem;
+  color: white;
+}
+
+.count {
+  margin-right: 1.1rem;
+}
+
+.accept {
+  display: block;
+  border-radius: 20px;
+  background: linear-gradient(#4992dc, #16dcef);
+  height: 50px;
+  width: 200px;
+  font-size: 2rem;
+  color: white;
+  padding-bottom: 1rem;
+  margin: 1.5rem auto;
+  cursor: pointer;
+}
+
+/* End Счетчик набранных карт и Alert если выбранно слишком много */
+
+
+
+
+
+
+/* Start игровое поле */
+.battle-field {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.play-field {
+  width: 43%;
+  height: 30%;
+  position: relative;
+  top: 36%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+.players-action {
+  height: 10rem;
+  color: white;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 5%;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.end-of-turn-btn {
+  position: absolute;
+  display: flex;
+  left: 5%;
+  top: 30%;
+  height: 100px;
+  width: 100px;
+  z-index: 100;
+  color: white;
+  cursor: pointer;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border: 5px solid white;
+  text-align: center;
+  align-items: center;
+}
+
+.hold {
+  cursor: grabbing;
+}
+
+.invinsible {
+  opacity: 0;
+}
+
+[draggable = true] {
+  cursor: grab;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+/* End игровое поле */

@@ -1,0 +1,62 @@
+[
+  {
+    "id": 0,
+    "role": "parent",
+    "tagName": "div",
+    "class": "wrapper-main-menu",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
+    "tagName": "div",
+    "class": "main-menu",
+    "content": null
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "div",
+    "class": "startButton",
+    "content": "Start battle"
+  },
+  {
+    "id": 3,
+    "role": "child",
+    "tagName": "div",
+    "class": "aboutButton",
+    "content": "About game"
+  },
+  {
+    "id": 4,
+    "role": "mainChild",
+    "tagName": "i",
+    "class": "fas fa-volume-up soundIcon",
+    "content": null
+  },
+  {
+    "id": 6,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/btn-hover.ogg",
+    "class": "btn-hover-audio",
+    "content": null
+  },
+  {
+    "id": 7,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/btn-click.ogg",
+    "class": "btn-click-audio",
+    "content": null
+  },
+  {
+    "id": 8,
+    "role": "parent",
+    "tagName": "script",
+    "class": "mainMenuJs",
+    "source": "js/game_navigation/main_menu.js",
+    "content": null
+   }
+]
+

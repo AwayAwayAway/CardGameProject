@@ -1,0 +1,32 @@
+.wrapper-main-menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: url("../images/backgrounds/main-menu.jpg") center/cover no-repeat;
+}
+
+.main-menu {
+  border: 3px solid black;
+  border-radius: 20px;
+  color: black;
+}
+
+.startButton,
+.aboutButton {
+  padding: 3rem;
+  transition: color .3s linear;
+}
+.startButton:hover,
+.aboutButton:hover {
+  color: cyan;
+  cursor: pointer;
+}
+
+.soundIcon {
+  position: absolute;
+  top: 5%;
+  left: 84%;
+  color: #d4b7b7;
+  cursor: pointer;
+}
