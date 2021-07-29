@@ -3,7 +3,7 @@ let gameConstructor = {};
 document.addEventListener('DOMContentLoaded', gameConstructorInit);
 
 // change hash
-document.addEventListener('click', (event) => gameNavigator(event));
+document.addEventListener('click', (event) => switchHash(event));
 
 window.addEventListener('hashchange', renderPage);
 
@@ -15,37 +15,37 @@ function renderPage() {
 		case '':
 			loading('mainMenuLoad');
 			document.title = 'Main menu';
-			createMainMenu(gameConstructor.mainMenu);
+			setTimeout(() => createMainPage(gameConstructor.mainMenu), 500)
 			break;
 		case 'choose-menu':
 			loading('chooseMenuLoad');
-			setTimeout(() => createMainMenu(gameConstructor.chooseMenu), 500);
+			setTimeout(() => createMainPage(gameConstructor.chooseMenu), 500);
 			break;
 		case 'main-menu':
 			loading('mainMenuLoad');
-			setTimeout(() => createMainMenu(gameConstructor.mainMenu), 500);
+			setTimeout(() => createMainPage(gameConstructor.mainMenu), 500);
 			break;
 		case 'battle-field':
 			loading('battleFieldLoad');
-			setTimeout(() => createMainMenu(gameConstructor.battle), 500);
+			setTimeout(() => createMainPage(gameConstructor.battle), 500);
 			break;
 	}
 }
 
-function gameNavigator(event) {
-	if (event.target.classList.contains('startButton')) {
-		document.title = 'Choose menu';
-		location.hash = decodeURIComponent('choose-menu');
-	}
-
-	if (event.target.classList.contains('back-to-main-menu')) {
-		document.title = 'Main menu';
-		location.hash = decodeURIComponent('main-menu');
-	}
-
-	if (event.target.classList.contains('startGame')) {
-		document.title = 'Battlefield';
-		location.hash = decodeURIComponent('battle-field');
+function switchHash(event) {
+	switch (event.target.className.split(' ')[0]) {
+		case 'startButton':
+			document.title = 'Choose menu';
+			location.hash = decodeURIComponent('choose-menu');
+			break;
+		case 'back-to-main-menu':
+			document.title = 'Main menu';
+			location.hash = decodeURIComponent('main-menu');
+			break;
+		case 'startGame':
+			document.title = 'Battlefield';
+			location.hash = decodeURIComponent('battle-field');
+			break;
 	}
 }
 
@@ -101,7 +101,7 @@ function errorHandler(jqXHR, statusStr, errorStr) {
 }
 
 // create page from JSON functions
-function createMainMenu(object) {
+function createMainPage(object) {
 	const body = document.querySelector('body');
 	const wrapperEl = document.querySelector('.wrapper');
 	const scriptEl = document.querySelector('.script');
@@ -118,7 +118,6 @@ function createMainMenu(object) {
 			switch (object[i][key]) {
 				case 'parent':
 					parent = createElement(object[i]);
-					// body.appendChild(parent);
 					break;
 				case 'mainChild':
 					mainChild = createElement(object[i]);

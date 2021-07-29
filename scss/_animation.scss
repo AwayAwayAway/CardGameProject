@@ -35,6 +35,89 @@
   animation: turn-info-animate 3s ease-in-out forwards;
 }
 
+.shakeX {
+  animation: shakeX .3s linear forwards ;
+  animation-delay: 0s;
+}
+
+.shakeY {
+  animation: shakeY .3s linear forwards ;
+  animation-delay: 0s;
+}
+.shakeMix {
+  animation: shakeMix .3s linear forwards ;
+  animation-delay: 0s;
+}
+
+@keyframes shakeX {
+  0% {
+    transform: translateX(-10px);
+  }
+  25% {
+    transform: translateX(10px);
+  }
+  50% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes shakeY {
+  0% {
+    transform: translateY(-10px);
+  }
+  25% {
+    transform: translateY(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes shakeMix {
+  0% {
+    transform: translateY(-10px);
+  }
+  5% {
+    transform: translateX(-10px);
+  }
+  25% {
+    transform: translateY(10px);
+  }
+  30% {
+    transform: translatex(10px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  55% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateY(10px);
+  }
+  80% {
+    transform: translateY(10px);
+  }
+  99% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 @keyframes loadingLeftRight {
   0% {
     width: 0;
@@ -94,5 +177,14 @@
     top: 5%;
     background: none;
     border: none;
+  }
+}
+
+@keyframes lets-battle {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.3);
   }
 }

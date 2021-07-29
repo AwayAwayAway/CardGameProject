@@ -55,7 +55,7 @@
     "role": "script",
     "tagName": "script",
     "class": "script",
-    "source": "js/game_navigation/main_menu.js",
+    "source": "dist/mainMenu.bundle.js",
     "content": null
    }
 ]

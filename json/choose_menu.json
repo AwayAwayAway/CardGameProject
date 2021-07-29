@@ -79,7 +79,7 @@
     "id": 9,
     "role": "mainChild",
     "tagName": "div",
-    "class": "startGame",
+    "class": "startGame btn",
     "content": "Let's battle"
   },
   {
@@ -100,14 +100,14 @@
     "id": 13,
     "role": "child",
     "tagName": "button",
-    "class": "decision-btn",
+    "class": "decision-btn btn",
     "content": "Confirm"
   },
   {
     "id": 14,
     "role": "mainChild",
     "tagName": "div",
-    "class": "back-to-main-menu",
+    "class": "back-to-main-menu btn",
     "content": null
   },
   {
@@ -162,7 +162,7 @@
     "role": "script",
     "tagName": "script",
     "class": "script",
-    "source": "js/game_navigation/choose_menu.js",
+    "source": "dist/chooseMenu.bundle.js",
     "content": null
   }
 ]

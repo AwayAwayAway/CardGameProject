@@ -39,7 +39,6 @@ export default class BoardController {
 			boardView.endTurn.attach(() => this.setPlayersTurnInfo());
 		}
 
-
 		if (boardView.hasOwnProperty('showPlayerDeck')) {
 			boardView.showPlayerDeck.attach((event) => this.showPlayersDeck(event));
 		}
@@ -122,7 +121,6 @@ export default class BoardController {
 		}
 
 		this.showPlayersDeck = function(eventTarget) {
-			// this.closePlayersDeck('open');
 			boardModel.showCardsForPlayers(eventTarget);
 		}
 
@@ -133,7 +131,6 @@ export default class BoardController {
 			if (event == boardModel.playersDeckClose) {
 				boardModel.openCloseOverlay('close');
 			}
-
 		}
 
 		this.setPlayersTurnInfo = function() {
