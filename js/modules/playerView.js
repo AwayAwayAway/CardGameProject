@@ -1,37 +1,35 @@
 export default class PlayersView {
-	constructor(model1, model2, container) {
-		const modelPlayer1 = model1;
-		const modelPlayer2 = model2;
+	constructor(playerOneModel, playerTwoModel, container) {
+		this.playerOneModel = playerOneModel;
+		this.playerTwoModel = playerTwoModel;
 		const playerContainer = container;
 
-		this.player1HP = playerContainer.querySelector('.player-1__hp-bar-inner');
-		this.player1HPValue = playerContainer.querySelector('.player-1__hp-value');
-		this.player1DefenceValue = playerContainer.querySelector('.player-1__defence-value');
-		this.player1StaminaValue = playerContainer.querySelector('.player-1__stamina-value');
+		this.playerOneHPValue = playerContainer.querySelector('.player-1__hp-value');
+		this.playerOneDefenceValue = playerContainer.querySelector('.player-1__defence-value');
+		this.playerOneStaminaValue = playerContainer.querySelector('.player-1__stamina-value');
+		this.playerOneHP = playerContainer.querySelector('.player-1__hp-bar-inner');
 
-		this.player2HP = playerContainer.querySelector('.player-2__hp-bar-inner');
-		this.player2HPValue = playerContainer.querySelector('.player-2__hp-value');
-		this.player2DefenceValue = playerContainer.querySelector('.player-2__defence-value');
-		this.player2StaminaValue = playerContainer.querySelector('.player-2__stamina-value');
+		this.playerTwoHPValue = playerContainer.querySelector('.player-2__hp-value');
+		this.playerTwoDefenceValue = playerContainer.querySelector('.player-2__defence-value');
+		this.playerTwoStaminaValue = playerContainer.querySelector('.player-2__stamina-value');
+		this.playerTwoHP = playerContainer.querySelector('.player-2__hp-bar-inner');
 
-		modelPlayer1.playerViewUpdate.attach(() => this.updateViewPlayer());
-		modelPlayer2.playerViewUpdate.attach(() => this.updateViewPlayer());
+		this.playerOneModel.playerViewUpdate.attach(() => this.updateViewPlayer());
+		this.playerTwoModel.playerViewUpdate.attach(() => this.updateViewPlayer());
 
-		// устанавливаем первые параметры здоровье, защита, стамина
-		this.updateViewPlayer = function() {
-			this.player1HPValue.textContent = modelPlayer1.healthPoints;
-			this.player1DefenceValue.textContent = modelPlayer1.defendPoints;
-			this.player1StaminaValue.textContent = modelPlayer1.staminaPoints;
-			this.player1HP.style.width = modelPlayer1.healthPoints + '%';
-
-			this.player2HPValue.textContent = modelPlayer2.healthPoints;
-			this.player2DefenceValue.textContent = modelPlayer2.defendPoints;
-			this.player2StaminaValue.textContent = modelPlayer2.staminaPoints;
-			this.player2HP.style.width = modelPlayer2.healthPoints + '%';
-		};
+		this.updateViewPlayer()
 	}
 
-	// this.updateViewPlayer2 = function () {
-	//
-	// };
+	// устанавливаем первые параметры здоровье, защита, стамина
+	updateViewPlayer() {
+		this.playerOneHPValue.textContent = this.playerOneModel.healthPoints;
+		this.playerOneDefenceValue.textContent = this.playerOneModel.defendPoints;
+		this.playerOneStaminaValue.textContent = this.playerOneModel.staminaPoints;
+		this.playerOneHP.style.width = this.playerOneModel.healthPoints + '%';
+
+		this.playerTwoHPValue.textContent = this.playerTwoModel.healthPoints;
+		this.playerTwoDefenceValue.textContent = this.playerTwoModel.defendPoints;
+		this.playerTwoStaminaValue.textContent = this.playerTwoModel.staminaPoints;
+		this.playerTwoHP.style.width = this.playerTwoModel.healthPoints + '%';
+	};
 }

@@ -32,11 +32,6 @@
 
 /* End Счетчик набранных карт и Alert если выбранно слишком много */
 
-
-
-
-
-
 /* Start игровое поле */
 .battle-field {
   position: absolute;
@@ -74,7 +69,7 @@
 .end-of-turn-btn {
   position: absolute;
   display: flex;
-  left: 5%;
+  //left: 5%;
   top: 30%;
   height: 100px;
   width: 100px;

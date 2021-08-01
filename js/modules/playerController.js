@@ -1,22 +1,27 @@
 export default class PlayersController {
-	constructor(model, view) {
-		const gameModel = model;
-		const boardView = view;
+	constructor(playerOneModel, playerTwoModel, view) {
+		this.playerOneModel = playerOneModel;
+		this.playerTwoModel = playerTwoModel;
+		this.boardView = view;
 
-		if (boardView.hasOwnProperty('doCardAction')) {
-			boardView.doCardAction.attach(() => this.playCard());
+		if (this.boardView.hasOwnProperty('doCardAction')) {
+			this.boardView.doCardAction.attach(() => this.playCard());
 		}
 
-		if (boardView.hasOwnProperty('endTurn')) {
-			boardView.endTurn.attach(() => this.doEndTurn());
+		if (this.boardView.hasOwnProperty('endTurn')) {
+			this.boardView.endTurn.attach(() => this.doEndTurn());
 		}
+	}
 
-		this.playCard = function() {
-			gameModel.doAction();
+	playCard(priority) {
+		if(priority) {
+			this.playerOneModel.doAction();
+		} else {
+			this.playerTwoModel.doAction();
 		}
+	}
 
-		this.doEndTurn = function() {
-			gameModel.endTurn();
-		}
+	doEndTurn() {
+		this.playerOneModel.endTurn();
 	}
 }

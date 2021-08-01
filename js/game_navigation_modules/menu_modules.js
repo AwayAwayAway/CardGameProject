@@ -23,12 +23,9 @@ class MainMenu extends Menu {
 
 		soundOffOn.addEventListener('click', playBackgroundMusic);
 
-		[...this.mainElement.children].forEach((hover) => {
-			hover.addEventListener('mouseover', playBtnHover);
-		});
-
-		[...this.mainElement.children].forEach((click) => {
-			click.addEventListener('click', playBtnClicked);
+		[...this.mainElement.children].forEach((button) => {
+			button.addEventListener('click', playBtnClicked);
+			button.addEventListener('mouseover', playBtnHover);
 		});
 	}
 }
@@ -66,37 +63,12 @@ class ChooseMenu extends Menu {
 
 		this.init('.wrapper-choose-menu');
 
-		const {6: soundOffOn, 2: options, 0: announcer, 1: description, 4: decision, 3: startGame} = this.source;
+		const {0: announcer, 1: description, 2: options, 3: startGame, 4: decision, 6: soundOffOn} = this.source;
 
 		const {firstElementChild: enterName, lastElementChild: applyChoose} = this.source[4];
 
-		options.addEventListener('click', (event) => this.setBackground(event));
-
-		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
-
-		[...options.children].forEach((hover) => {
-			hover.addEventListener('mouseover', playBtnHover);
-		});
-
-		//run function to choose character or  alert empty input name
-		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
-
-		document.addEventListener('keypress', (event) => {
-			if (event.code === 'Enter') {
-				this.playerChooseCharacter();
-			}
-		});
-
-		soundOffOn.addEventListener('click', playBackgroundMusic);
-
-		// set audio effects hover and click
-		[...document.querySelectorAll('.btn')].forEach((button) => {
-			button.addEventListener('mouseover', playBtnHover);
-			button.addEventListener('click', playBtnClicked);
-		});
-
 		// save name and model of character of each player
-		this.playerChooseCharacter = function() {
+		this.playerChooseCharacter = function () {
 			// const announcer = document.querySelector('.playerChoose');
 			const check = enterName.value.length >= 1 && enterName.value !== 'You forgot enter name' && [...options.children].some((child) => child.classList.contains('in-focus'));
 
@@ -131,10 +103,10 @@ class ChooseMenu extends Menu {
 
 			this.removeStyles();
 			this.checkConditionToStartBattle();
-		}
+		};
 
 		// alert for empty input
-		this.allertEmptyName = function() {
+		this.allertEmptyName = function () {
 			if (enterName.value.length <= 1) {
 				shakeAnimation('.decision-btn', 'horizontal');
 
@@ -154,10 +126,10 @@ class ChooseMenu extends Menu {
 			} else {
 				shakeAnimation('.options', 'mix');
 			}
-		}
+		};
 
 		// check if both players choose character and enter nicknames, start fight
-		this.checkConditionToStartBattle = function() {
+		this.checkConditionToStartBattle = function () {
 			if (playerOneClass && playerTwoClass) {
 				const playersChoice = this.prepareToExtract();
 
@@ -171,16 +143,16 @@ class ChooseMenu extends Menu {
 					startGame.classList.add('visible');
 				}, 500);
 			}
-		}
+		};
 
-		this.removeStyles = function() {
-			[...options.children].map((child) => {
+		this.removeStyles = function () {
+			[...options.children].forEach((child) => {
 				child.classList.remove('in-focus');
 			});
-		}
+		};
 
 		// function trigger audio and shake animation
-		this.startVisualAndSoundEffect = function(event) {
+		this.startVisualAndSoundEffect = function (event) {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
 					shakeAnimation('.wrapper-choose-menu');
@@ -195,31 +167,29 @@ class ChooseMenu extends Menu {
 					playAudioCharacterSelected('mage');
 					break;
 			}
-		}
+		};
 
 		// set text to describe each character
-		this.setCharacterDescription = function(character) {
+		this.setCharacterDescription = function (character) {
+			const keys = Object.keys(characterDescription[0]);
+
 			switch (character) {
 				case 'warrior':
-					description.children[0].textContent = characterDescription[0].title;
-					description.children[1].textContent = characterDescription[0].profile;
-					description.children[2].textContent = characterDescription[0].pross;
+					[...description.children].forEach((element, index) => element.textContent = characterDescription[0][keys[index]]);
 					break;
 				case 'rogue':
-					description.children[0].textContent = characterDescription[1].title;
-					description.children[1].textContent = characterDescription[1].profile;
-					description.children[2].textContent = characterDescription[1].pross;
+					[...description.children].forEach((element, index) => element.textContent = characterDescription[1][keys[index]]);
 					break;
 				case 'mage':
-					description.children[0].textContent = characterDescription[2].title;
-					description.children[1].textContent = characterDescription[2].profile;
-					description.children[2].textContent = characterDescription[2].pross;
+					[...description.children].forEach((element, index) => element.textContent = characterDescription[2][keys[index]]);
 					break;
 			}
-		}
+		};
 
-		this.setBackground = function(event) {
-			if (event.target.className === 'options') { return }
+		this.setBackground = function (event) {
+			if (event.target.className === 'options') {
+				return;
+			}
 
 			this.removeStyles();
 
@@ -228,7 +198,7 @@ class ChooseMenu extends Menu {
 			this.setCharacterDescription(`${event.target.textContent.toLowerCase()}`);
 
 			this.mainElement.style.backgroundImage = `url(\'images/backgrounds/${event.target.textContent.toLowerCase()}.jpg\')`;
-		}
+		};
 
 		this.prepareToExtract = function () {
 			return {
@@ -236,7 +206,30 @@ class ChooseMenu extends Menu {
 				playerTwoClass,
 				playerOneName,
 				playerTwoName
+			};
+		};
+
+		options.addEventListener('click', (event) => this.setBackground(event));
+
+		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
+
+		[...options.children].forEach(hover => hover.addEventListener('mouseover', playBtnHover));
+
+		//run function to choose character or  alert empty input name
+		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
+
+		soundOffOn.addEventListener('click', playBackgroundMusic);
+
+		document.addEventListener('keypress', (event) => {
+			if (event.code === 'Enter') {
+				this.playerChooseCharacter();
 			}
-		}
+		});
+
+		[...document.querySelectorAll('.btn')].forEach((button) => {
+			button.addEventListener('mouseover', playBtnHover);
+			button.addEventListener('click', playBtnClicked);
+		});
+
 	}
 }

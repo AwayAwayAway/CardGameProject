@@ -56,7 +56,7 @@ const ironWave = new Cards(8, 'defendAndAttack', 1, 5, 'images/cards/warrior/Iro
 
 const warcry = new Cards(9, 'defendDrawDiscard', 0, 1, 'images/cards/warrior/Warcry.png', 'warcry');
 
-const bloodletting = new Cards(10, 'defendDrawDiscard', 3, 1, 'images/cards/warrior/Bloodletting.png', 'bloodletting');
+const bloodletting = new Cards(10, 'defendDrawDiscard', 0, 3, 'images/cards/warrior/Bloodletting.png', 'bloodletting');
 
 const entrench = new Cards(11, 'defendAddEffect', 2, 2, 'images/cards/warrior/Entrench.png', 'entrench', () => gameObserver.activePlayer.defendPoints * 2 - gameObserver.activePlayer.defendPoints);
 
