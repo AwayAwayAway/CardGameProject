@@ -107,7 +107,8 @@ export default class Game {
 
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
-			shakeAnimation('.accept', 'horizontal')
+			playSoundEffect('.confirm-failed');
+			shakeAnimation('.accept', 'horizontal');
 			return;
 		}
 
@@ -133,6 +134,8 @@ export default class Game {
 			}
 			this.playerTwoPullOfCards = this.checkOnSelectedCards(tempCardChoosePlayer, this.playerTwoClass);
 		}
+
+		playSoundEffect('.confirm');
 
 		//меняем очередность выбора для игроков
 		this.setTurnPriority();

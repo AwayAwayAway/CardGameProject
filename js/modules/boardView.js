@@ -62,7 +62,7 @@ export default class BoardView {
 		// удаление сыгранной карты
 		this.boardModel.removeActionCard.attach((card) => this.deleteActionCard(card));
 
-		this.boardModel.cardsCreated.attach((querySelector, amount) => this.createCardAnim(querySelector, amount));
+		// this.boardModel.cardsCreated.attach((querySelector, amount) => this.createCardAnim(querySelector, amount));
 
 		// событие клик кнопки подтверждения выбора карт разсылаем уведомление что событие сработало
 		this.boardModel.btnAccept.addEventListener('click', () => this.onDefineCards.notify());
@@ -199,22 +199,22 @@ export default class BoardView {
 		}
 	}
 
-	createCardAnim(querySelector, amount) {
-		let elementAnim = document.querySelector(querySelector);
-
-		switch (amount) {
-			case 'single':
-				for(let i = 0; i < elementAnim.length; i++) {
-					if(elementAnim.children[i].classList.contains('cardsDrawAnim')) {
-						continue;
-					} else {
-						elementAnim.children[i].classList.add('cardsDrawAnim')
-					}
-				}
-				break;
-			case 'multiple':
-				[...elementAnim.children].forEach((element, index) => setTimeout(() => element.classList.add('cardsDrawAnim'), 300 * index));
-				break;
-		}
-	}
+	// createCardAnim(querySelector, amount) {
+	// 	let elementAnim = document.querySelector(querySelector);
+	//
+	// 	switch (amount) {
+	// 		case 'single':
+	// 			for(let i = 0; i < elementAnim.length; i++) {
+	// 				if(elementAnim.children[i].classList.contains('cardsDrawAnim')) {
+	// 					continue;
+	// 				} else {
+	// 					elementAnim.children[i].classList.add('cardsDrawAnim')
+	// 				}
+	// 			}
+	// 			break;
+	// 		case 'multiple':
+	// 			[...elementAnim.children].forEach((element, index) => setTimeout(() => element.classList.add('cardsDrawAnim'), 300 * index));
+	// 			break;
+	// 	}
+	// }
 }

@@ -24,8 +24,8 @@ class MainMenu extends Menu {
 		soundOffOn.addEventListener('click', playBackgroundMusic);
 
 		[...this.mainElement.children].forEach((button) => {
-			button.addEventListener('click', playBtnClicked);
-			button.addEventListener('mouseover', playBtnHover);
+			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
 		});
 	}
 }
@@ -101,12 +101,15 @@ class ChooseMenu extends Menu {
 			playerOneTurn = false;
 			playerTwoTurn = true;
 
+			playSoundEffect('.confirm')
 			this.removeStyles();
 			this.checkConditionToStartBattle();
 		};
 
 		// alert for empty input
 		this.allertEmptyName = function () {
+			playSoundEffect('.confirm-failed');
+
 			if (enterName.value.length <= 1) {
 				shakeAnimation('.decision-btn', 'horizontal');
 
@@ -156,15 +159,15 @@ class ChooseMenu extends Menu {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
 					shakeAnimation('.wrapper-choose-menu');
-					playAudioCharacterSelected('warrior');
+					playSoundEffect('.warrior-selected');
 					break;
 				case 'rogue':
 					shakeAnimation('.wrapper-choose-menu');
-					playAudioCharacterSelected('rogue');
+					playSoundEffect('.rogue-selected');
 					break;
 				case 'mage':
 					shakeAnimation('.wrapper-choose-menu');
-					playAudioCharacterSelected('mage');
+					playSoundEffect('.mage-selected');
 					break;
 			}
 		};
@@ -213,7 +216,7 @@ class ChooseMenu extends Menu {
 
 		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
 
-		[...options.children].forEach(hover => hover.addEventListener('mouseover', playBtnHover));
+		[...options.children].forEach(hover => hover.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio')));
 
 		//run function to choose character or  alert empty input name
 		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
@@ -227,9 +230,8 @@ class ChooseMenu extends Menu {
 		});
 
 		[...document.querySelectorAll('.btn')].forEach((button) => {
-			button.addEventListener('mouseover', playBtnHover);
-			button.addEventListener('click', playBtnClicked);
+			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
 		});
-
 	}
 }

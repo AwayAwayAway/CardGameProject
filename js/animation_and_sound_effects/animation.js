@@ -26,16 +26,6 @@
 		}
 	}
 
-// soundsHover and click buttons
-	function playBtnClicked() {
-		const btnClick = document.querySelector('.btn-click-audio');
-		btnClick.play();
-	}
-	function playBtnHover() {
-		const btnHover = document.querySelector('.btn-hover-audio');
-		btnHover.play();
-	}
-
 	// starting play backgorundMusic
 	function playBackgroundMusic() {
 		const audio = document.querySelector('.background-music');
@@ -66,25 +56,6 @@
 		}
 	}
 
-	// audio effect when character choosed /** choose menu **/
-	function playAudioCharacterSelected(character) {
-		let warriorSelected = document.querySelector('.warrior-selected');
-		let rogueSelected = document.querySelector('.rogue-selected');
-		let mageSelected = document.querySelector('.mage-selected');
-
-		switch (character) {
-			case 'warrior':
-				warriorSelected.play();
-				break;
-			case 'rogue':
-				rogueSelected.play();
-				break;
-			case 'mage':
-				mageSelected.play();
-				break;
-		}
-	}
-
 	// shake display when character choosed
 	function shakeAnimation(queryElement, direction = 'horizontal') {
 		const element = document.querySelector(queryElement)
@@ -104,6 +75,111 @@
 				element.classList.remove('shakeMix');
 				setTimeout(() =>  element.classList.add('shakeMix'), 0);
 				setTimeout(() => element.classList.remove('shakeMix'), 400);
+				break;
+		}
+	}
+
+	function createCardAnim(querySelector, amount) {
+		let elementAnim = document.querySelector(querySelector);
+
+		switch (amount) {
+			case 'single':
+				for(let i = 0; i < [...elementAnim.children].length; i++) {
+					if(elementAnim.children[i].classList.contains('cardsDrawAnim')) {
+						continue;
+					} else {
+						elementAnim.children[i].classList.add('cardsDrawAnim');
+
+						playSoundEffect('.push-card')
+					}
+				}
+				break;
+			case 'multiple':
+				[...elementAnim.children].forEach((element, index) => setTimeout(() => {
+					element.classList.add('cardsDrawAnim');
+
+					playSoundEffect('.push-card');
+				}, 250 * index));
+				break;
+			case 'overlay':
+				[...elementAnim.children].forEach(element => element.classList.add('cardsDrawAnim') );
+		}
+	}
+
+	function endTurnAnim(side) {
+		const button = document.querySelector('.end-of-turn-btn');
+		const turnAnnouncer = document.querySelector('.players-action');
+
+		turnAnnouncer.classList.add('players-turn-info');
+
+		switch (side) {
+			case 'left':
+				setTimeout(() => {
+					button.style.removeProperty('right');
+					button.style.left = '5%';
+				}, 500);
+				break;
+			case 'right':
+				setTimeout(() => {
+					button.style.removeProperty('left');
+					button.style.right = '5%';
+				}, 500);
+				break;
+		}
+
+		setTimeout(() => button.classList.add('endTurnAnim'), 1300);
+
+		setTimeout(() => turnAnnouncer.classList.remove('players-turn-info'), 2100);
+
+		setTimeout(() => button.classList.remove('endTurnAnim'), 1000);
+	}
+
+
+	function blockAnimationEffect(querySelector) {
+		const container = document.querySelector(querySelector).parentElement;
+		const image = document.createElement('img');
+
+		image.src = '../images/icons/Icon_Block.png';
+		image.className = 'shield';
+
+		container.appendChild(image);
+
+		setTimeout(() =>  container.removeChild(image), 1000);
+	}
+
+	function attackAnimation(querySelector, className, src) {
+		const container = document.querySelector(querySelector).parentElement;
+		const image = document.createElement('img');
+
+		image.src = src;
+		image.className = className;
+
+		container.appendChild(image);
+
+		setTimeout(() =>  container.removeChild(image), 600);
+	}
+
+	function playSoundEffect(querySelector) {
+		const soundEffect = document.querySelector(querySelector);
+
+		soundEffect.currentTime = 0;
+
+		soundEffect.play();
+	}
+
+	function attackAnimationEffect(querySelector, direction) {
+		const container = document.querySelector(querySelector);
+
+		switch (direction) {
+			case 'right':
+				container.classList.add('attackRight');
+
+				setTimeout(() =>  container.classList.remove('attackRight'), 1000);
+				break;
+			case 'left':
+				container.classList.add('attackLeft');
+
+				setTimeout(() =>  container.classList.remove('attackLeft'), 1000);
 				break;
 		}
 	}

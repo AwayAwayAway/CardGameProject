@@ -1000,15 +1000,100 @@ textarea {
 }
 
 .endTurnAnim {
-  animation: rotateEndTurn 1s linear forwards;
+  animation: rotateEndTurn 0.7s linear forwards;
 }
 
 .cardsDrawAnim {
   width: 11rem;
   height: 14rem;
-  animation: drawCard 0.3s linear forwards;
+  animation: drawCard 0.2s linear forwards;
 }
 
+.shield {
+  position: absolute;
+  top: 0;
+  left: 30%;
+  width: 200px;
+  height: 200px;
+  animation: block 1s linear forwards;
+}
+
+.attack {
+  position: absolute;
+  top: -16%;
+  left: -6%;
+  width: 550px;
+  height: 650px;
+  animation: attack 0.5s linear forwards;
+}
+
+.attackRight {
+  animation: attackRight 0.5s ease-in-out forwards;
+}
+
+.attackLeft {
+  animation: attackLeft 0.5s ease-in-out forwards;
+}
+
+@keyframes attack {
+  0% {
+    width: 0;
+    height: 650px;
+    visibility: hidden;
+    opacity: 0;
+  }
+  50% {
+    visibility: visible;
+    opacity: 1;
+    width: 550px;
+  }
+  99% {
+    opacity: 1;
+  }
+  100% {
+    visibility: visible;
+    opacity: 0;
+  }
+}
+@keyframes attackRight {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(70px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes attackLeft {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(-70px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+@keyframes block {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(0);
+  }
+  50% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(100px);
+  }
+  100% {
+    visibility: visible;
+    opacity: 0;
+    transform: translateY(200px);
+  }
+}
 @keyframes drawCard {
   0% {
     width: 0;
@@ -1162,13 +1247,7 @@ textarea {
   2% {
     transform: rotateX(0deg);
   }
-  25% {
-    transform: rotateY(360deg);
-  }
   50% {
-    transform: rotateY(0deg);
-  }
-  75% {
     transform: rotateY(360deg);
   }
   100% {

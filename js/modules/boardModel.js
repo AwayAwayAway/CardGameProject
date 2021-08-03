@@ -23,7 +23,7 @@ export default class Board {
 
 		// создаем событие на создание карт
 		this.onCreateCards = new Events();
-		this.cardsCreated = new Events();
+		// this.cardsCreated = new Events();
 		this.onCounterChange = new Events();
 		this.removeCards = new Events();
 		this.removeActionCard = new Events();
@@ -35,11 +35,15 @@ export default class Board {
 		this.removeExtraCards('board');
 
 		if (this.gameModel.playerOneTurn) {
-			skillCollection[playerClassInfo.playerOneClass].forEach((element) => this.createCards(element, 'board'));
-			this.cardsCreated.notify('.cards-choose-field', 'multiple');
+			setTimeout(() => {
+				skillCollection[playerClassInfo.playerOneClass].forEach((element) => this.createCards(element, 'board'));
+				createCardAnim('.cards-choose-field', 'multiple');
+			}, 500)
 		} else {
-			skillCollection[playerClassInfo.playerTwoClass].forEach((element) => this.createCards(element, 'board'));
-			this.cardsCreated.notify('.cards-choose-field', 'multiple');
+			setTimeout(() => {
+				skillCollection[playerClassInfo.playerTwoClass].forEach((element) => this.createCards(element, 'board'));
+				createCardAnim('.cards-choose-field', 'multiple');
+			}, 500)
 		}
 	}
 
@@ -50,10 +54,13 @@ export default class Board {
 
 		if (target.classList.contains('player-1__pile-of-car')) {
 			this.gameModel.playerOnePullOfCards.forEach((element) => this.createCards(element, 'overlay'));
+
+			createCardAnim('.players-overlay__cards', 'overlay');
 		}
 
 		if (target.classList.contains('player-2__pile-of-car')) {
 			this.gameModel.playerTwoPullOfCards.forEach((element) => this.createCards(element, 'overlay'));
+			createCardAnim('.players-overlay__cards', 'overlay');
 		}
 	}
 
@@ -61,23 +68,14 @@ export default class Board {
 		switch (state) {
 			case 'open':
 				this.playersOverlay.classList.remove('hidden');
+				playSoundEffect('.overlay-open');
 				break;
 			case 'close':
 				this.playersOverlay.classList.add('hidden');
+				playSoundEffect('.overlay-close');
 				break;
 		}
 	}
-
-	//создает карты доска выбора
-	// createCards(card) {
-	// 	let elDiv = document.createElement('div');
-	//
-	// 	elDiv.setAttribute('class', 'cards');
-	// 	elDiv.setAttribute('data-info', `${card.id}`);
-	// 	elDiv.style.backgroundImage = `url(${card.icon})`;
-	//
-	// 	this.onCreateCards.notify(elDiv, 'board');
-	// }
 
 	createCards(card, appendPlace, draggable = false) {
 		let elDiv = document.createElement('div');
@@ -86,34 +84,12 @@ export default class Board {
 		elDiv.setAttribute('data-info', `${card.id}`);
 		elDiv.style.backgroundImage = `url(${card.icon})`;
 
-		if(draggable) {
+		if (draggable) {
 			elDiv.setAttribute('draggable', 'true');
 		}
 
 		this.onCreateCards.notify(elDiv, appendPlace);
 	}
-
-	//создает карты в руке
-	// createCardsInHand(card) {
-	// 	let elDiv = document.createElement('div');
-	//
-	// 	elDiv.setAttribute('class', 'cards-to-play');
-	// 	elDiv.setAttribute('data-info', `${card.id}`);
-	// 	elDiv.setAttribute('draggable', 'true');
-	// 	elDiv.style.backgroundImage = `url(${card.icon})`;
-	//
-	// 	this.onCreateCards.notify(elDiv, 'hand');
-	// }
-
-	// createCardsInOverlay(card) {
-	// 	let elDiv = document.createElement('div');
-	//
-	// 	elDiv.setAttribute('class', 'cards');
-	// 	elDiv.setAttribute('data-info', `${card.id}`);
-	// 	elDiv.style.backgroundImage = `url(${card.icon})`;
-	//
-	// 	this.onCreateCards.notify(elDiv, 'overlay');
-	// }
 
 	// кидаем карты в руку
 	pullRandomCardsInHand() {
@@ -136,12 +112,12 @@ export default class Board {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerOnePullOfCards[tempIndex[i]], 'hand', true);
 			}
-			this.cardsCreated.notify('.card-in-hand-field');
+			createCardAnim('.card-in-hand-field', 'multiple');
 		} else {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerTwoPullOfCards[tempIndex[i]], 'hand', true);
 			}
-			this.cardsCreated.notify('.card-in-hand-field');
+			createCardAnim('.card-in-hand-field', 'multiple');
 		}
 	}
 
@@ -230,12 +206,15 @@ export default class Board {
 
 		if (target !== this.cardInHand) {
 			setTimeout(() => target.classList.add('invinsible'), 0);
-
 		}
+
+		playSoundEffect('.drag-sound');
 	}
 
 	//у ираем стили для перетаскивания
 	dragCardEnd(eventTarget) {
+		playSoundEffect('.card-grabb-cancel');
+
 		let target = eventTarget;
 
 		if (target !== this.cardInHand) {
@@ -248,28 +227,36 @@ export default class Board {
 	}
 
 	showWhichTurn() {
+		playSoundEffect('.end-turn');
+
 		if (this.gameModel.playerOneTurn) {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerOneName}'s Turn`;
-			this.playersTurnInfo.classList.add('players-turn-info');
-			setTimeout(() => {
-				this.endTurn.style.removeProperty('right');
-				this.endTurn.style.left = '5%';
-			}, 500);
-			setTimeout(() => this.endTurn.classList.add('endTurnAnim'), 1500);
 
-			setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 2100);
-			setTimeout(() => this.endTurn.classList.remove('endTurnAnim'), 1000);
+			endTurnAnim('left');
+			// this.playersTurnInfo.classList.add('players-turn-info');
+			//
+			// setTimeout(() => {
+			// 	this.endTurn.style.removeProperty('right');
+			// 	this.endTurn.style.left = '5%';
+			// }, 500);
+			// setTimeout(() => this.endTurn.classList.add('endTurnAnim'), 1500);
+			//
+			// setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 2100);
+			// setTimeout(() => this.endTurn.classList.remove('endTurnAnim'), 1000);
 		} else {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerTwoName}'s Turn`;
-			this.playersTurnInfo.classList.add('players-turn-info');
-			setTimeout(() => {
-				this.endTurn.style.removeProperty('left');
-				this.endTurn.style.right = '5%';
-			}, 500);
-			setTimeout(() => this.endTurn.classList.add('endTurnAnim'), 1500);
 
-			setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 2100);
-			setTimeout(() => this.endTurn.classList.remove('endTurnAnim'), 1000);
+			endTurnAnim('right');
+			// this.playersTurnInfo.classList.add('players-turn-info');
+			//
+			// setTimeout(() => {
+			// 	this.endTurn.style.removeProperty('left');
+			// 	this.endTurn.style.right = '5%';
+			// }, 500);
+			// setTimeout(() => this.endTurn.classList.add('endTurnAnim'), 1500);
+			//
+			// setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 2100);
+			// setTimeout(() => this.endTurn.classList.remove('endTurnAnim'), 1000);
 		}
 	}
 }

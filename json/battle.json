@@ -293,5 +293,93 @@
     "class": "script",
     "source": "dist/main.bundle.js",
     "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/defend.ogg",
+    "class": "defend-sound",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/card-grabbed.ogg",
+    "class": "drag-sound",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/overlay-open.ogg",
+    "class": "overlay-open",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/overlay-close.ogg",
+    "class": "overlay-close",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/card-grabb-cancel.ogg",
+    "class": "card-grabb-cancel",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/bash-attack.ogg",
+    "class": "bash-attack",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/strike-attack.ogg",
+    "class": "strike-attack",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/push-card.ogg",
+    "class": "push-card",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/confirm.ogg",
+    "class": "confirm",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/confirm-failed.ogg",
+    "class": "confirm-failed",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/end-turn.ogg",
+    "class": "end-turn",
+    "content": null
   }
 ]

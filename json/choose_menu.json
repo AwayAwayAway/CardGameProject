@@ -164,5 +164,21 @@
     "class": "script",
     "source": "dist/chooseMenu.bundle.js",
     "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/confirm.ogg",
+    "class": "confirm",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/confirm-failed.ogg",
+    "class": "confirm-failed",
+    "content": null
   }
 ]
