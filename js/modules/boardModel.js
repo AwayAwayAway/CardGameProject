@@ -1,5 +1,6 @@
 import Events from './eventsModel';
 import {skillCollection} from '../cards';
+import {createCardAnim, playSoundEffect, endTurnAnim} from '../animation_and_sound_effects/animation.js';
 
 export default class Board {
 	constructor(model) {
@@ -13,6 +14,7 @@ export default class Board {
 		this.endTurn = document.querySelector('.end-of-turn-btn');             // end turn button
 		this.playersTurnInfo = document.querySelector('.players-action');
 		this.cardsPlayField = document.querySelector('.play-field');           // area for cards to drop and play their actions
+		this.soundOffOn = document.querySelector('.soundIcon');
 
 		this.playersOverlay = document.querySelector('.players-overlay');
 		this.playersDeck = document.querySelector('.players-overlay__cards');
@@ -68,11 +70,11 @@ export default class Board {
 		switch (state) {
 			case 'open':
 				this.playersOverlay.classList.remove('hidden');
-				playSoundEffect('.overlay-open');
+				playSoundEffect('.overlay-open-audio');
 				break;
 			case 'close':
 				this.playersOverlay.classList.add('hidden');
-				playSoundEffect('.overlay-close');
+				playSoundEffect('.overlay-close-audio');
 				break;
 		}
 	}
@@ -162,6 +164,10 @@ export default class Board {
 
 		if (target !== this.decWrapper) {
 			target.classList.toggle('card-to-select');
+
+		}
+		if (target.classList.contains('card-to-select')) {
+			playSoundEffect('.card-selected-audio')
 		}
 
 		let counter = document.getElementsByClassName('card-to-select').length;
@@ -208,12 +214,12 @@ export default class Board {
 			setTimeout(() => target.classList.add('invinsible'), 0);
 		}
 
-		playSoundEffect('.drag-sound');
+		playSoundEffect('.drag-audio');
 	}
 
 	//у ираем стили для перетаскивания
 	dragCardEnd(eventTarget) {
-		playSoundEffect('.card-grabb-cancel');
+		playSoundEffect('.card-grabb-cancel-audio');
 
 		let target = eventTarget;
 
@@ -227,7 +233,7 @@ export default class Board {
 	}
 
 	showWhichTurn() {
-		playSoundEffect('.end-turn');
+		playSoundEffect('.end-turn-audio');
 
 		if (this.gameModel.playerOneTurn) {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerOneName}'s Turn`;

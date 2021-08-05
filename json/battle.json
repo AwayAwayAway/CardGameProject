@@ -7,6 +7,13 @@
     "content": null
   },
   {
+    "id": 14,
+    "role": "mainChild",
+    "tagName": "i",
+    "class": "fas fa-volume-up soundIcon hidden",
+    "content": null
+  },
+  {
     "id": 1,
     "role": "mainChild",
     "tagName": "div",
@@ -299,7 +306,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/defend.ogg",
-    "class": "defend-sound",
+    "class": "defend-audio",
     "content": null
   },
   {
@@ -307,7 +314,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/card-grabbed.ogg",
-    "class": "drag-sound",
+    "class": "drag-audio",
     "content": null
   },
   {
@@ -315,7 +322,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/overlay-open.ogg",
-    "class": "overlay-open",
+    "class": "overlay-open-audio",
     "content": null
   },
   {
@@ -323,7 +330,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/overlay-close.ogg",
-    "class": "overlay-close",
+    "class": "overlay-close-audio",
     "content": null
   },
   {
@@ -331,7 +338,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/card-grabb-cancel.ogg",
-    "class": "card-grabb-cancel",
+    "class": "card-grabb-cancel-audio",
     "content": null
   },
   {
@@ -339,7 +346,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/bash-attack.ogg",
-    "class": "bash-attack",
+    "class": "bash-attack-audio",
     "content": null
   },
   {
@@ -347,7 +354,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/strike-attack.ogg",
-    "class": "strike-attack",
+    "class": "strike-attack-audio",
     "content": null
   },
   {
@@ -355,7 +362,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/push-card.ogg",
-    "class": "push-card",
+    "class": "push-card-audio",
     "content": null
   },
   {
@@ -363,7 +370,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/confirm.ogg",
-    "class": "confirm",
+    "class": "confirm-audio",
     "content": null
   },
   {
@@ -371,7 +378,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/confirm-failed.ogg",
-    "class": "confirm-failed",
+    "class": "confirm-failed-audio",
     "content": null
   },
   {
@@ -379,7 +386,15 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/end-turn.ogg",
-    "class": "end-turn",
+    "class": "end-turn-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/card-selected.ogg",
+    "class": "card-selected-audio",
     "content": null
   }
 ]

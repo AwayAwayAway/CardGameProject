@@ -7,7 +7,6 @@ import PlayersView from './modules/playerView';
 import PlayersController from './modules/playerController';
 import BoardController from './modules/boardController';
 
-
 // #TODO: babel webpack
 export const gameObserver = new Game();
 
@@ -18,8 +17,8 @@ const boardView = new BoardView(boardModel, gameObserver, document.querySelector
 const gameController = new GameController(gameObserver, boardView);
 
 export const player1 = new Players(gameObserver, boardModel);
-export const player2 = new Players(gameObserver, boardModel);
 
+export const player2 = new Players(gameObserver, boardModel);
 
 const playersView = new PlayersView(player1, player2, document.querySelector('.wrapper-battle'));
 

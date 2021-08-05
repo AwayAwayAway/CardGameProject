@@ -1,3 +1,5 @@
+import {switchPlayPause, playSoundEffect, shakeAnimation} from '../animation_and_sound_effects/animation.js';
+
 export default class Menu {
 	static createMainMenu() {
 		const mainMenu = new MainMenu();
@@ -21,7 +23,7 @@ class MainMenu extends Menu {
 
 		const {1: soundOffOn} = this.source;
 
-		soundOffOn.addEventListener('click', playBackgroundMusic);
+		soundOffOn.addEventListener('click', switchPlayPause);
 
 		[...this.mainElement.children].forEach((button) => {
 			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
@@ -101,14 +103,14 @@ class ChooseMenu extends Menu {
 			playerOneTurn = false;
 			playerTwoTurn = true;
 
-			playSoundEffect('.confirm')
+			playSoundEffect('.confirm-audio')
 			this.removeStyles();
 			this.checkConditionToStartBattle();
 		};
 
 		// alert for empty input
 		this.allertEmptyName = function () {
-			playSoundEffect('.confirm-failed');
+			playSoundEffect('.confirm-failed-audio');
 
 			if (enterName.value.length <= 1) {
 				shakeAnimation('.decision-btn', 'horizontal');
@@ -159,15 +161,15 @@ class ChooseMenu extends Menu {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
 					shakeAnimation('.wrapper-choose-menu');
-					playSoundEffect('.warrior-selected');
+					playSoundEffect('.warrior-selected-audio');
 					break;
 				case 'rogue':
 					shakeAnimation('.wrapper-choose-menu');
-					playSoundEffect('.rogue-selected');
+					playSoundEffect('.rogue-selected-audio');
 					break;
 				case 'mage':
 					shakeAnimation('.wrapper-choose-menu');
-					playSoundEffect('.mage-selected');
+					playSoundEffect('.mage-selected-audio');
 					break;
 			}
 		};
@@ -221,7 +223,7 @@ class ChooseMenu extends Menu {
 		//run function to choose character or  alert empty input name
 		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
 
-		soundOffOn.addEventListener('click', playBackgroundMusic);
+		soundOffOn.addEventListener('click', switchPlayPause);
 
 		document.addEventListener('keypress', (event) => {
 			if (event.code === 'Enter') {

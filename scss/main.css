@@ -399,6 +399,7 @@ textarea {
   left: 84%;
   color: #d4b7b7;
   cursor: pointer;
+  z-index: 600;
 }
 
 .wrapper-choose-menu {

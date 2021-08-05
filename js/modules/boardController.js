@@ -1,3 +1,5 @@
+import {switchPlayPause} from '../animation_and_sound_effects/animation.js';
+
 export default class BoardController {
 	constructor(game, board, playerModel1, playerModel2, view) {
 		this.gameModel = game;
@@ -71,6 +73,10 @@ export default class BoardController {
 		if (this.player2.hasOwnProperty('cardDiscard')) {
 			this.player2.cardDiscard.attach((card) => this.deleteRandomCard(card));
 		}
+
+		if (this.boardView.hasOwnProperty('soundOffOn')) {
+			this.boardView.soundOffOn.attach(() => this.turnOnOfSound());
+		}
 	}
 
 	createCard() {
@@ -138,5 +144,9 @@ export default class BoardController {
 
 	setPlayersTurnInfo() {
 		this.boardModel.showWhichTurn();
+	}
+
+	turnOnOfSound() {
+		switchPlayPause();
 	}
 }

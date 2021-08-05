@@ -1,3 +1,5 @@
+import {checkBackgroundAudio, loading} from './animation_and_sound_effects/animation.js';
+
 let gameConstructor = {};
 
 document.addEventListener('DOMContentLoaded', gameConstructorInit);
@@ -30,6 +32,8 @@ function renderPage() {
 			setTimeout(() => createMainPage(gameConstructor.battle), 500);
 			break;
 	}
+
+	setTimeout(() => checkBackgroundAudio(), 550) ;
 }
 
 function switchHash(event) {
@@ -178,3 +182,4 @@ function createElement(obj) {
 
 	return element;
 }
+

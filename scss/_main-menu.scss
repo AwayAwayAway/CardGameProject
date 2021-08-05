@@ -17,6 +17,7 @@
   padding: 3rem;
   transition: color .3s linear;
 }
+
 .startButton:hover,
 .aboutButton:hover {
   color: cyan;
@@ -29,4 +30,5 @@
   left: 84%;
   color: #d4b7b7;
   cursor: pointer;
+  z-index: 600;
 }

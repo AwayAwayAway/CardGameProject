@@ -1,6 +1,7 @@
 import Events from './eventsModel';
 import {skillCollection} from '../cards';
 import {player1, player2} from '../game';
+import {playSoundEffect} from '../animation_and_sound_effects/animation.js';
 
 export default class Game {
 	constructor() {
@@ -107,7 +108,7 @@ export default class Game {
 
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
-			playSoundEffect('.confirm-failed');
+			playSoundEffect('.confirm-failed-audio');
 			shakeAnimation('.accept', 'horizontal');
 			return;
 		}
@@ -135,7 +136,7 @@ export default class Game {
 			this.playerTwoPullOfCards = this.checkOnSelectedCards(tempCardChoosePlayer, this.playerTwoClass);
 		}
 
-		playSoundEffect('.confirm');
+		playSoundEffect('.confirm-audio');
 
 		//меняем очередность выбора для игроков
 		this.setTurnPriority();

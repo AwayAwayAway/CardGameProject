@@ -122,7 +122,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/warrior-selected.ogg",
-    "class": "warrior-selected",
+    "class": "warrior-selected-audio",
     "content": null
   },
   {
@@ -130,7 +130,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/rogue-selected.ogg",
-    "class": "rogue-selected",
+    "class": "rogue-selected-audio",
     "content": null
   },
   {
@@ -154,7 +154,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/mage-selected.ogg",
-    "class": "mage-selected",
+    "class": "mage-selected-audio",
     "content": null
   },
   {
@@ -170,7 +170,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/confirm.ogg",
-    "class": "confirm",
+    "class": "confirm-audio",
     "content": null
   },
   {
@@ -178,7 +178,7 @@
     "role": "mainChild",
     "tagName": "audio",
     "source": "sounds/confirm-failed.ogg",
-    "class": "confirm-failed",
+    "class": "confirm-failed-audio",
     "content": null
   }
 ]

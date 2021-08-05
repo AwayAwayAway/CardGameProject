@@ -35,7 +35,8 @@ export default class BoardView {
 		this.endTurn = new Events();
 
 		this.showPlayerDeck = new Events();
-		// this.deckPlayer2 = new Events();
+
+		this.soundOffOn = new Events();
 
 		// подписываемся на событие в модели
 		// this.boardModel создала карты надо их отобразить
@@ -92,6 +93,8 @@ export default class BoardView {
 		this.boardModel.cardsPlayField.addEventListener('drop', () => this.doCardAction.notify(this.gameModel.playerOneTurn));
 
 		this.boardModel.endTurn.addEventListener('click', () => this.endTurn.notify());
+
+		this.boardModel.soundOffOn.addEventListener('click', () => this.soundOffOn.notify());
 
 	}
 

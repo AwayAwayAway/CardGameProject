@@ -1,4 +1,6 @@
 import Events from './eventsModel';
+import {playSoundEffect, attackAnimationEffect, shakeAnimation,
+	blockAnimationEffect, createCardAnim, attackAnimation} from '../animation_and_sound_effects/animation.js';
 
 export default class Players {
 	constructor(game, board) {
@@ -27,7 +29,7 @@ export default class Players {
 
 	doAction() {
 		if (this.gameModel.activePlayer.staminaPoints < this.gameModel.tempCard.cost) {
-			playSoundEffect('.card-grabb-cancel');
+			playSoundEffect('.card-grabb-cancel-audio');
 			return;
 		}
 
@@ -59,26 +61,26 @@ export default class Players {
 				attackAnimationEffect(activePlayerUI, direction);
 
 				setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-				setTimeout(() => playSoundEffect('.bash-attack') , 200);
+				setTimeout(() => playSoundEffect('.bash-attack-audio') , 200);
 				break;
 			case 'attackAddEffect':
 				this.sideEffectAttack(this.gameModel.tempCard);
 				attackAnimationEffect(activePlayerUI, direction);
 
 				setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-				setTimeout(() => playSoundEffect('.bash-attack') , 200);
+				setTimeout(() => playSoundEffect('.bash-attack-audio') , 200);
 				break;
 			case 'defend':
 				this.standartDefend(this.gameModel.tempCard);
 
 				blockAnimationEffect(activePlayerUI);
-				playSoundEffect('.defend-sound')
+				playSoundEffect('.defend-sound-audio')
 				break;
 			case 'defendAddEffect':
 				this.sideEffectDefend(this.gameModel.tempCard);
 
 				blockAnimationEffect(activePlayerUI);
-				playSoundEffect('.defend-sound')
+				playSoundEffect('.defend-sound-audio')
 				break;
 			case 'defendDrawDiscard':
 				this.defendDrawDiscard(this.gameModel.tempCard);
@@ -155,7 +157,7 @@ export default class Players {
 		attackAnimation(passivePlayerUI, 'attack', '../images/attack-effects/warrior-attack.png')
 
 		setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-		setTimeout(() => playSoundEffect('.strike-attack') , 200);
+		setTimeout(() => playSoundEffect('.strike-attack-audio') , 200);
 
 		if (this.gameModel.passivePlayer.defendPoints) {
 			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
