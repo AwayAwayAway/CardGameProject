@@ -117,6 +117,14 @@
   animation: warriorUltimate 0.8s linear forwards;
 }
 
+.rogueUltimate {
+  position: absolute;
+  top: -16%;
+  left: -6%;
+  width: 550px;
+  height: 650px;
+}
+
 .fade-in {
   z-index: 500;
   animation: fade-in 0.3s linear forwards;
@@ -125,6 +133,15 @@
 .fade-out {
   z-index: 500;
   animation: fade-out 0.3s linear forwards;
+}
+
+.expertice {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  animation: rotateExpertice 0.5s linear forwards;
 }
 
 @keyframes warriorUltimate {
@@ -406,6 +423,19 @@
   }
   100% {
     transform: rotateY(0deg);
+  }
+}
+
+@keyframes rotateExpertice {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(360deg);
+  }
+  100% {
+    transform: rotateZ(0deg);
+    opacity: 0;
   }
 }
 

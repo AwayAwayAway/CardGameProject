@@ -436,5 +436,21 @@
     "source": "sounds/flash.ogg",
     "class": "flash-audio",
     "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/backstab.ogg",
+    "class": "backstab-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/expertice.ogg",
+    "class": "expertice-audio",
+    "content": null
   }
 ]

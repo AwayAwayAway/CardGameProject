@@ -61,7 +61,7 @@ export default class Players {
 				this.defendWithAttack(this.gameModel.tempCard);
 		}
 
-		this.actionAnimation.notify();
+		// this.actionAnimation.notify();
 	};
 
 	randomCardDraw() {
@@ -134,7 +134,7 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.updateView();
+		this.actionAnimation.notify();
 	};
 
 	sideEffectAttack(card) {
@@ -146,7 +146,7 @@ export default class Players {
 
 			this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-			this.updateView();
+			this.actionAnimation.notify();
 
 			return;
 		}
@@ -160,7 +160,7 @@ export default class Players {
 
 			this.gameModel.passivePlayer.healthPoints = sideEffect;
 
-			this.updateView();
+			this.actionAnimation.notify();
 
 			return;
 		}
@@ -191,7 +191,7 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.updateView();
+		this.actionAnimation.notify();
 	};
 
 	attackDrawDiscard(card) {
@@ -233,14 +233,14 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.updateView();
+		this.actionAnimation.notify();
 	};
 
 	standartDefend(card) {
 		this.gameModel.activePlayer.defendPoints += card.effect;
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.updateView();
+		this.actionAnimation.notify();
 	};
 
 	sideEffectDefend(card) {
@@ -250,7 +250,7 @@ export default class Players {
 			this.gameModel.activePlayer.defendPoints = sideEffect;
 			this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-			this.updateView();
+			this.actionAnimation.notify();
 
 			return;
 		}
@@ -266,7 +266,7 @@ export default class Players {
 				this.gameModel.activePlayer.staminaPoints += card.effect;
 			}
 
-			this.updateView();
+			this.actionAnimation.notify();
 
 			return;
 		}
@@ -277,18 +277,30 @@ export default class Players {
 			this.gameModel.activePlayer.defendPoints += sideEffect;
 			this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-			this.updateView();
+			this.actionAnimation.notify();
 		}
 	};
 
 	defendWithAttack(card) {
-		this.sideEffectAttack(card);
-		this.standartDefend(card);
+		if (this.gameModel.passivePlayer.defendPoints) {
+			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
 
-		//compensate for double stamina reduce from methods above
-		this.gameModel.activePlayer.staminaPoints += card.cost;
+			if (test < 0) {
+				this.gameModel.passivePlayer.defendPoints = 0;
 
-		this.updateView();
+				test = Math.abs(test);
+				this.gameModel.passivePlayer.healthPoints -= test;
+			} else {
+				this.gameModel.passivePlayer.defendPoints = test;
+			}
+		} else {
+			this.gameModel.passivePlayer.healthPoints -= card.effect;
+		}
+
+		this.gameModel.activePlayer.defendPoints += card.effect;
+		this.gameModel.activePlayer.staminaPoints -= card.cost;
+
+		this.actionAnimation.notify();
 	};
 
 	defendDrawDiscard(card) {
@@ -308,6 +320,8 @@ export default class Players {
 		if (card.name == 'warcry') {
 			this.randomCardDraw();
 
+			this.actionAnimation.notify();
+
 			return;
 		}
 
@@ -322,7 +336,7 @@ export default class Players {
 
 			this.gameModel.activePlayer.healthPoints -= card.effect;
 
-			this.updateView();
+			this.actionAnimation.notify();
 
 			return;
 		}
@@ -359,6 +373,6 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.updateView();
+		this.actionAnimation.notify();
 	};
 }

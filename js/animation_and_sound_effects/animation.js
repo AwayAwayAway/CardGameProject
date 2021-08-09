@@ -170,12 +170,12 @@ function endTurnAnim(side) {
 	setTimeout(() => button.classList.remove('endTurnAnim'), 1000);
 }
 
-function blockAnimationEffect(querySelector, cl) {
+function blockAnimationEffect(querySelector, className, src) {
 	const container = document.querySelector(querySelector).parentElement;
 	const image = document.createElement('img');
 
-	image.src = '../images/icons/Icon_Block.png';
-	image.className = 'shield';
+	image.src = src;
+	image.className = className;
 
 	container.appendChild(image);
 
@@ -236,7 +236,7 @@ function standartAttackAnimation(querySelector, className, src) {
 	setTimeout(() => container.removeChild(image), 400);
 }
 
-function ultimateSkillAnimation(querySelector, className, src) {
+function ultimateSkillAnimation(querySelector, className, src, audio) {
 	const container = document.querySelector(querySelector).parentElement;
 	const overlay = document.querySelector('.players-overlay');
 	const overlayClose = document.querySelector('.overlay__close');
@@ -250,13 +250,11 @@ function ultimateSkillAnimation(querySelector, className, src) {
 	overlayClose.classList.add('hidden');
 
 	setTimeout(() => {
-		playSoundEffect('.warcry-audio');
-
 		container.appendChild(image);
 
 		shakeAnimation(querySelector)
 
-		playSoundEffect('.flash-audio');
+		playSoundEffect(audio);
 	}, 200);
 
 	setTimeout(() => {
