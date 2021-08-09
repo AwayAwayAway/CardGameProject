@@ -1,6 +1,5 @@
 import Events from './eventsModel';
-import {playSoundEffect, attackAnimationEffect, shakeAnimation,
-	blockAnimationEffect, createCardAnim, attackAnimation} from '../animation_and_sound_effects/animation.js';
+import {playSoundEffect, createCardAnim, discardCardAnim} from '../animation_and_sound_effects/animation.js';
 
 export default class Players {
 	constructor(game, board) {
@@ -14,6 +13,7 @@ export default class Players {
 		this.playerViewUpdate = new Events();
 		this.cardDraw = new Events();
 		this.cardDiscard = new Events();
+		this.actionAnimation = new Events();
 	}
 
 	endTurn() {
@@ -29,58 +29,30 @@ export default class Players {
 
 	doAction() {
 		if (this.gameModel.activePlayer.staminaPoints < this.gameModel.tempCard.cost) {
-			playSoundEffect('.card-grabb-cancel-audio');
+			playSoundEffect('.card-grab-cancel-audio');
 			return;
 		}
-
-		// let activePlayerUI;
-		// let passivePlayerUI;
-		// let direction;
-		//
-		// if(this.gameModel.playerOneTurn) {
-		// 	activePlayerUI = '.player-1__model';
-		// 	passivePlayerUI = '.player-2__model';
-		// 	direction = 'right'
-		// } else {
-		// 	activePlayerUI = '.player-2__model';
-		// 	passivePlayerUI = '.player-1__model';
-		// 	direction = 'left'
-		// }
-
 
 		switch (this.gameModel.tempCard.type) {
 			case 'attack':
 				this.standartAttack(this.gameModel.tempCard);
-				// attackAnimationEffect(activePlayerUI, direction);
-				//
-				// setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-				// setTimeout(() => playSoundEffect('.bash-attack') , 200);
+
 				break;
 			case 'attackDrawDiscard':
 				this.attackDrawDiscard(this.gameModel.tempCard);
-				attackAnimationEffect(activePlayerUI, direction);
 
-				setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-				setTimeout(() => playSoundEffect('.bash-attack-audio') , 200);
 				break;
 			case 'attackAddEffect':
 				this.sideEffectAttack(this.gameModel.tempCard);
-				attackAnimationEffect(activePlayerUI, direction);
 
-				setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-				setTimeout(() => playSoundEffect('.bash-attack-audio') , 200);
 				break;
 			case 'defend':
 				this.standartDefend(this.gameModel.tempCard);
 
-				blockAnimationEffect(activePlayerUI);
-				playSoundEffect('.defend-sound-audio')
 				break;
 			case 'defendAddEffect':
 				this.sideEffectDefend(this.gameModel.tempCard);
 
-				blockAnimationEffect(activePlayerUI);
-				playSoundEffect('.defend-sound-audio')
 				break;
 			case 'defendDrawDiscard':
 				this.defendDrawDiscard(this.gameModel.tempCard);
@@ -88,6 +60,8 @@ export default class Players {
 			case 'defendAndAttack':
 				this.defendWithAttack(this.gameModel.tempCard);
 		}
+
+		this.actionAnimation.notify();
 	};
 
 	randomCardDraw() {
@@ -107,7 +81,11 @@ export default class Players {
 
 		//it will be error if you use DaggerThrow as the last card in hand so w check on this
 		if (this.boardModel.cardInHand.children.length > 0) {
-			this.cardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]);
+			discardCardAnim(this.boardModel.cardInHand.children[randomDiscard]);
+
+			playSoundEffect('.discard-card-audio');
+
+			setTimeout(() => this.cardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300)
 		}
 	}
 
@@ -139,26 +117,6 @@ export default class Players {
 	}
 
 	standartAttack(card) {
-		let activePlayerUI;
-		let passivePlayerUI;
-		let direction;
-
-		if(this.gameModel.playerOneTurn) {
-			activePlayerUI = '.player-1__model';
-			passivePlayerUI = '.player-2__model';
-			direction = 'right'
-		} else {
-			activePlayerUI = '.player-2__model';
-			passivePlayerUI = '.player-1__model';
-			direction = 'left'
-		}
-
-		attackAnimationEffect(activePlayerUI, direction);
-		attackAnimation(passivePlayerUI, 'attack', '../images/attack-effects/warrior-attack.png')
-
-		setTimeout(() => shakeAnimation(passivePlayerUI) , 200);
-		setTimeout(() => playSoundEffect('.strike-attack-audio') , 200);
-
 		if (this.gameModel.passivePlayer.defendPoints) {
 			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
 

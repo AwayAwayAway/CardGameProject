@@ -1,4 +1,5 @@
 import Events from './eventsModel';
+import {createCardAnim, endTurnAnim} from '../animation_and_sound_effects/animation';
 
 export default class BoardView {
 	constructor(board, game, selector) {
@@ -22,6 +23,7 @@ export default class BoardView {
 
 		// навели убрали мышку на карту в руке
 		this.grabCardStart = new Events();
+
 		this.grabCardEnd = new Events();
 
 		this.preventDrag = new Events();
@@ -37,6 +39,43 @@ export default class BoardView {
 		this.showPlayerDeck = new Events();
 
 		this.soundOffOn = new Events();
+
+		this.boardModel.btnAccept.addEventListener('click', () => this.onDefineCards.notify());
+
+		this.boardModel.btnAccept.addEventListener('click', () => this.submitCardCheckChoose.notify());
+
+		// событие клик подстветка выбора карт
+		this.boardModel.decWrapper.addEventListener('click', (event) => this.onAnimCards.notify(event.target));
+
+		// показываем карты какие наюрал игрок на этапе выбора
+		this.boardModel.battleField.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
+
+		this.boardModel.playersDeckClose.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
+
+		// анимация карт в руке при наведении
+		this.boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify(event.target, 'focus'));
+
+		this.boardModel.cardInHand.addEventListener('mouseout', (event) => this.cardInHandChoosen.notify(event.target, 'blur'));
+
+		// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
+		this.boardModel.cardInHand.addEventListener('dragstart', (event) => this.grabCardStart.notify(event.target, 'focus'));
+
+		this.boardModel.cardInHand.addEventListener('dragend', (event) => this.grabCardEnd.notify(event.target, 'blur'));
+
+		// prevent default behavior
+		this.boardModel.cardsPlayField.addEventListener('dragenter', (event) => this.preventDrag.notify(event));
+
+		this.boardModel.cardsPlayField.addEventListener('dragover', (event) => this.preventDrag.notify(event));
+
+		// играем карты
+		this.boardModel.cardsPlayField.addEventListener('drop', () => this.dropEvent.notify());
+
+		this.boardModel.cardsPlayField.addEventListener('drop', () => this.doCardAction.notify(this.gameModel.playerOneTurn));
+
+		this.boardModel.endTurn.addEventListener('click', () => this.endTurn.notify());
+
+		this.boardModel.soundOffOn.addEventListener('click', () => this.soundOffOn.notify());
+
 
 		// подписываемся на событие в модели
 		// this.boardModel создала карты надо их отобразить
@@ -63,38 +102,10 @@ export default class BoardView {
 		// удаление сыгранной карты
 		this.boardModel.removeActionCard.attach((card) => this.deleteActionCard(card));
 
-		// this.boardModel.cardsCreated.attach((querySelector, amount) => this.createCardAnim(querySelector, amount));
+		this.boardModel.createAnimation.attach((querySelector, amount) => this.createAnimation(querySelector, amount));
 
-		// событие клик кнопки подтверждения выбора карт разсылаем уведомление что событие сработало
-		this.boardModel.btnAccept.addEventListener('click', () => this.onDefineCards.notify());
-		this.boardModel.btnAccept.addEventListener('click', () => this.submitCardCheckChoose.notify());
+		this.boardModel.endTurnAnimation.attach((side) => this.endTurnAnimation(side));
 
-		// событие клик подстветка выбора карт
-		this.boardModel.decWrapper.addEventListener('click', (event) => this.onAnimCards.notify(event.target));
-
-		// показываем карты какие наюрал игрок на этапе выбора
-		this.boardModel.battleField.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
-		this.boardModel.playersDeckClose.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
-
-		// анимация карт в руке при наведении
-		this.boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify(event.target, 'focus'));
-		this.boardModel.cardInHand.addEventListener('mouseout', (event) => this.cardInHandChoosen.notify(event.target, 'blur'));
-
-		// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
-		this.boardModel.cardInHand.addEventListener('dragstart', (event) => this.grabCardStart.notify(event.target, 'focus'));
-		this.boardModel.cardInHand.addEventListener('dragend', (event) => this.grabCardEnd.notify(event.target, 'blur'));
-
-		// prevent default behavior
-		this.boardModel.cardsPlayField.addEventListener('dragenter', (event) => this.preventDrag.notify(event));
-		this.boardModel.cardsPlayField.addEventListener('dragover', (event) => this.preventDrag.notify(event));
-
-		// играем карты
-		this.boardModel.cardsPlayField.addEventListener('drop', () => this.dropEvent.notify());
-		this.boardModel.cardsPlayField.addEventListener('drop', () => this.doCardAction.notify(this.gameModel.playerOneTurn));
-
-		this.boardModel.endTurn.addEventListener('click', () => this.endTurn.notify());
-
-		this.boardModel.soundOffOn.addEventListener('click', () => this.soundOffOn.notify());
 
 	}
 
@@ -153,7 +164,7 @@ export default class BoardView {
 	selectionEndUpdate() {
 		this.boardModel.decWrapper.style.display = 'none';
 		this.boardModel.battleField.classList.remove('hidden');
-		this.boardSelector.querySelector('.card-counter').classList.add('hidden');
+		// this.boardSelector.querySelector('.card-counter').classList.add('hidden');
 		this.boardSelector.querySelector('.card-counter').style.display = 'none';
 	}
 
@@ -202,22 +213,11 @@ export default class BoardView {
 		}
 	}
 
-	// createCardAnim(querySelector, amount) {
-	// 	let elementAnim = document.querySelector(querySelector);
-	//
-	// 	switch (amount) {
-	// 		case 'single':
-	// 			for(let i = 0; i < elementAnim.length; i++) {
-	// 				if(elementAnim.children[i].classList.contains('cardsDrawAnim')) {
-	// 					continue;
-	// 				} else {
-	// 					elementAnim.children[i].classList.add('cardsDrawAnim')
-	// 				}
-	// 			}
-	// 			break;
-	// 		case 'multiple':
-	// 			[...elementAnim.children].forEach((element, index) => setTimeout(() => element.classList.add('cardsDrawAnim'), 300 * index));
-	// 			break;
-	// 	}
-	// }
+	createAnimation(querySelector, amount) {
+		createCardAnim(querySelector, amount)
+	}
+
+	endTurnAnimation(side) {
+		endTurnAnim(side);
+	}
 }

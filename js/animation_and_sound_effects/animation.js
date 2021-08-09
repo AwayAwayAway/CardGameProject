@@ -1,4 +1,3 @@
-// #TODO normalize all sounds and music
 // animation through all menu loading black screen
 function loading(target) {
 	switch (target) {
@@ -54,7 +53,7 @@ function switchPlayPause() {
 	}
 }
 
-let checkBackgroundAudio = (function (querySelector) {
+const checkBackgroundAudio = (function (querySelector) {
 	const currentHash = [];
 	const mainAudio = document.querySelector('.background-music-main-menu');
 	const audio = document.querySelector('.background-music-battlefield');
@@ -68,7 +67,7 @@ let checkBackgroundAudio = (function (querySelector) {
 		if (currentHash[currentHash.length - 1] === 'battle-field' && [...allAudio].every(element => element.paused)) {
 			mainAudio.pause();
 			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'battle-field' && [...allAudio].some(element => element.paused)){
+		} else if (currentHash[currentHash.length - 1] === 'battle-field' && [...allAudio].some(element => element.paused)) {
 			mainAudio.pause();
 			audio.play();
 		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
@@ -86,7 +85,7 @@ let checkBackgroundAudio = (function (querySelector) {
 		} else {
 			soundOffOn.className = 'fas fa-volume-up soundIcon';
 		}
-	}
+	};
 }('.soundIcon'));
 
 // shake display when character choosed
@@ -139,6 +138,10 @@ function createCardAnim(querySelector, amount) {
 	}
 }
 
+function discardCardAnim(querySelector) {
+	querySelector.classList.add('cardDiscard');
+}
+
 function endTurnAnim(side) {
 	const button = document.querySelector('.end-of-turn-btn');
 	const turnAnnouncer = document.querySelector('.players-action');
@@ -167,7 +170,7 @@ function endTurnAnim(side) {
 	setTimeout(() => button.classList.remove('endTurnAnim'), 1000);
 }
 
-function blockAnimationEffect(querySelector) {
+function blockAnimationEffect(querySelector, cl) {
 	const container = document.querySelector(querySelector).parentElement;
 	const image = document.createElement('img');
 
@@ -184,6 +187,7 @@ function attackAnimation(querySelector, className, src) {
 	const image = document.createElement('img');
 
 	image.src = src;
+	image.style.transform = `rotate(${Math.floor(Math.random() * (360 - 1) + 1)}deg)`;
 	image.className = className;
 
 	container.appendChild(image);
@@ -191,8 +195,90 @@ function attackAnimation(querySelector, className, src) {
 	setTimeout(() => container.removeChild(image), 600);
 }
 
+function multipleAttackAnimation(querySelector, className, src, amountEffect) {
+	const container = document.querySelector(querySelector).parentElement;
+
+	let effectStorage = [];
+
+	for (let i = 0; i < amountEffect; i++) {
+		const image = document.createElement('img');
+		effectStorage.push(image);
+	}
+
+	effectStorage.forEach((elem, index) => {
+		elem.src = src;
+
+		if (index === 1) {
+			elem.style.transform = 'rotate(30deg)';
+		} else if (index === 2) {
+			elem.style.transform = 'rotate(315deg)';
+		}
+
+		elem.className = className;
+
+		setTimeout(() => {
+			container.appendChild(elem);
+			playSoundEffect('.strike-attack-audio');
+			setTimeout(() => container.removeChild(elem), 400);
+		}, index * 300);
+	});
+}
+
+function standartAttackAnimation(querySelector, className, src) {
+	const container = document.querySelector(querySelector).parentElement;
+	const image = document.createElement('img');
+
+	image.src = src;
+	image.className = className;
+
+	container.appendChild(image);
+
+	setTimeout(() => container.removeChild(image), 400);
+}
+
+function ultimateSkillAnimation(querySelector, className, src) {
+	const container = document.querySelector(querySelector).parentElement;
+	const overlay = document.querySelector('.players-overlay');
+	const overlayClose = document.querySelector('.overlay__close');
+	const image = document.createElement('img');
+
+	image.src = src;
+	image.className = className;
+
+	overlay.classList.remove('hidden');
+	overlay.classList.add('fade-in');
+	overlayClose.classList.add('hidden');
+
+	setTimeout(() => {
+		playSoundEffect('.warcry-audio');
+
+		container.appendChild(image);
+
+		shakeAnimation(querySelector)
+
+		playSoundEffect('.flash-audio');
+	}, 200);
+
+	setTimeout(() => {
+		container.removeChild(image);
+		overlay.classList.add('fade-out');
+
+	}, 800);
+
+	setTimeout(() => {
+		overlay.classList.add('hidden');
+		overlay.classList.remove('fade-in');
+		overlay.classList.remove('fade-out');
+		overlayClose.classList.remove('hidden');
+	}, 1000);
+}
+
 function playSoundEffect(querySelector) {
 	const soundEffect = document.querySelector(querySelector);
+
+	if (!soundEffect) {
+		return;
+	}
 
 	soundEffect.currentTime = 0;
 
@@ -216,9 +302,12 @@ function attackAnimationEffect(querySelector, direction) {
 	}
 }
 
-export {loading, switchPlayPause, checkBackgroundAudio, shakeAnimation,
+export {
+	loading, switchPlayPause, checkBackgroundAudio, shakeAnimation,
 	createCardAnim, endTurnAnim, blockAnimationEffect, attackAnimation,
-	playSoundEffect, attackAnimationEffect}
+	playSoundEffect, attackAnimationEffect, multipleAttackAnimation, discardCardAnim,
+	standartAttackAnimation, ultimateSkillAnimation
+};
 
 
 

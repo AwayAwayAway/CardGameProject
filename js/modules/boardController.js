@@ -21,11 +21,11 @@ export default class BoardController {
 		}
 
 		if (this.boardView.hasOwnProperty('grabCardStart')) {
-			this.boardView.grabCardStart.attach((event, state) => this.grabbedCardAnim(event, state));
+			this.boardView.grabCardStart.attach((event, state) => this.grabedCardAnim(event, state));
 		}
 
 		if (this.boardView.hasOwnProperty('grabCardEnd')) {
-			this.boardView.grabCardEnd.attach((event, state) => this.grabbedCardAnim(event, state));
+			this.boardView.grabCardEnd.attach((event, state) => this.grabedCardAnim(event, state));
 		}
 
 		if (this.boardView.hasOwnProperty('preventDrag')) {
@@ -102,7 +102,7 @@ export default class BoardController {
 		this.boardModel.pullRandomCardsInHand();
 	}
 
-	grabbedCardAnim(event, state) {
+	grabedCardAnim(event, state) {
 		switch (state) {
 			case 'focus':
 				this.boardModel.dragCardStart(event);

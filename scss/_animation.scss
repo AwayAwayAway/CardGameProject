@@ -36,28 +36,32 @@
 }
 
 .shakeX {
-  animation: shakeX .3s linear forwards ;
+  animation: shakeX .3s linear forwards;
   animation-delay: 0s;
 }
 
 .shakeY {
-  animation: shakeY .3s linear forwards ;
+  animation: shakeY .3s linear forwards;
   animation-delay: 0s;
 }
 
 .shakeMix {
-  animation: shakeMix .3s linear forwards ;
+  animation: shakeMix .3s linear forwards;
   animation-delay: 0s;
 }
 
 .endTurnAnim {
-  animation: rotateEndTurn .7s linear forwards ;
+  animation: rotateEndTurn .7s linear forwards;
 }
 
 .cardsDrawAnim {
   width: 11rem;
   height: 14rem;
   animation: drawCard .2s linear forwards;
+}
+
+.cardDiscard {
+  animation: discardCard .2s linear forwards;
 }
 
 .shield {
@@ -78,12 +82,88 @@
   animation: attack 0.5s linear forwards;
 }
 
+.angerAttack {
+  position: absolute;
+  top: -16%;
+  left: -6%;
+  width: 550px;
+  height: 650px;
+  animation: smashAttack 0.5s linear forwards;
+}
+
 .attackRight {
   animation: attackRight .5s ease-in-out forwards;
 }
 
 .attackLeft {
   animation: attackLeft .5s ease-in-out forwards;
+}
+
+.smashAttack {
+  position: absolute;
+  top: 10%;
+  left: 11%;
+  width: 350px;
+  height: 350px;
+  animation: smashAttack 0.5s linear forwards;
+}
+
+.warriorUltimate {
+  position: absolute;
+  top: -16%;
+  left: -6%;
+  width: 550px;
+  height: 650px;
+  animation: warriorUltimate 0.8s linear forwards;
+}
+
+.fade-in {
+  z-index: 500;
+  animation: fade-in 0.3s linear forwards;
+}
+
+.fade-out {
+  z-index: 500;
+  animation: fade-out 0.3s linear forwards;
+}
+
+@keyframes warriorUltimate {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes smashAttack {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+  80% {
+    opacity: 1
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
 }
 
 @keyframes attack {
@@ -108,25 +188,25 @@
 }
 
 @keyframes attackRight {
-  0%{
+  0% {
     transform: translateX(0px);
   }
-  50%{
+  50% {
     transform: translateX(70px);
   }
-  100%{
+  100% {
     transform: translateX(0px);
   }
 }
 
 @keyframes attackLeft {
-  0%{
+  0% {
     transform: translateX(0px);
   }
-  50%{
+  50% {
     transform: translateX(-70px);
   }
-  100%{
+  100% {
     transform: translateX(0px);
   }
 }
@@ -157,6 +237,17 @@
   100% {
     width: 11rem;
     height: 14rem;
+  }
+}
+
+@keyframes discardCard {
+  0% {
+    width: 11rem;
+    height: 14rem;
+  }
+  100% {
+    width: 0;
+    height: 0;
   }
 }
 
@@ -263,7 +354,7 @@
   0% {
     top: 30%;
     width: 100%;
-    text-align:center;
+    text-align: center;
     background: #16dcef;
     border-top: 3px solid white;
     border-bottom: 3px solid white;
@@ -276,13 +367,13 @@
     top: 30%;
     width: 100%;
     background: #16dcef;
-    text-align:center;
+    text-align: center;
     border-top: 3px solid white;
     border-bottom: 3px solid white;
   }
   99% {
     width: 100%;
-    text-align:center;
+    text-align: center;
   }
   100% {
     top: 5%;
@@ -315,5 +406,25 @@
   }
   100% {
     transform: rotateY(0deg);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+
+  100%{
+    opacity: 0;
   }
 }

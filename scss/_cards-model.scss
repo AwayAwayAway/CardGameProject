@@ -15,8 +15,6 @@
 
 .cards {
   position: relative;
-  //width: 11rem;
-  //height: 14rem;
   margin-right: 1rem;
   margin-top: 7rem;
   cursor: pointer;
@@ -33,12 +31,11 @@
   bottom: 1%;
   display: flex;
   justify-content: center;
+  z-index: 400;
 }
 
 .cards-to-play {
   position: relative;
-  //width: 11rem;
-  //height: 14.5rem;
   transition: all .3s ease-in-out;
   background: center/cover no-repeat;
   outline: none;
@@ -64,9 +61,10 @@
   right: 0;
   left: 0;
   height: 100vh;
-  z-index: 500;
+  z-index: 700;
   background: rgba(0, 0, 0, 0.9);
 }
+
 
 .overlay__close {
   position: absolute;

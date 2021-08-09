@@ -7,7 +7,7 @@ const strike_w = new Cards(0, 'attack', 1, 6, 'images/cards/warrior/Strike.png',
 
 const bash = new Cards(1, 'attack', 1, 8, 'images/cards/warrior/Bash.png', 'bash');
 
-const anger = new Cards(2, 'attackAddEffect', 1, 6, 'images/cards/warrior/Anger.png', 'anger',
+const anger = new Cards(2, 'attackAddEffect', 1, 6, 'images/cards/warrior/anger.png', 'anger',
 	() => {
 		let effect;
 		if (gameObserver.activePlayer.healthPoints < 50) {
@@ -28,7 +28,7 @@ const bodySlam = new Cards(3, 'attackAddEffect', 2, 0, 'images/cards/warrior/Bod
 	return effect;
 });
 
-const perfecedStrike = new Cards(4, 'attackAddEffect', 1, 6, 'images/cards/warrior/PerfectedStrike.png', 'perfecedStrike', () => 6 + boardModel.cardInHand.children.length);
+const perfecedStrike = new Cards(4, 'attackAddEffect', 1, 6, 'images/cards/warrior/PerfectedStrike.png', 'perfectedStrike', () => 6 + boardModel.cardInHand.children.length);
 
 const bludgeon = new Cards(5, 'attackAddEffect', 3, 12, 'images/cards/warrior/Bludgeon.png', 'bludgeon', () => {
 	let effect;

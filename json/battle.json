@@ -337,8 +337,8 @@
     "id": 39,
     "role": "mainChild",
     "tagName": "audio",
-    "source": "sounds/card-grabb-cancel.ogg",
-    "class": "card-grabb-cancel-audio",
+    "source": "sounds/card-grab-cancel.ogg",
+    "class": "card-grab-cancel-audio",
     "content": null
   },
   {
@@ -395,6 +395,46 @@
     "tagName": "audio",
     "source": "sounds/card-selected.ogg",
     "class": "card-selected-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/discard-card.ogg",
+    "class": "discard-card-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/anger.ogg",
+    "class": "anger-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/bloodletting.ogg",
+    "class": "bloodletting-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/warcry.ogg",
+    "class": "warcry-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/flash.ogg",
+    "class": "flash-audio",
     "content": null
   }
 ]

@@ -25,11 +25,11 @@ export default class Board {
 
 		// создаем событие на создание карт
 		this.onCreateCards = new Events();
-		// this.cardsCreated = new Events();
 		this.onCounterChange = new Events();
 		this.removeCards = new Events();
 		this.removeActionCard = new Events();
-		// this.openCloseOverlay = new Events();
+		this.createAnimation = new Events();
+		this.endTurnAnimation = new Events();
 	}
 
 	// создаем деку в начале игры для игрока согласно классу
@@ -39,12 +39,18 @@ export default class Board {
 		if (this.gameModel.playerOneTurn) {
 			setTimeout(() => {
 				skillCollection[playerClassInfo.playerOneClass].forEach((element) => this.createCards(element, 'board'));
-				createCardAnim('.cards-choose-field', 'multiple');
+
+				this.createAnimation.notify('.cards-choose-field', 'multiple');
+
+				// createCardAnim('.cards-choose-field', 'multiple');
 			}, 500)
 		} else {
 			setTimeout(() => {
 				skillCollection[playerClassInfo.playerTwoClass].forEach((element) => this.createCards(element, 'board'));
-				createCardAnim('.cards-choose-field', 'multiple');
+
+				this.createAnimation.notify('.cards-choose-field', 'multiple');
+
+				// createCardAnim('.cards-choose-field', 'multiple');
 			}, 500)
 		}
 	}
@@ -57,12 +63,17 @@ export default class Board {
 		if (target.classList.contains('player-1__pile-of-car')) {
 			this.gameModel.playerOnePullOfCards.forEach((element) => this.createCards(element, 'overlay'));
 
-			createCardAnim('.players-overlay__cards', 'overlay');
+			this.createAnimation.notify('.players-overlay__cards', 'overlay')
+
+			// createCardAnim('.players-overlay__cards', 'overlay');
 		}
 
 		if (target.classList.contains('player-2__pile-of-car')) {
 			this.gameModel.playerTwoPullOfCards.forEach((element) => this.createCards(element, 'overlay'));
-			createCardAnim('.players-overlay__cards', 'overlay');
+
+			this.createAnimation.notify('.players-overlay__cards', 'overlay')
+
+			// createCardAnim('.players-overlay__cards', 'overlay');
 		}
 	}
 
@@ -70,11 +81,15 @@ export default class Board {
 		switch (state) {
 			case 'open':
 				this.playersOverlay.classList.remove('hidden');
+
 				playSoundEffect('.overlay-open-audio');
+
 				break;
 			case 'close':
 				this.playersOverlay.classList.add('hidden');
+
 				playSoundEffect('.overlay-close-audio');
+
 				break;
 		}
 	}
@@ -114,12 +129,18 @@ export default class Board {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerOnePullOfCards[tempIndex[i]], 'hand', true);
 			}
-			createCardAnim('.card-in-hand-field', 'multiple');
+
+			this.createAnimation.notify('.card-in-hand-field', 'multiple');
+
+			// createCardAnim('.card-in-hand-field', 'multiple');
 		} else {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerTwoPullOfCards[tempIndex[i]], 'hand', true);
 			}
-			createCardAnim('.card-in-hand-field', 'multiple');
+
+			this.createAnimation.notify('.card-in-hand-field', 'multiple');
+
+			// createCardAnim('.card-in-hand-field', 'multiple');
 		}
 	}
 
@@ -164,8 +185,8 @@ export default class Board {
 
 		if (target !== this.decWrapper) {
 			target.classList.toggle('card-to-select');
-
 		}
+
 		if (target.classList.contains('card-to-select')) {
 			playSoundEffect('.card-selected-audio')
 		}
@@ -173,6 +194,7 @@ export default class Board {
 		let counter = document.getElementsByClassName('card-to-select').length;
 
 		let counterInfo = {};
+
 		counterInfo.number = counter;
 
 		if (counter > 8) {
@@ -211,7 +233,7 @@ export default class Board {
 		let target = eventTarget;
 
 		if (target !== this.cardInHand) {
-			setTimeout(() => target.classList.add('invinsible'), 0);
+			setTimeout(() => target.classList.add('invisible'), 0);
 		}
 
 		playSoundEffect('.drag-audio');
@@ -219,12 +241,12 @@ export default class Board {
 
 	//у ираем стили для перетаскивания
 	dragCardEnd(eventTarget) {
-		playSoundEffect('.card-grabb-cancel-audio');
+		playSoundEffect('.card-grab-cancel-audio');
 
 		let target = eventTarget;
 
 		if (target !== this.cardInHand) {
-			target.classList.remove('invinsible');
+			target.classList.remove('invisible');
 		}
 	}
 
@@ -238,31 +260,15 @@ export default class Board {
 		if (this.gameModel.playerOneTurn) {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerOneName}'s Turn`;
 
-			endTurnAnim('left');
-			// this.playersTurnInfo.classList.add('players-turn-info');
-			//
-			// setTimeout(() => {
-			// 	this.endTurn.style.removeProperty('right');
-			// 	this.endTurn.style.left = '5%';
-			// }, 500);
-			// setTimeout(() => this.endTurn.classList.add('endTurnAnim'), 1500);
-			//
-			// setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 2100);
-			// setTimeout(() => this.endTurn.classList.remove('endTurnAnim'), 1000);
+			this.endTurnAnimation.notify('left');
+
+			// endTurnAnim('left');
 		} else {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerTwoName}'s Turn`;
 
-			endTurnAnim('right');
-			// this.playersTurnInfo.classList.add('players-turn-info');
-			//
-			// setTimeout(() => {
-			// 	this.endTurn.style.removeProperty('left');
-			// 	this.endTurn.style.right = '5%';
-			// }, 500);
-			// setTimeout(() => this.endTurn.classList.add('endTurnAnim'), 1500);
-			//
-			// setTimeout(() => this.playersTurnInfo.classList.remove('players-turn-info'), 2100);
-			// setTimeout(() => this.endTurn.classList.remove('endTurnAnim'), 1000);
+			this.endTurnAnimation.notify('right');
+
+			// endTurnAnim('right');
 		}
 	}
 }

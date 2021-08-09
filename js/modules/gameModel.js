@@ -1,7 +1,7 @@
 import Events from './eventsModel';
 import {skillCollection} from '../cards';
 import {player1, player2} from '../game';
-import {playSoundEffect} from '../animation_and_sound_effects/animation.js';
+import {playSoundEffect, shakeAnimation} from '../animation_and_sound_effects/animation.js';
 
 export default class Game {
 	constructor() {
