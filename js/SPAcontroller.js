@@ -1,7 +1,6 @@
 import {checkBackgroundAudio, loading} from './animation_and_sound_effects/animation.js';
 import '../scss/main.scss';
 
-
 let gameConstructor = {};
 
 document.addEventListener('DOMContentLoaded', gameConstructorInit);
