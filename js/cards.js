@@ -7,7 +7,7 @@ const strike_w = new Cards(0, 'attack', 1, 6, 'images/cards/warrior/Strike.png',
 
 const bash = new Cards(1, 'attack', 1, 8, 'images/cards/warrior/Bash.png', 'bash');
 
-const anger = new Cards(2, 'attackAddEffect', 1, 6, 'images/cards/warrior/anger.png', 'anger',
+const anger = new Cards(2, 'attackAddEffect', 1, 6, 'images/cards/warrior/Anger.png', 'anger',
 	() => {
 		let effect;
 		if (gameObserver.activePlayer.healthPoints < 50) {

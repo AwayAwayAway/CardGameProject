@@ -125,6 +125,15 @@
   height: 650px;
 }
 
+.mageUltimate {
+  position: absolute;
+  top: -16%;
+  left: -6%;
+  width: 550px;
+  height: 650px;
+  animation: rotateExpertice 0.8s linear forwards;
+}
+
 .fade-in {
   z-index: 500;
   animation: fade-in 0.3s linear forwards;
@@ -141,7 +150,7 @@
   left: 0;
   width: 100px;
   height: 100px;
-  animation: rotateExpertice 0.5s linear forwards;
+  animation: rotateExpertice 1s linear forwards;
 }
 
 @keyframes warriorUltimate {

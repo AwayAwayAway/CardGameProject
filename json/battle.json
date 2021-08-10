@@ -452,5 +452,53 @@
     "source": "sounds/expertice.ogg",
     "class": "expertice-audio",
     "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/mage-punch.ogg",
+    "class": "mage-punch-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/mage-ultimate.ogg",
+    "class": "mage-ultimate-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/mage-attack.ogg",
+    "class": "mage-attack-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/meditate.ogg",
+    "class": "meditate-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/judj.ogg",
+    "class": "judj-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/mage-strong.ogg",
+    "class": "mage-strong-audio",
+    "content": null
   }
 ]

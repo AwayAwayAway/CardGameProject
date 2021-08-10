@@ -89,6 +89,18 @@ export default class Players {
 		}
 	}
 
+	cardRemove(element) {
+		//it will be error if you use DaggerThrow as the last card in hand so w check on this
+		if (this.boardModel.cardInHand.children.length > 0) {
+			discardCardAnim(element);
+
+			playSoundEffect('.discard-card-audio');
+
+			// setTimeout(() => this.cardDiscard.notify(element), 300)
+			this.cardDiscard.notify(element)
+		}
+	}
+
 	// we take condition only for card "expertise"
 	massiveRandomDraw(card, condition) {
 		let tempIndex = [];
@@ -155,6 +167,8 @@ export default class Players {
 			let sideEffect = card.sideEffect();
 
 			if (sideEffect == undefined) {
+				this.actionAnimation.notify();
+
 				return;
 			}
 
@@ -217,8 +231,8 @@ export default class Players {
 		}
 
 		if (card.name == 'daggerThrow') {
-			this.randomCardDiscard();
-			this.randomCardDraw();
+			setTimeout(() => this.randomCardDiscard(), 300)
+			setTimeout(() => this.randomCardDraw(), 800)
 		}
 
 		if (card.name == 'quickSlash') {
@@ -227,8 +241,10 @@ export default class Players {
 
 		if (card.name == 'cutThroughFate') {
 			let sideEffect = card.sideEffect();
+
 			this.gameModel.activePlayer.defendPoints += sideEffect;
-			this.randomCardDraw();
+
+			setTimeout(() => this.randomCardDraw(),600)
 		}
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
@@ -312,7 +328,7 @@ export default class Players {
 
 		if (card.name == 'prepared') {
 			this.randomCardDiscard();
-			this.randomCardDraw();
+			setTimeout(() =>this.randomCardDraw(), 300)
 
 			return;
 		}
@@ -326,7 +342,7 @@ export default class Players {
 		}
 
 		if (card.name == 'survivor') {
-			this.randomCardDiscard();
+			setTimeout(() => this.randomCardDiscard(), 300)
 
 			this.gameModel.activePlayer.defendPoints += card.effect;
 		}
@@ -349,8 +365,8 @@ export default class Players {
 
 			// убираем лишние карты из руки
 			for (let i = 0; i < this.boardModel.cardInHand.children.length; i++) {
-				if (this.boardModel.cardInHand.children[i].classList.contains('cards-to-play')) {
-					this.randomCardDiscard(this.boardModel.cardInHand.children[i]);
+				if (this.boardModel.cardInHand.children[i].classList.contains('cards')) {
+					this.cardRemove(this.boardModel.cardInHand.children[i]);
 					i--;
 				}
 			}
@@ -362,7 +378,7 @@ export default class Players {
 			let sideEffect = card.sideEffect();
 			this.gameModel.activePlayer.defendPoints += sideEffect;
 
-			this.massiveRandomDraw(card, 0);
+			setTimeout(() => this.massiveRandomDraw(card, 0), 300)
 		}
 
 		if (card.name == 'thirdEye') {

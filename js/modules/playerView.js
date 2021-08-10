@@ -4,7 +4,6 @@ import {
 	ultimateSkillAnimation
 } from '../animation_and_sound_effects/animation';
 
-
 export default class PlayersView {
 	constructor(playerOneModel, playerTwoModel, gameModel, container) {
 		this.playerOneModel = playerOneModel;
@@ -76,12 +75,10 @@ export default class PlayersView {
 		switch (this.gameModel.tempCard.name) {
 			case 'strike_w':
 			case 'bash':
-			case 'slice':
 			case 'strike_r':
 			case 'quickSlash':
-			case 'strike_m':
 				attackAnimationEffect(activePlayerUI, direction);
-				attackAnimation(passivePlayerUI, 'attack', '../images/attack-effects/warrior-attack.png');
+				attackAnimation(passivePlayerUI, 'attack', 'images/attack-effects/warrior-attack.png');
 
 				setTimeout(() => {
 					shakeAnimation(passivePlayerUI);
@@ -99,10 +96,11 @@ export default class PlayersView {
 			case 'deflect':
 			case 'backFlip':
 			case 'defend_m':
+			case 'nirvana':
 			case 'masterReality':
 			case 'thirdEye':
 			case 'survivor':
-				blockAnimationEffect(activePlayerUI, 'shield','../images/icons/Icon_Block.png');
+				blockAnimationEffect(activePlayerUI, 'shield','images/icons/Icon_Block.png');
 				playSoundEffect('.defend-audio');
 
 				this.updateViewDef();
@@ -111,7 +109,7 @@ export default class PlayersView {
 			case 'bodySlam':
 				attackAnimationEffect(activePlayerUI, direction);
 
-				attackAnimation(passivePlayerUI, 'smashAttack', '../images/attack-effects/smash.png');
+				attackAnimation(passivePlayerUI, 'smashAttack', 'images/attack-effects/smash.png');
 
 				setTimeout(() => {
 					shakeAnimation(passivePlayerUI);
@@ -123,10 +121,25 @@ export default class PlayersView {
 
 				break;
 
+			case 'slice':
+			case 'strike_m':
+				attackAnimationEffect(activePlayerUI, direction);
+
+				attackAnimation(passivePlayerUI, 'smashAttack', 'images/attack-effects/smash.png');
+
+				playSoundEffect('.mage-punch-audio');
+
+				shakeAnimation(passivePlayerUI);
+
+				this.updateViewHP();
+				this.updateViewDef();
+
+				break;
+
 			case 'daggerThrow':
 				setTimeout(() => {
 					attackAnimationEffect(activePlayerUI, direction);
-					attackAnimation(passivePlayerUI, 'smashAttack', '../images/attack-effects/smash.png');
+					attackAnimation(passivePlayerUI, 'smashAttack', 'images/attack-effects/smash.png');
 
 					shakeAnimation(passivePlayerUI);
 					playSoundEffect('.bash-attack-audio');
@@ -140,7 +153,7 @@ export default class PlayersView {
 			case 'anger':
 				attackAnimationEffect(activePlayerUI, direction);
 
-				standartAttackAnimation(passivePlayerUI, 'angerAttack', '../images/attack-effects/anger.png');
+				standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/anger.png');
 
 				setTimeout(() => {
 					shakeAnimation(passivePlayerUI);
@@ -152,9 +165,24 @@ export default class PlayersView {
 
 				break;
 
+			case 'reachHeaven':
+				attackAnimationEffect(activePlayerUI, direction);
+
+				standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/reach-heaven.png');
+
+				setTimeout(() => {
+					shakeAnimation(passivePlayerUI);
+					playSoundEffect('.mage-strong-audio');
+				}, 200);
+
+				this.updateViewHP();
+				this.updateViewDef();
+
+				break;
+
 			case 'ironWave':
 			case 'dash':
-				blockAnimationEffect(activePlayerUI);
+				blockAnimationEffect(activePlayerUI,'shield','images/icons/Icon_Block.png');
 
 				playSoundEffect('.defend-audio');
 
@@ -162,7 +190,7 @@ export default class PlayersView {
 
 				setTimeout(() => attackAnimationEffect(activePlayerUI, direction), 400);
 
-				setTimeout(() => standartAttackAnimation(passivePlayerUI, 'angerAttack', '../images/attack-effects/anger.png'), 400);
+				setTimeout(() => standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/anger.png'), 400);
 
 				setTimeout(() => shakeAnimation(passivePlayerUI), 400);
 
@@ -175,7 +203,7 @@ export default class PlayersView {
 				break;
 
 			case 'bloodletting':
-				standartAttackAnimation(activePlayerUI, 'shield', '../images/attack-effects/bloodletting.png');
+				standartAttackAnimation(activePlayerUI, 'shield', 'images/attack-effects/bloodletting.png');
 
 				setTimeout(() => {
 					shakeAnimation(activePlayerUI);
@@ -195,11 +223,43 @@ export default class PlayersView {
 
 				break;
 
+			case 'meditate':
+			case 'alpha':
+				blockAnimationEffect(activePlayerUI, 'expertice', 'images/attack-effects/refresh-stamina.svg');
+
+				playSoundEffect('.meditate-audio');
+
+				this.updateViewHP();
+
+				break;
+
+			case 'cutThroughFate':
+				blockAnimationEffect(activePlayerUI,'shield','images/icons/Icon_Block.png');
+
+				playSoundEffect('.defend-audio');
+
+				this.updateViewDef();
+
+				setTimeout(() => attackAnimationEffect(activePlayerUI, direction), 400);
+
+				setTimeout(() => standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/mageEffect.png'), 400);
+
+				setTimeout(() => shakeAnimation(passivePlayerUI), 400);
+
+				setTimeout(() => playSoundEffect('.mage-attack-audio'), 400);
+
+				setTimeout(() => this.updateViewHP(), 400);
+
+				setTimeout(() => this.updateViewDef(), 400);
+
+				break;
+
 			case 'perfectedStrike':
+			case 'tantrum':
 			case 'flechettes':
 				attackAnimationEffect(activePlayerUI, direction);
 
-				multipleAttackAnimation(passivePlayerUI, 'attack', '../images/attack-effects/warrior-attack.png', 3);
+				multipleAttackAnimation(passivePlayerUI, 'attack', 'images/attack-effects/warrior-attack.png', 3);
 
 				setTimeout(() => shakeAnimation(passivePlayerUI), 200);
 
@@ -209,7 +269,7 @@ export default class PlayersView {
 				break;
 
 			case 'expertise':
-				blockAnimationEffect(activePlayerUI, 'expertice', '../images/attack-effects/serpent_ring.png');
+				blockAnimationEffect(activePlayerUI, 'expertice', 'images/attack-effects/serpent_ring.png');
 
 				this.updateViewHP();
 
@@ -220,7 +280,7 @@ export default class PlayersView {
 
 				playSoundEffect('.warcry-audio');
 
-				ultimateSkillAnimation(passivePlayerUI, 'warriorUltimate', '../images/attack-effects/flash.png', '.flash-audio');
+				ultimateSkillAnimation(passivePlayerUI, 'warriorUltimate', 'images/attack-effects/flash.png', '.flash-audio');
 
 				this.updateViewHP();
 				this.updateViewDef();
@@ -230,7 +290,27 @@ export default class PlayersView {
 			case 'riddleWithHoles':
 				attackAnimationEffect(activePlayerUI, direction);
 
-				ultimateSkillAnimation(passivePlayerUI, 'rogueUltimate', '../images/attack-effects/daggers.svg', '.backstab-audio');
+				ultimateSkillAnimation(passivePlayerUI, 'rogueUltimate', 'images/attack-effects/daggers.svg', '.backstab-audio');
+
+				this.updateViewHP();
+				this.updateViewDef();
+
+				break;
+
+			case 'signatureMove':
+				attackAnimationEffect(activePlayerUI, direction);
+
+				ultimateSkillAnimation(passivePlayerUI, 'mageUltimate', 'images/attack-effects/mage-attack.png', '.mage-ultimate-audio');
+
+				this.updateViewHP();
+				this.updateViewDef();
+
+				break;
+
+			case 'judjment':
+				attackAnimationEffect(activePlayerUI, direction);
+
+				ultimateSkillAnimation(passivePlayerUI, 'rogueUltimate', 'images/attack-effects/judjment.svg', '.judj-audio');
 
 				this.updateViewHP();
 				this.updateViewDef();

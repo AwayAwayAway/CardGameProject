@@ -13,12 +13,12 @@
         #mage-chest {
           transform-box: fill-box;
           transform-origin: bottom;
-          animation: breathMage 2s linear infinite;
+          animation: breathMage 3s linear infinite;
         }
         #mage-right-hand {
           transform-box: fill-box;
           transform-origin: top;
-          animation: handMove 2s linear infinite;
+          animation: handMove 3s linear infinite;
         }
 
         #mage-hair {
@@ -50,7 +50,7 @@
             transform: rotateZ(0deg);
           }
           50% {
-            transform: rotateZ(1deg);
+            transform: rotateZ(2deg);
           }
           100% {
             transform: rotateZ(0deg);
@@ -74,7 +74,7 @@
             transform: scale(1.0);
           }
           50% {
-            transform: scale(1.015);
+            transform: scale(1.03);
           }
           100% {
             transform: scale(1.0);

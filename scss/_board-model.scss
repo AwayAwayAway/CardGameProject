@@ -1,6 +1,6 @@
 .wrapper-battle {
   height: 100vh;
-  background: url("./images/backgrounds/battlefield.jpg") center/cover no-repeat;
+  background: url("../images/backgrounds/battlefield.jpg") center/cover no-repeat;
 }
 
 /* Start Счетчик набранных карт */
@@ -69,8 +69,7 @@
 .end-of-turn-btn {
   position: absolute;
   display: flex;
-  //left: 5%;
-  top: 30%;
+  top: 25%;
   height: 100px;
   width: 100px;
   z-index: 100;
