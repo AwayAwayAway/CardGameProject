@@ -153,6 +153,50 @@
   animation: rotateExpertice 1s linear forwards;
 }
 
+.defendValuePositive {
+  animation: DPanimatePositive .5s linear forwards;
+}
+
+.defendValueNegative {
+  animation: DPanimateNegative .5s linear forwards;
+}
+
+.damageNumberAnimate {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: white;
+  font-size: 3rem;
+  z-index: 1000;
+  transform-origin: 50% 50%;
+  animation: damageNumberAnimate linear 1s forwards;
+}
+@keyframes damageNumberAnimate {
+  0% {
+    transform: translate(0px, 0px);
+    opacity: 1;
+  }
+  20% {
+    transform:  translate(-15px, -30px);
+  }
+  40% {
+    transform:  translate(-25px, 30px);
+  }
+  60% {
+    transform: translate(-35px, 60px);
+  }
+  80% {
+    transform:  translate(-45px, 90px);
+  }
+  99%{
+    opacity: 1;
+  }
+  100% {
+    transform:  translate(-66px, 120px);
+    opacity: 0;
+  }
+}
+
 @keyframes warriorUltimate {
   0% {
     opacity: 0;
@@ -172,6 +216,44 @@
 
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes DPanimatePositive {
+  0% {
+    transform: scale(1.0);
+    color: white;
+  }
+  1%{
+    color: green;
+  }
+  50% {
+    transform: scale(1.5);
+    color: green;
+  }
+  99%{
+    color: green;
+  }
+  100% {
+    transform: scale(1.0);
+    color: white;
+  }
+}
+
+@keyframes DPanimateNegative {
+  0% {
+    transform: scale(1.0);
+    color: white;
+  }
+
+  50% {
+    transform: scale(1.2);
+    color: red;
+  }
+
+  100% {
+    transform: scale(1.0);
+    color: white;
   }
 }
 
@@ -467,3 +549,4 @@
     opacity: 0;
   }
 }
+

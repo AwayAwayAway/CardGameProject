@@ -90,7 +90,7 @@ const strike_m = new Cards(0, 'attack', 1, 6, 'images/cards/mage/Strike_P.png', 
 
 const cutThroughFate = new Cards(1, 'attackDrawDiscard', 1, 7, 'images/cards/mage/CutThroughFate.png', 'cutThroughFate', () => 2);
 
-const reachHeaven = new Cards(2, 'attack', 2, 10, 'images/cards/mage/ReachHeaven.png', 'reachHeaven');
+const reachHeaven = new Cards(2, 'attack', 2, 12, 'images/cards/mage/ReachHeaven.png', 'reachHeaven');
 
 const signatureMove = new Cards(3, 'attackAddEffect', 2, 0, 'images/cards/mage/SignatureMove.png', 'signatureMove', () => gameObserver.passivePlayer.defendPoints);
 

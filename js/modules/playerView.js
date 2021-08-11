@@ -1,8 +1,9 @@
 import {
 	attackAnimation, attackAnimationEffect, blockAnimationEffect,
 	playSoundEffect, shakeAnimation, multipleAttackAnimation, standartAttackAnimation,
-	ultimateSkillAnimation
+	ultimateSkillAnimation, damageNumbersAnimation
 } from '../animation_and_sound_effects/animation';
+import Events from './eventsModel';
 
 export default class PlayersView {
 	constructor(playerOneModel, playerTwoModel, gameModel, container) {
@@ -10,6 +11,8 @@ export default class PlayersView {
 		this.playerTwoModel = playerTwoModel;
 		this.gameModel = gameModel;
 		const playerContainer = container;
+
+		this.updateInitialValue = new Events();
 
 		this.playerOneHPValue = playerContainer.querySelector('.player-1__hp-value');
 		this.playerOneDefenceValue = playerContainer.querySelector('.player-1__defence-value');
@@ -22,39 +25,74 @@ export default class PlayersView {
 		this.playerTwoHP = playerContainer.querySelector('.player-2__hp-bar-inner');
 
 		this.playerOneModel.playerViewUpdate.attach(() => {
-			this.updateViewHP();
-			this.updateViewDef();
+			this.updateViewStamina();
 		});
 		this.playerTwoModel.playerViewUpdate.attach(() => {
-			this.updateViewHP();
-			this.updateViewDef();
+			this.updateViewStamina();
 		});
 
-		this.playerTwoModel.actionAnimation.attach(() => this.doAnimation());
+		this.playerOneModel.actionAnimation.attach(() => this.doAnimation());
 		this.playerTwoModel.actionAnimation.attach(() => this.doAnimation());
 
 		this.updateViewHP();
 		this.updateViewDef();
-
+		this.updateViewStamina();
 	}
 
 	// устанавливаем первые параметры здоровье, защита, стамина
 	updateViewHP() {
 		this.playerOneHPValue.textContent = this.playerOneModel.healthPoints;
-		this.playerOneStaminaValue.textContent = this.playerOneModel.staminaPoints;
+
 		this.playerOneHP.style.width = this.playerOneModel.healthPoints + '%';
 
 		this.playerTwoHPValue.textContent = this.playerTwoModel.healthPoints;
-		this.playerTwoStaminaValue.textContent = this.playerTwoModel.staminaPoints;
+
 		this.playerTwoHP.style.width = this.playerTwoModel.healthPoints + '%';
 	};
 
 	updateViewDef() {
 		this.playerOneDefenceValue.textContent = this.playerOneModel.defendPoints;
-		this.playerOneStaminaValue.textContent = this.playerOneModel.staminaPoints;
 
 		this.playerTwoDefenceValue.textContent = this.playerTwoModel.defendPoints;
+
+		this.playerOneDefenceValue.classList.remove('defendValueNegative');
+		this.playerOneDefenceValue.classList.remove('defendValuePositive');
+		this.playerTwoDefenceValue.classList.remove('defendValueNegative');
+		this.playerTwoDefenceValue.classList.remove('defendValuePositive');
+
+		if(this.playerOneModel.initialDP > this.playerOneModel.defendPoints) {
+			setTimeout(() => this.playerOneDefenceValue.className = 'player-1__defence-value defendValueNegative', 0);
+		}
+
+		if (this.playerOneModel.initialDP < this.playerOneModel.defendPoints) {
+			setTimeout(() => this.playerOneDefenceValue.className = 'player-1__defence-value defendValuePositive', 0);
+		}
+
+		if (this.playerTwoModel.initialDP > this.playerTwoModel.defendPoints) {
+			setTimeout(() => this.playerTwoDefenceValue.className = 'player-2__defence-value defendValueNegative', 0);
+		}
+
+		if (this.playerTwoModel.initialDP < this.playerTwoModel.defendPoints) {
+			setTimeout(() => this.playerTwoDefenceValue.className = 'player-2__defence-value defendValuePositive', 0);
+		}
+	};
+
+	updateViewStamina() {
+		this.playerOneStaminaValue.textContent = this.playerOneModel.staminaPoints;
+
 		this.playerTwoStaminaValue.textContent = this.playerTwoModel.staminaPoints;
+	};
+
+	updateDamageNumbers(passivePlayerUI) {
+		let calcDP = this.gameModel.passivePlayer.initialDP - this.gameModel.passivePlayer.defendPoints;
+		const calcHP = this.gameModel.passivePlayer.initialHP - this.gameModel.passivePlayer.healthPoints;
+
+		if(calcDP <= 0) {
+			calcDP = 0;
+		}
+		const resultContent = calcHP + calcDP;
+
+		damageNumbersAnimation(passivePlayerUI, 'damageNumberAnimate', resultContent)
 	};
 
 	doAnimation() {
@@ -87,6 +125,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -104,6 +145,10 @@ export default class PlayersView {
 				playSoundEffect('.defend-audio');
 
 				this.updateViewDef();
+				this.updateViewStamina();
+
+				this.updateInitialValue.notify();
+
 				break;
 
 			case 'bodySlam':
@@ -118,6 +163,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -133,6 +181,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -147,6 +198,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -162,6 +216,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -175,8 +232,13 @@ export default class PlayersView {
 					playSoundEffect('.mage-strong-audio');
 				}, 200);
 
+
+
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -186,19 +248,20 @@ export default class PlayersView {
 
 				playSoundEffect('.defend-audio');
 
-				this.updateViewDef();
+				setTimeout(()=> {
+					attackAnimationEffect(activePlayerUI, direction);
+					standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/anger.png');
+					shakeAnimation(passivePlayerUI);
+					playSoundEffect('.bash-attack-audio');
 
-				setTimeout(() => attackAnimationEffect(activePlayerUI, direction), 400);
+					this.updateViewHP();
+					this.updateViewDef();
+					this.updateViewStamina();
+					this.updateDamageNumbers(passivePlayerUI);
+					this.updateInitialValue.notify();
+				},400)
 
-				setTimeout(() => standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/anger.png'), 400);
 
-				setTimeout(() => shakeAnimation(passivePlayerUI), 400);
-
-				setTimeout(() => playSoundEffect('.bash-attack-audio'), 400);
-
-				setTimeout(() => this.updateViewHP(), 400);
-
-				setTimeout(() => this.updateViewDef(), 400);
 
 				break;
 
@@ -210,7 +273,11 @@ export default class PlayersView {
 					playSoundEffect('.bloodletting-audio');
 				}, 200);
 
+
+
 				this.updateViewHP();
+
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -219,7 +286,7 @@ export default class PlayersView {
 
 				playSoundEffect('.warcry-audio');
 
-				this.updateViewHP();
+				this.updateViewStamina();
 
 				break;
 
@@ -229,7 +296,7 @@ export default class PlayersView {
 
 				playSoundEffect('.meditate-audio');
 
-				this.updateViewHP();
+				this.updateViewStamina();
 
 				break;
 
@@ -239,18 +306,20 @@ export default class PlayersView {
 				playSoundEffect('.defend-audio');
 
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
-				setTimeout(() => attackAnimationEffect(activePlayerUI, direction), 400);
+				setTimeout(()=> {
+					attackAnimationEffect(activePlayerUI, direction);
+					standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/mageEffect.png');
+					shakeAnimation(passivePlayerUI);
+					playSoundEffect('.mage-attack-audio');
 
-				setTimeout(() => standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/mageEffect.png'), 400);
-
-				setTimeout(() => shakeAnimation(passivePlayerUI), 400);
-
-				setTimeout(() => playSoundEffect('.mage-attack-audio'), 400);
-
-				setTimeout(() => this.updateViewHP(), 400);
-
-				setTimeout(() => this.updateViewDef(), 400);
+					this.updateViewHP();
+					this.updateViewDef();
+					this.updateInitialValue.notify();
+				},400)
 
 				break;
 
@@ -265,13 +334,16 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
 			case 'expertise':
 				blockAnimationEffect(activePlayerUI, 'expertice', 'images/attack-effects/serpent_ring.png');
 
-				this.updateViewHP();
+				this.updateViewStamina();
 
 				break;
 
@@ -284,6 +356,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -294,6 +369,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -304,6 +382,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 
@@ -314,6 +395,9 @@ export default class PlayersView {
 
 				this.updateViewHP();
 				this.updateViewDef();
+				this.updateViewStamina();
+				this.updateDamageNumbers(passivePlayerUI);
+				this.updateInitialValue.notify();
 
 				break;
 		}

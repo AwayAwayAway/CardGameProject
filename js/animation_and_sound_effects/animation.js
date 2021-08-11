@@ -300,11 +300,23 @@ function attackAnimationEffect(querySelector, direction) {
 	}
 }
 
+function damageNumbersAnimation(querySelector, className, content) {
+	const container = document.querySelector(querySelector).parentElement;
+
+	const divEl = document.createElement('div');
+	divEl.textContent = content;
+	divEl.className = className;
+
+	container.appendChild(divEl);
+
+	// setTimeout(() => container.removeChild(divEl), 300);
+}
+
 export {
 	loading, switchPlayPause, checkBackgroundAudio, shakeAnimation,
 	createCardAnim, endTurnAnim, blockAnimationEffect, attackAnimation,
 	playSoundEffect, attackAnimationEffect, multipleAttackAnimation, discardCardAnim,
-	standartAttackAnimation, ultimateSkillAnimation
+	standartAttackAnimation, ultimateSkillAnimation, damageNumbersAnimation
 };
 
 

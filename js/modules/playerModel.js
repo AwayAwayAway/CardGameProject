@@ -14,6 +14,9 @@ export default class Players {
 		this.cardDraw = new Events();
 		this.cardDiscard = new Events();
 		this.actionAnimation = new Events();
+
+		this.initialHP = 100;
+		this.initialDP = 7;
 	}
 
 	endTurn() {
@@ -25,6 +28,11 @@ export default class Players {
 
 	updateView() {
 		this.playerViewUpdate.notify();
+	};
+
+	updateInitialValues() {
+		this.initialHP = this.healthPoints;
+		this.initialDP = this.defendPoints;
 	};
 
 	doAction() {
@@ -56,12 +64,14 @@ export default class Players {
 				break;
 			case 'defendDrawDiscard':
 				this.defendDrawDiscard(this.gameModel.tempCard);
+
+
 				break;
 			case 'defendAndAttack':
 				this.defendWithAttack(this.gameModel.tempCard);
-		}
 
-		// this.actionAnimation.notify();
+				break;
+		}
 	};
 
 	randomCardDraw() {

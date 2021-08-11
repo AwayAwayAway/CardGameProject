@@ -21,7 +21,7 @@ export const player2 = new Players(gameObserver, boardModel);
 
 const playersView = new PlayersView(player1, player2, gameObserver, document.querySelector('.wrapper-battle'));
 
-const playersController = new PlayersController(player1, player2, boardView);
+const playersController = new PlayersController(player1, player2, boardView, playersView);
 
 const boardController = new BoardController(gameObserver, boardModel, player1, player2, boardView);
 
