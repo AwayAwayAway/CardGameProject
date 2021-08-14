@@ -13,13 +13,15 @@
 }
 
 .startButton,
-.aboutButton {
+.aboutButton,
+.continueButton {
   padding: 3rem;
   transition: color .3s linear;
 }
 
 .startButton:hover,
-.aboutButton:hover {
+.aboutButton:hover,
+.continueButton:hover {
   color: cyan;
   cursor: pointer;
 }
@@ -31,4 +33,25 @@
   color: #d4b7b7;
   cursor: pointer;
   z-index: 600;
+}
+
+.closeRuleBtn {
+  color: white;
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  cursor: pointer;
+  transition: color .3s ease-in-out;
+  border: 2px dotted white;
+  padding: 1rem;
+  border-radius: 20px;
+}
+
+.closeRuleBtn:hover {
+  color: #f80606;
+}
+
+.rules {
+  height: 90vh;
+  width: 100%;
 }

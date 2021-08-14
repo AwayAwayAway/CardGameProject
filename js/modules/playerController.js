@@ -1,3 +1,5 @@
+import {player1, player2} from '../game';
+
 export default class PlayersController {
 	constructor(playerOneModel, playerTwoModel, boardView, playerView) {
 		this.playerOneModel = playerOneModel;
@@ -16,10 +18,18 @@ export default class PlayersController {
 		if (this.playersView.hasOwnProperty('updateInitialValue')) {
 			this.playersView.updateInitialValue.attach(() => this.updateInitialValue());
 		}
+
+		if (this.boardView.hasOwnProperty('saveGameProgres')) {
+			this.boardView.saveGameProgres.attach(() => this.onSavePlayerData());
+		}
+
+		if (this.boardView.hasOwnProperty('onConcede')) {
+			this.boardView.onConcede.attach((player) => this.doConcede(player));
+		}
 	}
 
 	playCard(priority) {
-		if(priority) {
+		if (priority) {
 			this.playerOneModel.doAction();
 		} else {
 			this.playerTwoModel.doAction();
@@ -35,5 +45,18 @@ export default class PlayersController {
 	updateInitialValue() {
 		this.playerOneModel.updateInitialValues();
 		this.playerTwoModel.updateInitialValues();
+	}
+
+	onSavePlayerData() {
+		this.playerOneModel.savePlayerData();
+		this.playerTwoModel.savePlayerData();
+	}
+
+	doConcede(player) {
+		if (player === 'player1') {
+			player1.concede();
+		} else {
+			player2.concede();
+		}
 	}
 }

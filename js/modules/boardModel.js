@@ -23,6 +23,9 @@ export default class Board {
 		this.showDeckPlayer1 = document.querySelector('.player-1__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
 		this.showDeckPlayer2 = document.querySelector('.player-2__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
 
+		this.menu = document.querySelector('.battle-field-nav');
+		this.menuIcon = document.querySelector('.battle-field-nav__icon');
+
 		// создаем событие на создание карт
 		this.onCreateCards = new Events();
 		this.onCounterChange = new Events();
@@ -131,16 +134,12 @@ export default class Board {
 			}
 
 			this.createAnimation.notify('.card-in-hand-field', 'multiple');
-
-			// createCardAnim('.card-in-hand-field', 'multiple');
 		} else {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerTwoPullOfCards[tempIndex[i]], 'hand', true);
 			}
 
 			this.createAnimation.notify('.card-in-hand-field', 'multiple');
-
-			// createCardAnim('.card-in-hand-field', 'multiple');
 		}
 	}
 

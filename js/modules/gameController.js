@@ -18,6 +18,14 @@ export default class GameController {
 		if (this.boardView.hasOwnProperty('endTurn')) {
 			this.boardView.endTurn.attach(() => this.doEndTurn());
 		}
+
+		if (this.boardView.hasOwnProperty('saveGameProgres')) {
+			this.boardView.saveGameProgres.attach(() => this.onSaveGameData());
+		}
+
+		if (this.boardView.hasOwnProperty('onRestoreGameData')) {
+			this.boardView.onRestoreGameData.attach(() => this.startRestoreData());
+		}
 	}
 
 	// событие на кнопку подтверждения выбора карт, запоминаем что выбрал в масси
@@ -36,5 +44,13 @@ export default class GameController {
 
 	doEndTurn() {
 		this.gameModel.turnEndsNextPlayerTurn();
+	}
+
+	onSaveGameData() {
+		this.gameModel.saveGameData();
+	}
+
+	startRestoreData() {
+		this.gameModel.doRestoreGameData()
 	}
 }

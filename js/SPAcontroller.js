@@ -32,6 +32,10 @@ function renderPage() {
 			loading('battleFieldLoad');
 			setTimeout(() => createMainPage(gameConstructor.battle), 500);
 			break;
+		case 'restoredGame':
+			loading('battleFieldLoad');
+			setTimeout(() => createMainPage(gameConstructor.battle), 500);
+			break;
 	}
 
 	setTimeout(() => checkBackgroundAudio(), 550) ;
@@ -50,6 +54,10 @@ function switchHash(event) {
 		case 'startGame':
 			document.title = 'Battlefield';
 			location.hash = decodeURIComponent('battle-field');
+			break;
+		case 'continueButton':
+			document.title = 'Battlefield';
+			location.hash = decodeURIComponent('restoredGame');
 			break;
 	}
 }

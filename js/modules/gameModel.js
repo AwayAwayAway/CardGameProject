@@ -51,21 +51,17 @@ export default class Game {
 		this.setActivePassivePlayer();
 	};
 
-	// линкуем player1 & player2 в gamemodel
-	setActivePassivePlayer() {
-		this.activePlayer = player1;
-		this.passivePlayer = player2;
-	};
-
 	// забираем инфу о выборе игроками персонажей и их никнеймов и парсим json
 	setPlayersChoiceInfo(object) {
 		let temp = localStorage.getItem(object);
+
 		this.playersInfo = JSON.parse(temp);
 	};
 
 	// устанавливаем класы игроками из объекта
 	setPlayersClasses() {
 		this.playerOneClass = this.playersInfo.playerOneClass;
+
 		this.playerTwoClass = this.playersInfo.playerTwoClass;
 	};
 
@@ -88,14 +84,14 @@ export default class Game {
 		}
 	};
 
-	// устанавливаем приоритет хода игрока
-	setTurnPriority() {
-		if (this.playerOneTurn) {
-			this.playerOneTurn = false;
-			this.playerTwoTurn = true;
+	// линкуем player1 & player2 в gamemodel
+	setActivePassivePlayer() {
+		if(this.playerOneTurn) {
+			this.activePlayer = player1;
+			this.passivePlayer = player2;
 		} else {
-			this.playerOneTurn = true;
-			this.playerTwoTurn = false;
+			this.activePlayer = player2;
+			this.passivePlayer = player1;
 		}
 	};
 
@@ -200,6 +196,73 @@ export default class Game {
 			this.passivePlayer = player2;
 		}
 	};
+
+	// устанавливаем приоритет хода игрока
+	setTurnPriority() {
+		if (this.playerOneTurn) {
+			this.playerOneTurn = false;
+			this.playerTwoTurn = true;
+		} else {
+			this.playerOneTurn = true;
+			this.playerTwoTurn = false;
+		}
+	};
+
+	saveGameData() {
+		const info = {
+			playerOneTurn: this.playerOneTurn,
+			playerTwoTurn: this.playerTwoTurn,
+			playerOnePullOfCards: this.playerOnePullOfCards.map((element) => element.id),
+			playerTwoPullOfCards: this.playerTwoPullOfCards.map((element) => element.id),
+			activePlayerCardsHand: this.saveActivePlayerCardsHand(),
+			player1: player1.savePlayerData(),
+			player2: player2.savePlayerData()
+		}
+
+		console.log(info);
+
+		localStorage.setItem('gameData', JSON.stringify(info));
+	}
+
+	saveActivePlayerCardsHand() {
+		const cardInfo = document.querySelector('.card-in-hand-field');
+		const cardID = [...cardInfo.children].map((element) => element.dataset.info)
+
+		return cardID
+	}
+
+	doRestoreGameData() {
+		const temp = localStorage.getItem('gameData');
+		const tempData = JSON.parse(temp);
+		const overlay = document.querySelector('.players-overlay');
+		const overlayClose = document.querySelector('.overlay__close');
+		const divEl = document.querySelector('.confirm-continue');
+		let activePlayerHand;
+
+		this.playerOneTurn = tempData.playerOneTurn;
+		this.playerTwoTurn = tempData.playerTwoTurn;
+
+		this.playerOnePullOfCards = this.checkOnSelectedCards(tempData.playerOnePullOfCards, this.playerOneClass);
+		this.playerTwoPullOfCards = this.checkOnSelectedCards(tempData.playerTwoPullOfCards, this.playerTwoClass);
+
+		if(this.playerOneTurn){
+			activePlayerHand = this.checkOnSelectedCards(tempData.activePlayerCardsHand, this.playerOneClass);
+		} else {
+			activePlayerHand = this.checkOnSelectedCards(tempData.activePlayerCardsHand, this.playerTwoClass);
+		}
+
+		this.setActivePassivePlayer();
+
+		player1.doRestorePlayerData('player1');
+		player2.doRestorePlayerData('player2');
+
+		this.selectionEnd.notify(activePlayerHand);
+
+		overlay.removeChild(divEl);
+
+		overlay.classList.add('hidden');
+		overlayClose.classList.remove('hidden');
+	}
 }
 
 

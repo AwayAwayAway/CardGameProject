@@ -1,5 +1,6 @@
 import Events from './eventsModel';
 import {playSoundEffect, createCardAnim, discardCardAnim} from '../animation_and_sound_effects/animation.js';
+import {player1} from '../game';
 
 export default class Players {
 	constructor(game, board) {
@@ -26,8 +27,13 @@ export default class Players {
 		this.updateView();
 	}
 
-	updateView() {
-		this.playerViewUpdate.notify();
+	updateView(state) {
+		if(state) {
+			this.playerViewUpdate.notify('concede');
+		} else {
+			this.playerViewUpdate.notify();
+		}
+
 	};
 
 	updateInitialValues() {
@@ -401,4 +407,31 @@ export default class Players {
 
 		this.actionAnimation.notify();
 	};
+
+	savePlayerData() {
+		return {
+			healthPoints: this.healthPoints,
+			staminaPoints: this.staminaPoints,
+			defendPoints: this.defendPoints,
+			initialHP: this.initialHP,
+			initialDP: this.initialDP
+		}
+	}
+
+	doRestorePlayerData(player) {
+		const temp = localStorage.getItem('gameData');
+		const tempData = JSON.parse(temp);
+
+		this.healthPoints = tempData[player].healthPoints;
+		this.staminaPoints = tempData[player].staminaPoints;
+		this.defendPoints = tempData[player].defendPoints;
+		this.initialHP = tempData[player].initialHP;
+		this.initialDP = tempData[player].initialDP;
+	}
+
+	concede() {
+		this.healthPoints = 0;
+
+		this.updateView('concede')
+	}
 }

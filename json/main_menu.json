@@ -17,6 +17,13 @@
     "id": 2,
     "role": "child",
     "tagName": "div",
+    "class": "continueButton",
+    "content": "Continue"
+  },
+  {
+    "id": 2,
+    "role": "child",
+    "tagName": "div",
     "class": "startButton",
     "content": "Start battle"
   },

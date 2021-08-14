@@ -1,10 +1,16 @@
 import Events from './eventsModel';
-import {createCardAnim, endTurnAnim} from '../animation_and_sound_effects/animation';
+import {createCardAnim, endTurnAnim, playSoundEffect} from '../animation_and_sound_effects/animation';
+import {gameObserver, player1} from '../game';
+import {player2} from '../game';
 
 export default class BoardView {
 	constructor(board, game, selector) {
+		this.forbidClick = event => event.stopPropagation();
+
 		this.boardModel = board;
+
 		this.gameModel = game;
+
 		this.boardSelector = selector;
 
 		this.onLoadCreate = new Events;
@@ -39,6 +45,12 @@ export default class BoardView {
 		this.showPlayerDeck = new Events();
 
 		this.soundOffOn = new Events();
+
+		this.saveGameProgres = new Events();
+
+		this.onRestoreGameData = new Events();
+
+		this.onConcede = new Events();
 
 		this.boardModel.btnAccept.addEventListener('click', () => this.onDefineCards.notify());
 
@@ -76,6 +88,26 @@ export default class BoardView {
 
 		this.boardModel.soundOffOn.addEventListener('click', () => this.soundOffOn.notify());
 
+		this.boardModel.menuIcon.addEventListener('click', () => this.showMenu());
+
+		this.boardModel.menuIcon.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+
+		this.boardModel.menu.addEventListener('click', (event) => this.navigateGame(event.target));
+
+		[...this.boardModel.menu.getElementsByTagName('li')].forEach((button) => {
+			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+		});
+
+		this.boardSelector.querySelector('.save-progress').addEventListener('click', this.forbidClick);
+
+		this.boardSelector.querySelector('.concede').addEventListener('click', this.forbidClick);
+
+		window.addEventListener('beforeunload', (event) => {
+			event.preventDefault();
+			event.returnValue = '';
+		});
+
 
 		// подписываемся на событие в модели
 		// this.boardModel создала карты надо их отобразить
@@ -105,29 +137,32 @@ export default class BoardView {
 		this.boardModel.createAnimation.attach((querySelector, amount) => this.createAnimation(querySelector, amount));
 
 		this.boardModel.endTurnAnimation.attach((side) => this.endTurnAnimation(side));
-
-
 	}
 
 	// need for start render cards when page is loaded
 	init() {
 		this.onLoadCreate.notify();
+		this.checkRestoreGame();
 	};
 
 	drawCards(card, place) {
 		switch (place) {
 			case 'board':
 				this.boardModel.decWrapper.appendChild(card);
+
 				break;
 			case 'hand':
 				this.boardModel.cardInHand.appendChild(card);
+
 				break;
 			case 'overlay':
 				this.boardModel.playersDeck.appendChild(card);
+
 				break;
 		}
 
-		this.boardModel.cardsChooseCounter.textContent = 0;
+		this.boardModel.cardsChooseCounter.textContent = '0';
+
 		this.boardModel.cardsChooseCounter.style = 'color: white';
 	};
 
@@ -158,13 +193,15 @@ export default class BoardView {
 
 	counterUpdate(info) {
 		this.boardModel.cardsChooseCounter.textContent = info.number;
+
 		this.boardModel.cardsChooseCounter.style = `color: ${info.color}`;
 	};
 
 	selectionEndUpdate() {
 		this.boardModel.decWrapper.style.display = 'none';
+
 		this.boardModel.battleField.classList.remove('hidden');
-		// this.boardSelector.querySelector('.card-counter').classList.add('hidden');
+
 		this.boardSelector.querySelector('.card-counter').style.display = 'none';
 	}
 
@@ -174,6 +211,7 @@ export default class BoardView {
 
 	playerNameUpdate(name1, name2) {
 		this.boardSelector.querySelector('.player-1__name').textContent = name1;
+
 		this.boardSelector.querySelector('.player-2__name').textContent = name2;
 	}
 
@@ -187,12 +225,15 @@ export default class BoardView {
 		switch (modelPlayer1) {
 			case 'warrior':
 				player1Model.data = 'images/models/viking.svg';
+
 				break;
 			case 'rogue':
 				player1Model.data = 'images/models/rogue.svg';
+
 				break;
 			case 'mage':
 				player1Model.data = 'images/models/mage.svg';
+
 				break;
 			default:
 				console.log('models not found');
@@ -201,23 +242,126 @@ export default class BoardView {
 		switch (modelPlayer2) {
 			case 'warrior':
 				player2Model.data = 'images/models/viking.svg';
+
 				break;
 			case 'rogue':
 				player2Model.data = 'images/models/rogue.svg';
+
 				break;
 			case 'mage':
 				player2Model.data = 'images/models/mage.svg';
+
 				break;
 			default:
 				console.log('models not found');
 		}
 	}
 
+	doConcede() {
+		if(this.gameModel.playerOneTurn) {
+			this.onConcede.notify('player1');
+		} else {
+			this.onConcede.notify('player2');
+		}
+	}
+
 	createAnimation(querySelector, amount) {
-		createCardAnim(querySelector, amount)
+		createCardAnim(querySelector, amount);
 	}
 
 	endTurnAnimation(side) {
 		endTurnAnim(side);
 	}
+
+	showMenu() {
+		const menuIcon = this.boardSelector.querySelector('.battle-field-nav__icon');
+		const menuList = this.boardSelector.querySelector('.battle-field-nav__list');
+
+		if (menuIcon.classList.contains('fa-times-circle')) {
+			menuList.classList.add('hidden');
+			menuIcon.className = 'fas fa-bars battle-field-nav__icon';
+		} else {
+			menuList.classList.remove('hidden');
+			menuIcon.className = 'far fa-times-circle battle-field-nav__icon';
+		}
+	}
+
+	navigateGame(eventTarget) {
+		switch (eventTarget.className.split(' ')[0]) {
+			case 'return-to-main-menu':
+				document.title = 'Main menu';
+				location.hash = decodeURIComponent('main-menu');
+
+				break;
+			case 'return-to-choose-menu':
+				document.title = 'Choose menu';
+				location.hash = decodeURIComponent('choose-menu');
+
+				break;
+			case 'save-progress':
+				this.saveGameProgres.notify();
+
+				break;
+			case 'concede':
+				this.doConcede();
+
+				break;
+		}
+	}
+
+	checkRestoreGame() {
+		const hash = window.location.hash;
+		const state = decodeURIComponent(hash.substr(1));
+		const overlay = document.querySelector('.players-overlay');
+		const overlayClose = document.querySelector('.overlay__close');
+
+		if (state === 'restoredGame') {
+			overlay.classList.remove('hidden');
+			overlay.classList.add('fade-in');
+			overlayClose.classList.add('hidden');
+
+			const divEl = document.createElement('div');
+
+			divEl.className = 'confirm-continue';
+			divEl.textContent = 'Do you want to continue the last game?';
+
+			const choiceYes = document.createElement('button');
+
+			choiceYes.className = 'accept';
+			choiceYes.textContent = 'Yes';
+
+			const choiceNo = document.createElement('button');
+
+			choiceNo.className = 'reject';
+			choiceNo.textContent = 'No';
+
+			divEl.appendChild(choiceYes);
+			divEl.appendChild(choiceNo);
+
+			overlay.appendChild(divEl);
+
+			this.boardSelector.querySelector('.confirm-continue').addEventListener('click', (event) => this.doContinueDecision(event.target));
+		}
+	}
+
+	doContinueDecision(eventTarget) {
+		const overlay = document.querySelector('.players-overlay');
+		const overlayClose = document.querySelector('.overlay__close');
+		const divEl = document.querySelector('.confirm-continue');
+
+		switch (eventTarget.className) {
+			case 'reject':
+				overlay.removeChild(divEl);
+
+				overlay.classList.add('hidden');
+				overlayClose.classList.remove('hidden');
+
+				break;
+			case 'accept':
+				this.onRestoreGameData.notify();
+
+				break;
+		}
+	}
+
 }

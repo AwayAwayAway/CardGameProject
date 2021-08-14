@@ -24,19 +24,29 @@ export default class PlayersView {
 		this.playerTwoStaminaValue = playerContainer.querySelector('.player-2__stamina-value');
 		this.playerTwoHP = playerContainer.querySelector('.player-2__hp-bar-inner');
 
-		this.playerOneModel.playerViewUpdate.attach(() => {
-			this.updateViewStamina();
+		this.playerOneModel.playerViewUpdate.attach((state) => {
+			if(state) {
+				this.updateViewHP();
+			} else {
+				this.updateViewStamina();
+			}
 		});
-		this.playerTwoModel.playerViewUpdate.attach(() => {
-			this.updateViewStamina();
+		this.playerTwoModel.playerViewUpdate.attach((state) => {
+			if(state) {
+				this.updateViewHP();
+			} else {
+				this.updateViewStamina();
+			}
 		});
 
 		this.playerOneModel.actionAnimation.attach(() => this.doAnimation());
 		this.playerTwoModel.actionAnimation.attach(() => this.doAnimation());
 
-		this.updateViewHP();
-		this.updateViewDef();
-		this.updateViewStamina();
+		this.gameModel.selectionEnd.attach(() => {
+			this.updateViewHP();
+			this.updateViewDef();
+			this.updateViewStamina();
+		})
 	}
 
 	// устанавливаем первые параметры здоровье, защита, стамина
@@ -60,7 +70,7 @@ export default class PlayersView {
 		this.playerTwoDefenceValue.classList.remove('defendValueNegative');
 		this.playerTwoDefenceValue.classList.remove('defendValuePositive');
 
-		if(this.playerOneModel.initialDP > this.playerOneModel.defendPoints) {
+		if (this.playerOneModel.initialDP > this.playerOneModel.defendPoints) {
 			setTimeout(() => this.playerOneDefenceValue.className = 'player-1__defence-value defendValueNegative', 0);
 		}
 
@@ -87,12 +97,12 @@ export default class PlayersView {
 		let calcDP = this.gameModel.passivePlayer.initialDP - this.gameModel.passivePlayer.defendPoints;
 		const calcHP = this.gameModel.passivePlayer.initialHP - this.gameModel.passivePlayer.healthPoints;
 
-		if(calcDP <= 0) {
+		if (calcDP <= 0) {
 			calcDP = 0;
 		}
 		const resultContent = calcHP + calcDP;
 
-		damageNumbersAnimation(passivePlayerUI, 'damageNumberAnimate', resultContent)
+		damageNumbersAnimation(passivePlayerUI, 'damageNumberAnimate', resultContent);
 	};
 
 	doAnimation() {
@@ -130,7 +140,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'defend_w':
 			case 'armaments':
 			case 'entrench':
@@ -141,16 +150,14 @@ export default class PlayersView {
 			case 'masterReality':
 			case 'thirdEye':
 			case 'survivor':
-				blockAnimationEffect(activePlayerUI, 'shield','images/icons/Icon_Block.png');
+				blockAnimationEffect(activePlayerUI, 'shield', 'images/icons/Icon_Block.png');
 				playSoundEffect('.defend-audio');
 
 				this.updateViewDef();
 				this.updateViewStamina();
-
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'bodySlam':
 				attackAnimationEffect(activePlayerUI, direction);
 
@@ -168,7 +175,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'slice':
 			case 'strike_m':
 				attackAnimationEffect(activePlayerUI, direction);
@@ -186,7 +192,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'daggerThrow':
 				setTimeout(() => {
 					attackAnimationEffect(activePlayerUI, direction);
@@ -203,7 +208,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'anger':
 				attackAnimationEffect(activePlayerUI, direction);
 
@@ -221,7 +225,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'reachHeaven':
 				attackAnimationEffect(activePlayerUI, direction);
 
@@ -232,8 +235,6 @@ export default class PlayersView {
 					playSoundEffect('.mage-strong-audio');
 				}, 200);
 
-
-
 				this.updateViewHP();
 				this.updateViewDef();
 				this.updateViewStamina();
@@ -241,14 +242,13 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'ironWave':
 			case 'dash':
-				blockAnimationEffect(activePlayerUI,'shield','images/icons/Icon_Block.png');
+				blockAnimationEffect(activePlayerUI, 'shield', 'images/icons/Icon_Block.png');
 
 				playSoundEffect('.defend-audio');
 
-				setTimeout(()=> {
+				setTimeout(() => {
 					attackAnimationEffect(activePlayerUI, direction);
 					standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/anger.png');
 					shakeAnimation(passivePlayerUI);
@@ -259,12 +259,9 @@ export default class PlayersView {
 					this.updateViewStamina();
 					this.updateDamageNumbers(passivePlayerUI);
 					this.updateInitialValue.notify();
-				},400)
-
-
+				}, 400);
 
 				break;
-
 			case 'bloodletting':
 				standartAttackAnimation(activePlayerUI, 'shield', 'images/attack-effects/bloodletting.png');
 
@@ -274,13 +271,11 @@ export default class PlayersView {
 				}, 200);
 
 
-
 				this.updateViewHP();
 
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'warcry':
 				shakeAnimation(activePlayerUI);
 
@@ -289,7 +284,6 @@ export default class PlayersView {
 				this.updateViewStamina();
 
 				break;
-
 			case 'meditate':
 			case 'alpha':
 				blockAnimationEffect(activePlayerUI, 'expertice', 'images/attack-effects/refresh-stamina.svg');
@@ -299,9 +293,8 @@ export default class PlayersView {
 				this.updateViewStamina();
 
 				break;
-
 			case 'cutThroughFate':
-				blockAnimationEffect(activePlayerUI,'shield','images/icons/Icon_Block.png');
+				blockAnimationEffect(activePlayerUI, 'shield', 'images/icons/Icon_Block.png');
 
 				playSoundEffect('.defend-audio');
 
@@ -310,7 +303,7 @@ export default class PlayersView {
 				this.updateDamageNumbers(passivePlayerUI);
 				this.updateInitialValue.notify();
 
-				setTimeout(()=> {
+				setTimeout(() => {
 					attackAnimationEffect(activePlayerUI, direction);
 					standartAttackAnimation(passivePlayerUI, 'angerAttack', 'images/attack-effects/mageEffect.png');
 					shakeAnimation(passivePlayerUI);
@@ -319,10 +312,9 @@ export default class PlayersView {
 					this.updateViewHP();
 					this.updateViewDef();
 					this.updateInitialValue.notify();
-				},400)
+				}, 400);
 
 				break;
-
 			case 'perfectedStrike':
 			case 'tantrum':
 			case 'flechettes':
@@ -339,14 +331,12 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'expertise':
 				blockAnimationEffect(activePlayerUI, 'expertice', 'images/attack-effects/serpent_ring.png');
 
 				this.updateViewStamina();
 
 				break;
-
 			case 'bludgeon':
 				attackAnimationEffect(activePlayerUI, direction);
 
@@ -361,7 +351,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'riddleWithHoles':
 				attackAnimationEffect(activePlayerUI, direction);
 
@@ -374,7 +363,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'signatureMove':
 				attackAnimationEffect(activePlayerUI, direction);
 
@@ -387,7 +375,6 @@ export default class PlayersView {
 				this.updateInitialValue.notify();
 
 				break;
-
 			case 'judjment':
 				attackAnimationEffect(activePlayerUI, direction);
 

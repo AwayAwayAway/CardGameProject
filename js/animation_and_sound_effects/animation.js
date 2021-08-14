@@ -261,14 +261,14 @@ function ultimateSkillAnimation(querySelector, className, src, audio) {
 		container.removeChild(image);
 		overlay.classList.add('fade-out');
 
-	}, 800);
+	}, 1350);
 
 	setTimeout(() => {
 		overlay.classList.add('hidden');
 		overlay.classList.remove('fade-in');
 		overlay.classList.remove('fade-out');
 		overlayClose.classList.remove('hidden');
-	}, 1000);
+	}, 1500);
 }
 
 function playSoundEffect(querySelector) {
@@ -309,7 +309,7 @@ function damageNumbersAnimation(querySelector, className, content) {
 
 	container.appendChild(divEl);
 
-	// setTimeout(() => container.removeChild(divEl), 300);
+	setTimeout(() => container.removeChild(divEl), 1500);
 }
 
 export {

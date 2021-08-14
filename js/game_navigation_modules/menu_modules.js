@@ -11,6 +11,7 @@ export default class Menu {
 
 	init(parentElement) {
 		this.mainElement = document.querySelector(parentElement);
+
 		this.source = {...document.querySelector(parentElement).children};
 	}
 }
@@ -18,6 +19,10 @@ export default class Menu {
 class MainMenu extends Menu {
 	constructor() {
 		super();
+
+		this.aboutGame = document.querySelector('.aboutButton')
+
+		this.checkContinueCondition();
 
 		this.init('.wrapper-main-menu');
 
@@ -29,6 +34,48 @@ class MainMenu extends Menu {
 			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
 			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
 		});
+
+		this.aboutGame.addEventListener('click', () => this.createAboutRules());
+	}
+
+	checkContinueCondition() {
+		const temp = localStorage.getItem('gameData');
+		const gameDate = JSON.parse(temp);
+
+		if(!temp) {
+			document.querySelector('.continueButton').addEventListener('click', (event) => event.stopPropagation());
+
+			document.querySelector('.continueButton').style.color = 'grey';
+		}
+	}
+
+	createAboutRules() {
+		const divEl = document.createElement('div');
+		const closeBtn = document.createElement('div');
+		const img = document.createElement('img')
+
+		divEl.className = 'players-overlay fade-in';
+		closeBtn.className = 'closeRuleBtn';
+		img.src = '../images/rules.png'
+		img.className = 'rules'
+		closeBtn.textContent = 'Close';
+
+		divEl.appendChild(img);
+		divEl.appendChild(closeBtn);
+		this.mainElement.appendChild(divEl);
+
+		document.querySelector('.closeRuleBtn').addEventListener('click', () => this.removeAboutRules())
+
+		document.querySelector('.closeRuleBtn').addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+
+		document.querySelector('.closeRuleBtn').addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+	}
+
+	removeAboutRules() {
+		const divEl = document.querySelector('.players-overlay');
+		divEl.className = 'players-overlay fade-out';
+
+		setTimeout(() => this.mainElement.removeChild(divEl), 500)
 	}
 }
 

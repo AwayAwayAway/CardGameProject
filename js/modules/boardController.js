@@ -54,7 +54,7 @@ export default class BoardController {
 		}
 
 		if (this.gameModel.hasOwnProperty('selectionEnd')) {
-			this.gameModel.selectionEnd.attach(() => this.createCardsInHand());
+			this.gameModel.selectionEnd.attach((restoredCards) => this.createCardsInHand(restoredCards));
 			this.gameModel.selectionEnd.attach(() => this.setPlayersTurnInfo());
 		}
 
@@ -98,8 +98,14 @@ export default class BoardController {
 		}
 	}
 
-	createCardsInHand() {
-		this.boardModel.pullRandomCardsInHand();
+	createCardsInHand(restoredCards) {
+		if(restoredCards) {
+			restoredCards.forEach(element => this.boardModel.createCards(element, 'hand', true));
+
+			this.boardModel.createAnimation.notify('.card-in-hand-field', 'multiple');
+		} else {
+			this.boardModel.pullRandomCardsInHand();
+		}
 	}
 
 	grabedCardAnim(event, state) {

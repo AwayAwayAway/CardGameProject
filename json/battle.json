@@ -16,6 +16,55 @@
   {
     "id": 1,
     "role": "mainChild",
+    "tagName": "nav",
+    "class": "battle-field-nav",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "i",
+    "class": "fas fa-bars battle-field-nav__icon",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "child",
+    "tagName": "ul",
+    "class": "battle-field-nav__list hidden",
+    "content": null
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "li",
+    "class": "save-progress",
+    "content": "Save progress"
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "li",
+    "class": "return-to-main-menu",
+    "content": "Back to main menu"
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "li",
+    "class": "return-to-choose-menu",
+    "content": "Back to choose menu"
+  },
+  {
+    "id": 1,
+    "role": "subChild",
+    "tagName": "li",
+    "class": "concede",
+    "content": "Concede"
+  },
+  {
+    "id": 1,
+    "role": "mainChild",
     "tagName": "div",
     "class": "players-overlay hidden",
     "content": null
@@ -499,6 +548,30 @@
     "tagName": "audio",
     "source": "sounds/mage-strong.ogg",
     "class": "mage-strong-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/btn-hover.ogg",
+    "class": "btn-hover-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/btn-click.ogg",
+    "class": "btn-click-audio",
+    "content": null
+  },
+  {
+    "id": 39,
+    "role": "mainChild",
+    "tagName": "audio",
+    "source": "sounds/victory.ogg",
+    "class": "victory-audio",
     "content": null
   }
 ]

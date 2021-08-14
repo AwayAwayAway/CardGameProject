@@ -30,6 +30,20 @@
   cursor: pointer;
 }
 
+.reject {
+  @extend .accept;
+  background: linear-gradient(#d249dc, #ef1678);
+}
+
+.confirm-continue {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: wheat;
+  cursor: pointer;
+}
+
 /* End Счетчик набранных карт и Alert если выбранно слишком много */
 
 /* Start игровое поле */
@@ -59,7 +73,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 5%;
+  top: 1%;
   z-index: 1500;
   display: flex;
   align-items: center;
@@ -82,6 +96,53 @@
   align-items: center;
 }
 
+.battle-field-nav {
+  position: absolute;
+  top: 5%;
+  left: 2%;
+  z-index: 650;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  &__icon {
+    color: #d4b7b7;
+    cursor: pointer;
+  }
+
+  &__list {
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    opacity: 1;
+    transition: all .3s ease-in-out;
+
+    li {
+      margin-top: 1rem;
+      transition: color .3s ease-in-out;
+      cursor: pointer;
+    }
+
+    li:hover {
+      color: #f80606;
+    }
+
+    .concede,
+    .save-progress {
+      color: grey;
+    }
+    .concede-allow,
+    .save-progress-allow {
+      color: white;
+    }
+  }
+}
+
+.player-name-choosing {
+  margin-bottom: 1rem;
+}
+
 .hold {
   cursor: grabbing;
 }
@@ -96,6 +157,7 @@
 
 .hidden {
   visibility: hidden;
+  opacity: 0;
 }
 
 /* End игровое поле */
