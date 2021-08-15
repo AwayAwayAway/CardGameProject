@@ -53,6 +53,7 @@ function switchPlayPause() {
 	}
 }
 
+//#TODO рефактор бэкгроунд музыки т.к. изменилась навигация по меню
 const checkBackgroundAudio = (function (querySelector) {
 	const currentHash = [];
 	const mainAudio = document.querySelector('.background-music-main-menu');
@@ -152,13 +153,13 @@ function endTurnAnim(side) {
 		case 'left':
 			setTimeout(() => {
 				button.style.removeProperty('right');
-				button.style.left = '5%';
+				button.style.left = '2%';
 			}, 500);
 			break;
 		case 'right':
 			setTimeout(() => {
 				button.style.removeProperty('left');
-				button.style.right = '5%';
+				button.style.right = '2%';
 			}, 500);
 			break;
 	}
@@ -261,14 +262,14 @@ function ultimateSkillAnimation(querySelector, className, src, audio) {
 		container.removeChild(image);
 		overlay.classList.add('fade-out');
 
-	}, 1350);
+	}, 1250);
 
 	setTimeout(() => {
 		overlay.classList.add('hidden');
 		overlay.classList.remove('fade-in');
 		overlay.classList.remove('fade-out');
 		overlayClose.classList.remove('hidden');
-	}, 1500);
+	}, 1600);
 }
 
 function playSoundEffect(querySelector) {

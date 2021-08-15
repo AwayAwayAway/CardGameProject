@@ -5,13 +5,52 @@ import {player2} from '../game';
 
 export default class BoardView {
 	constructor(board, game, selector) {
-		this.forbidClick = event => event.stopPropagation();
-
 		this.boardModel = board;
 
 		this.gameModel = game;
 
 		this.boardSelector = selector;
+
+		this.forbidClick = event => event.stopPropagation();
+
+		this.touchEvent = event => {
+			const self = this;
+			const coordinateY = event.touches[0].pageY;
+			const eventTarget = event.target;
+
+			if(event.target.classList.contains('cards')) {
+				this.touchCardStart.notify(event.target);
+
+				event.target.classList.add('touchStartAnim');
+
+				playSoundEffect('.drag-audio')
+
+				function closure() {
+					console.log(self.boardSelector);
+					const coordinate = coordinateY;
+					const target = eventTarget;
+
+					self.boardSelector.addEventListener('touchend', function touchEnd (event) {
+						const comparison = parseFloat(coordinateY)  - parseFloat(event.changedTouches[0].pageY);
+
+						eventTarget.classList.remove('touchStartAnim');
+
+						playSoundEffect('.card-grab-cancel-audio');
+
+						console.log(comparison)
+
+						if(comparison > 140) {
+							self.dropEvent.notify()
+							self.doCardAction.notify(self.gameModel.playerOneTurn)
+						}
+
+						document.removeEventListener('touchend', touchEnd);
+					});
+				}
+
+				closure();
+			}
+		};
 
 		this.onLoadCreate = new Events;
 
@@ -33,6 +72,8 @@ export default class BoardView {
 		this.grabCardEnd = new Events();
 
 		this.preventDrag = new Events();
+
+		this.touchCardStart = new Events();
 
 		//удаляем сыгранную карту
 		this.dropEvent = new Events();
@@ -80,17 +121,23 @@ export default class BoardView {
 		this.boardModel.cardsPlayField.addEventListener('dragover', (event) => this.preventDrag.notify(event));
 
 		// играем карты
-		this.boardModel.cardsPlayField.addEventListener('drop', () => this.dropEvent.notify());
+		this.boardModel.cardsPlayField.addEventListener('drop', () => {
+			this.dropEvent.notify();
+			this.doCardAction.notify(this.gameModel.playerOneTurn);
+		})
 
-		this.boardModel.cardsPlayField.addEventListener('drop', () => this.doCardAction.notify(this.gameModel.playerOneTurn));
+		this.boardModel.cardInHand.addEventListener('touchstart', (event) => this.touchEvent(event));
 
 		this.boardModel.endTurn.addEventListener('click', () => this.endTurn.notify());
 
 		this.boardModel.soundOffOn.addEventListener('click', () => this.soundOffOn.notify());
 
-		this.boardModel.menuIcon.addEventListener('click', () => this.showMenu());
+		this.boardModel.menuIcon.addEventListener('click', () => {
+			playSoundEffect('.btn-click-audio');
+			this.showMenu()
+		});
 
-		this.boardModel.menuIcon.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+		// this.boardModel.menuIcon.addEventListener('click', () => );
 
 		this.boardModel.menu.addEventListener('click', (event) => this.navigateGame(event.target));
 
@@ -327,12 +374,12 @@ export default class BoardView {
 
 			const choiceYes = document.createElement('button');
 
-			choiceYes.className = 'players-draw-info__accept';
+			choiceYes.className = 'confirm-continue__accept';
 			choiceYes.textContent = 'Yes';
 
 			const choiceNo = document.createElement('button');
 
-			choiceNo.className = 'reject';
+			choiceNo.className = 'confirm-continue__reject';
 			choiceNo.textContent = 'No';
 
 			divEl.appendChild(choiceYes);
@@ -350,18 +397,17 @@ export default class BoardView {
 		const divEl = document.querySelector('.confirm-continue');
 
 		switch (eventTarget.className) {
-			case 'reject':
+			case 'confirm-continue__reject':
 				overlay.removeChild(divEl);
 
 				overlay.classList.add('hidden');
 				overlayClose.classList.remove('hidden');
 
 				break;
-			case 'players-draw-info__accept':
+			case 'confirm-continue__accept':
 				this.onRestoreGameData.notify();
 
 				break;
 		}
 	}
-
 }

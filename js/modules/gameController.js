@@ -15,6 +15,10 @@ export default class GameController {
 			this.boardView.grabCardStart.attach((eventTarget) => this.actionCard(eventTarget));
 		}
 
+		if (this.boardView.hasOwnProperty('touchCardStart')) {
+			this.boardView.touchCardStart.attach((eventTarget) => this.actionCard(eventTarget));
+		}
+
 		if (this.boardView.hasOwnProperty('endTurn')) {
 			this.boardView.endTurn.attach(() => this.doEndTurn());
 		}

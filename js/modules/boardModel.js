@@ -67,16 +67,12 @@ export default class Board {
 			this.gameModel.playerOnePullOfCards.forEach((element) => this.createCards(element, 'overlay'));
 
 			this.createAnimation.notify('.players-overlay__cards', 'overlay')
-
-			// createCardAnim('.players-overlay__cards', 'overlay');
 		}
 
 		if (target.classList.contains('player-2__pile-of-car')) {
 			this.gameModel.playerTwoPullOfCards.forEach((element) => this.createCards(element, 'overlay'));
 
 			this.createAnimation.notify('.players-overlay__cards', 'overlay')
-
-			// createCardAnim('.players-overlay__cards', 'overlay');
 		}
 	}
 
@@ -84,12 +80,14 @@ export default class Board {
 		switch (state) {
 			case 'open':
 				this.playersOverlay.classList.remove('hidden');
+				this.playersOverlay.classList.add('fade-in-pile');
 
 				playSoundEffect('.overlay-open-audio');
 
 				break;
 			case 'close':
 				this.playersOverlay.classList.add('hidden');
+				this.playersOverlay.classList.remove('fade-in-pile');
 
 				playSoundEffect('.overlay-close-audio');
 

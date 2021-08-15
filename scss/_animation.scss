@@ -81,6 +81,11 @@
   animation: discardCard .2s linear forwards;
 }
 
+.touchStartAnim {
+  transform: scale(1.5) translateY(-18px);
+  z-index: 100;
+}
+
 .shield {
   position: absolute;
   top: 0;
@@ -88,6 +93,12 @@
   width: 200px;
   height: 200px;
   animation: block 1s linear forwards;
+
+  @include mobile-landscape {
+    width: 100px;
+    height: 100px;
+    animation: block-mobile 1s linear forwards;
+  }
 }
 
 .attack {
@@ -97,6 +108,13 @@
   width: 450px;
   height: 550px;
   animation: attack 0.5s linear forwards;
+
+  @include mobile-landscape {
+    width: 250px;
+    height: 250px;
+    top: -10%;
+    animation: attack-mobile 0.5s linear forwards;
+  }
 }
 
 .angerAttack {
@@ -106,6 +124,12 @@
   width: 450px;
   height: 550px;
   animation: smashAttack 0.5s linear forwards;
+
+  @include mobile-landscape {
+    width: 250px;
+    height: 250px;
+    top: -10%;
+  }
 }
 
 .attackRight {
@@ -123,6 +147,11 @@
   width: 300px;
   height: 300px;
   animation: smashAttack 0.5s linear forwards;
+
+  @include mobile-landscape {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 .warriorUltimate {
@@ -132,6 +161,12 @@
   width: 450px;
   height: 550px;
   animation: warriorUltimate 0.8s linear forwards;
+
+  @include mobile-landscape {
+    width: 250px;
+    height: 250px;
+    top: -10%;
+  }
 }
 
 .rogueUltimate {
@@ -140,6 +175,11 @@
   left: -6%;
   width: 450px;
   height: 550px;
+
+  @include mobile-landscape {
+    width: 250px;
+    height: 250px;
+  }
 }
 
 .mageUltimate {
@@ -149,17 +189,28 @@
   width: 450px;
   height: 550px;
   animation: rotateExpertice 0.8s linear forwards;
+
+  @include mobile-landscape {
+    width: 250px;
+    height: 250px;
+    top: -10%;
+  }
 }
 
 .fade-in {
+  z-index: 500;
+  animation: fade-in 0.3s linear forwards;
+}
+
+.fade-in-pile {
   z-index: 700;
   animation: fade-in 0.3s linear forwards;
 }
 
-.fade-out {
-  z-index: 700;
-  animation: fade-out 0.3s linear forwards;
-}
+//.fade-out-pile {
+//  z-index: 700;
+//  animation: fade-out 0.3s linear forwards;
+//}
 
 .expertice {
   position: absolute;
@@ -168,6 +219,11 @@
   width: 80px;
   height: 80px;
   animation: rotateExpertice 1s linear forwards;
+
+  @include mobile-landscape {
+    width: 50px;
+    height: 50px;
+  }
 }
 
 .defendValuePositive {
@@ -316,6 +372,30 @@
   }
 }
 
+@keyframes attack-mobile {
+  0% {
+    width: 0;
+    height: 150px;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  50% {
+    visibility: visible;
+    opacity: 1;
+    width: 250px;
+  }
+
+  99% {
+    opacity: 1
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 0;
+  }
+}
+
 @keyframes attackRight {
   0% {
     transform: translateX(0px);
@@ -357,6 +437,26 @@
     visibility: visible;
     opacity: 0;
     transform: translateY(200px);
+  }
+}
+
+@keyframes block-mobile {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(0);
+  }
+
+  50% {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(50px);
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 0;
+    transform: translateY(100px);
   }
 }
 

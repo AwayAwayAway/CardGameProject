@@ -249,7 +249,7 @@ class ChooseMenu extends Menu {
 
 			this.setCharacterDescription(`${event.target.textContent.toLowerCase()}`);
 
-			this.mainElement.style.backgroundImage = `url(\'../images/backgrounds/${event.target.textContent.toLowerCase()}.jpg\')`;
+			this.mainElement.style.backgroundImage = `url(\'./images/backgrounds/${event.target.textContent.toLowerCase()}.jpg\')`;
 		};
 
 		this.prepareToExtract = function () {

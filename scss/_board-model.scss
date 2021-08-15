@@ -61,20 +61,38 @@
   }
 }
 
-.players-overlay {
+.confirm-continue {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: wheat;
+  cursor: pointer;
+  z-index: 1100;
 
-  .reject {
-    @extend .players-draw-info__accept;
-    background: linear-gradient(#d249dc, #ef1678);
+  @include mobile-landscape {
+    font-size: 2rem;
+    display: block;
+    top: 25%;
   }
 
-  .confirm-continue {
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: wheat;
-    cursor: pointer;
+  &__reject {
+    @extend .players-draw-info__accept;
+    background: linear-gradient(#d249dc, #ef1678);
+
+    @include mobile-landscape {
+      display: block;
+      margin: 1.5rem auto;
+    }
+  }
+
+  &__accept {
+    @extend .players-draw-info__accept;
+
+    @include mobile-landscape {
+      display: block;
+      margin: 1.5rem auto;
+    }
   }
 }
 
@@ -113,6 +131,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @include mobile-landscape {
+    font-size: 2rem;
+    height: 6rem;
+  }
 }
 
 .end-of-turn-btn {
@@ -135,7 +158,6 @@
     width: 50px;
     font-size: 1rem;
     border: 3px solid white;
-    left: 2%;
   }
 }
 
@@ -147,6 +169,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @include mobile-landscape {
+    top: 2%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
 
 
   &__icon {
@@ -164,9 +193,13 @@
     font-size: 1rem;
     opacity: 1;
     transition: all .3s ease-in-out;
+    background: brown;
+    border-radius: 20px;
 
     @include mobile-landscape {
       font-size: 1rem;
+      margin-left: 1rem;
+
     }
 
     li {
@@ -174,8 +207,13 @@
       transition: color .3s ease-in-out;
       cursor: pointer;
 
+      &:last-child {
+        margin-bottom: 1rem;
+      }
+
       @include mobile-landscape {
         margin: 0.5rem;
+
       }
     }
 
@@ -187,6 +225,7 @@
     .save-progress {
       color: grey;
     }
+
     .concede-allow,
     .save-progress-allow {
       color: white;
@@ -194,6 +233,38 @@
   }
 }
 
+.players-overlay {
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 500;
+  background: rgba(0, 0, 0, 0.9);
+
+  &__close {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    z-index: 505;
+    opacity: 1;
+    color: #cccccc;
+    cursor: pointer;
+  }
+
+  &__cards {
+    width: 70vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 110;
+  }
+}
 .hold {
   cursor: grabbing;
 }
