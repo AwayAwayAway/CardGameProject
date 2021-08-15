@@ -1,48 +1,83 @@
+@import "variables";
+@import "mixins";
+
 .wrapper-battle {
   height: 100vh;
   background: url("../images/backgrounds/battlefield.jpg") center/cover no-repeat;
 }
 
 /* Start Счетчик набранных карт */
-.card-counter {
+.players-draw-info {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   padding-top: 2rem;
   color: white;
+
+  &__count {
+    margin-right: 1.1rem;
+
+    @include tablet-landscape {
+      font-size: 3rem;
+    }
+  }
+
+  &__max-count {
+    @include tablet-landscape {
+      font-size: 3rem;
+    }
+  }
+
+  &__name {
+    margin-bottom: 1rem;
+
+    @include tablet-landscape {
+      font-size: 3rem;
+    }
+
+    @include mobile-landscape {
+      margin: 0;
+    }
+  }
+
+  &__accept {
+    display: block;
+    border-radius: 20px;
+    background: linear-gradient(#4992dc, #16dcef);
+    height: 50px;
+    width: 200px;
+    font-size: 2rem;
+    color: white;
+    padding-bottom: 1rem;
+    margin: 1.5rem auto;
+    cursor: pointer;
+
+    @include mobile-landscape {
+      display: inline;
+      margin-left: 3.5rem;
+      padding: 0;
+    }
+  }
 }
 
-.count {
-  margin-right: 1.1rem;
+.players-overlay {
+
+  .reject {
+    @extend .players-draw-info__accept;
+    background: linear-gradient(#d249dc, #ef1678);
+  }
+
+  .confirm-continue {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: wheat;
+    cursor: pointer;
+  }
 }
 
-.accept {
-  display: block;
-  border-radius: 20px;
-  background: linear-gradient(#4992dc, #16dcef);
-  height: 50px;
-  width: 200px;
-  font-size: 2rem;
-  color: white;
-  padding-bottom: 1rem;
-  margin: 1.5rem auto;
-  cursor: pointer;
-}
-
-.reject {
-  @extend .accept;
-  background: linear-gradient(#d249dc, #ef1678);
-}
-
-.confirm-continue {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translateX(-50%);
-  color: wheat;
-  cursor: pointer;
-}
 
 /* End Счетчик набранных карт и Alert если выбранно слишком много */
 
@@ -83,17 +118,25 @@
 .end-of-turn-btn {
   position: absolute;
   display: flex;
-  top: 25%;
-  height: 100px;
-  width: 100px;
+  top: 30%;
+  height: 70px;
+  width: 70px;
   z-index: 100;
   color: white;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: 50%;
   border: 5px solid white;
   text-align: center;
   align-items: center;
+
+  @include mobile-landscape {
+    height: 50px;
+    width: 50px;
+    font-size: 1rem;
+    border: 3px solid white;
+    left: 2%;
+  }
 }
 
 .battle-field-nav {
@@ -109,19 +152,31 @@
   &__icon {
     color: #d4b7b7;
     cursor: pointer;
+
+    @include tablet-landscape {
+      font-size: 3rem;
+    }
   }
 
   &__list {
     color: white;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1rem;
     opacity: 1;
     transition: all .3s ease-in-out;
+
+    @include mobile-landscape {
+      font-size: 1rem;
+    }
 
     li {
       margin-top: 1rem;
       transition: color .3s ease-in-out;
       cursor: pointer;
+
+      @include mobile-landscape {
+        margin: 0.5rem;
+      }
     }
 
     li:hover {
@@ -137,10 +192,6 @@
       color: white;
     }
   }
-}
-
-.player-name-choosing {
-  margin-bottom: 1rem;
 }
 
 .hold {

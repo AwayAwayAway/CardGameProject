@@ -1,65 +1,12 @@
+@import "variables";
+@import "mixins";
+
 .wrapper-choose-menu {
   width: 100vw;
   height: 100vh;
   background: url("../images/backgrounds/warrior.jpg") center/cover no-repeat;
   color: white;
   transition: all .3s ease-in-out;
-}
-
-.options {
-  position: absolute;
-  bottom: 25%;
-  left: 10%;
-  display: flex;
-  justify-content: space-between;
-  width: 80vw;
-  transition: all .3s ease-in-out;
-}
-
-.decision {
-  display: flex;
-  position: relative;
-  width: 50vw;
-  top: 78%;
-  left: 10%;
-  transition: all .3s ease-in-out;
-}
-
-.decision-btn {
-  width: 10rem;
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 1rem;
-  font-size: 2rem;
-  background-color: rgba(25, 250, 104, 0.65);
-  cursor: pointer;
-  transition: all .3s ease-in-out;
-}
-
-.enterName {
-  width: 25rem;
-  margin-right: 2rem;
-  border-radius: 20px;
-  border: none;
-  text-align: center;
-  font-size: 2rem;
-  outline: none;
-}
-
-.warrior,
-.rogue,
-.mage {
-  border: 2px solid white;
-  border-radius: 20px;
-  padding: 1rem 5rem 1rem 5rem;
-  background-color: rgba(111, 93, 93, 0.65);
-  cursor: pointer;
-  transition: all .3s ease-in-out;
-}
-
-.in-focus {
-  box-shadow: 5px 5px 50px #00fc2a;
-  transform: translateY(-1.5rem);
 }
 
 .description {
@@ -70,99 +17,174 @@
   font-size: 2rem;
   font-family: 'Oswald', sans-serif;
 
+  @include tablet {
+    width: 90vw;
+  }
+
+  @include tablet-landscape {
+    font-size: 1.2rem;
+    top: 14%;
+  }
+
   h1 {
     font-size: 4rem;
     font-weight: 700;
     color: #ff8400;
+
+    @include tablet-landscape {
+      font-size: 2.5rem;
+    }
+
+    @include mobile-landscape {
+      font-size: 2rem;
+    }
   }
 
   p {
     padding-top: 1.5rem;
+
+    @include mobile-landscape {
+      padding-top: 0.5rem;
+    }
   }
 }
 
-@media (max-width: 85.375rem) {
-  .playerChoose {
-    font-size: 2rem;
+.options {
+  position: absolute;
+  bottom: 25%;
+  left: 10%;
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+  transition: all .3s ease-in-out;
+
+  @include tablet {
+    flex-direction: column;
+    width: 50vw;
+    left: 6%;
   }
 
-  .options {
-    display: flex;
+  @include tablet-landscape {
     flex-direction: column;
-    bottom: 20%;
-    left: 5%;
-    font-size: 1.5rem;
+    width: 50vw;
+    left: 6%;
+    top: 35%;
+  }
+
+  @include mobile-landscape {
+    flex-direction: row;
+    height: 20vh;
+    top: 45%;
   }
 
   .warrior,
   .rogue,
   .mage {
-    width: 25vw;
-    margin-bottom: 3rem;
+    border: 2px solid white;
+    font-size: 3rem;
+    border-radius: 20px;
+    padding: 1rem 4rem 1rem 4rem;
+    background-color: rgba(111, 93, 93, 0.65);
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+
+    @include tablet {
+      margin-top: 1rem;
+    }
+
+    @include tablet-landscape {
+      margin-top: 1rem;
+      width: 29vw;
+      font-size: 2rem;
+    }
+
+    @include mobile-landscape {
+      margin-right: 1rem;
+    }
+  }
+}
+
+.decision {
+  display: flex;
+  position: relative;
+  width: 50vw;
+  top: 78%;
+  left: 10%;
+  transition: all .3s ease-in-out;
+
+  @include tablet {
+    left: 6%;
+  }
+
+  &__btn {
+    width: 10rem;
+    border: 2px solid white;
+    border-radius: 20px;
+    padding: 1rem;
+    font-size: 2rem;
+    background-color: rgba(25, 250, 104, 0.65);
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+
+    @include tablet-landscape {
+      padding: 0.5rem;
+      font-size: 1.5rem;
+    }
+  }
+
+  &__enter-name {
+    width: 25rem;
+    margin-right: 2rem;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+    font-size: 2rem;
+    outline: none;
+  }
+}
+
+.playerChoose {
+  @include tablet {
     font-size: 3rem;
   }
 
-  .decision {
-    left: 5%;
+  @include tablet-landscape {
+    font-size: 2.5rem;
   }
 
-  .enterName {
-    padding: 1rem;
+  @include mobile-landscape {
+    font-size: 2rem;
   }
+}
 
-  .in-focus {
-    box-shadow: 5px 5px 50px #00fc2a;
+.in-focus {
+  box-shadow: 5px 5px 50px #00fc2a;
+  transform: translateY(-1.5rem);
+
+  @include tablet {
     transform: translateX(1.5rem);
+  }
+
+  @include tablet-landscape {
+    transform: translateX(1.5rem);
+  }
+
+  @include mobile-landscape {
+    transform: translateY(-1.1rem);
   }
 }
 
 .back-to-main-menu {
   background: url("../images/icons/back-to-main-menu-icon.png") center/cover no-repeat;
-  height: 85px;
-  width: 200px;
+  height: 60px;
+  width: 145px;
   position: absolute;
-  left: 3%;
-  bottom: 3%;
+  left: 2%;
+  bottom: 2%;
   cursor: pointer;
-}
 
-@media (max-height: 30.375rem) {
-  .playerChoose {
-    font-size: 2rem;
-  }
-
-  .warrior,
-  .rogue,
-  .mage {
-    width: 25vw;
-    margin-bottom: 1rem;
-    font-size: 2rem;
-  }
-
-  .enterName {
-    height: 2rem;
-    padding: 0.5rem;
-  }
-
-  .decision-btn {
-    padding: 0.5rem;
-    font-size: 1.3rem;
-  }
-
-  .in-focus {
-    box-shadow: 5px 5px 50px #00fc2a;
-    transform: translateX(1.5rem);
-  }
-
-  .description {
-    position: absolute;
-    left: 66%;
-    top: 20%;
-    font-size: 1.8rem;
-  }
-
-  .description h1 {
-    font-size: 2rem;
+  @include tablet-landscape {
+    left: 80%;
   }
 }
 
@@ -188,10 +210,6 @@
   opacity: 0;
   visibility: hidden;
 }
-
-
-
-
 
 .soundIcon {
   position: absolute;

@@ -93,14 +93,14 @@
     "id": 12,
     "role": "child",
     "tagName": "input",
-    "class": "enterName",
+    "class": "decision__enter-name",
     "content": null
   },
   {
     "id": 13,
     "role": "child",
     "tagName": "button",
-    "class": "decision-btn btn",
+    "class": "decision__btn btn",
     "content": "Confirm"
   },
   {

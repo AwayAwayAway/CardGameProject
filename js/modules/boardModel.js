@@ -7,8 +7,8 @@ export default class Board {
 		this.gameModel = model;
 
 		this.decWrapper = document.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
-		this.btnAccept = document.querySelector('.accept');               // player accept cards he chose
-		this.cardsChooseCounter = document.querySelector('.count');             // counter for amount of cards have been chosen(needs for alert)
+		this.btnAccept = document.querySelector('.players-draw-info__accept');               // player accept cards he chose
+		this.cardsChooseCounter = document.querySelector('.players-draw-info__count');             // counter for amount of cards have been chosen(needs for alert)
 		this.cardInHand = document.querySelector('.card-in-hand-field');              // field for cards in hand each player
 		this.battleField = document.querySelector('.battle-field');            // play field
 		this.endTurn = document.querySelector('.end-of-turn-btn');             // end turn button
@@ -18,7 +18,7 @@ export default class Board {
 
 		this.playersOverlay = document.querySelector('.players-overlay');
 		this.playersDeck = document.querySelector('.players-overlay__cards');
-		this.playersDeckClose = document.querySelector('.overlay__close');
+		this.playersDeckClose = document.querySelector('.players-overlay__close');
 
 		this.showDeckPlayer1 = document.querySelector('.player-1__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
 		this.showDeckPlayer2 = document.querySelector('.player-2__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал

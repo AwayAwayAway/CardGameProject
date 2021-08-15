@@ -1,3 +1,6 @@
+@import "variables";
+@import "mixins";
+
 .wrapper-main-menu {
   display: flex;
   justify-content: center;
@@ -7,32 +10,37 @@
 }
 
 .main-menu {
+  font-size: $main-font-size;
   border: 3px solid black;
   border-radius: 20px;
   color: black;
-}
 
-.startButton,
-.aboutButton,
-.continueButton {
-  padding: 3rem;
-  transition: color .3s linear;
-}
+  @include desktop {
+    font-size: $tablet-font-size;
+  }
 
-.startButton:hover,
-.aboutButton:hover,
-.continueButton:hover {
-  color: cyan;
-  cursor: pointer;
-}
+  @include tablet {
+    font-size: $tablet-font-size;
+  }
 
-.soundIcon {
-  position: absolute;
-  top: 5%;
-  left: 84%;
-  color: #d4b7b7;
-  cursor: pointer;
-  z-index: 600;
+  @include mobile {
+    font-size: $mobile-font-size;
+  }
+
+  .startButton,
+  .aboutButton,
+  .continueButton {
+    padding: 3rem;
+    transition: color .3s linear;
+
+    &:hover,
+    &:hover,
+    &:hover {
+      color: cyan;
+      cursor: pointer;
+    }
+  }
+
 }
 
 .closeRuleBtn {
@@ -45,10 +53,44 @@
   border: 2px dotted white;
   padding: 1rem;
   border-radius: 20px;
+
+  @include desktop {
+    font-size: $tablet-font-size;
+  }
+
+  @include tablet {
+    font-size: $tablet-font-size;
+  }
+
+  @include mobile {
+    font-size: $mobile-font-size;
+  }
+
+  &:hover {
+    color: #f80606;
+  }
 }
 
-.closeRuleBtn:hover {
-  color: #f80606;
+.soundIcon {
+  position: absolute;
+  top: 5%;
+  left: 84%;
+  color: #d4b7b7;
+  cursor: pointer;
+  z-index: 600;
+
+  @include desktop {
+    font-size: $tablet-font-size;
+  }
+
+  @include tablet {
+    font-size: $tablet-font-size;
+  }
+
+  @include mobile {
+    font-size: $mobile-font-size;
+  }
+
 }
 
 .rules {

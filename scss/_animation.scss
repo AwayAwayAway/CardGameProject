@@ -1,3 +1,6 @@
+@import "variables";
+@import "mixins";
+
 .go-to-choose-menu-anim {
   position: absolute;
   top: 0;
@@ -55,9 +58,23 @@
 }
 
 .cardsDrawAnim {
-  width: 11rem;
-  height: 14rem;
-  animation: drawCard .2s linear forwards;
+  width: 8rem;
+  height: 10rem;
+  animation: drawCard-desktop .2s linear forwards;
+
+  @include tablet-landscape {
+    width: 7rem;
+    height: 9rem;
+    animation: drawCard-tablet-landscape .2s linear forwards;
+  }
+
+  @include mobile-landscape {
+    width: 5rem;
+    height: 7rem;
+    animation: drawCard-mobile-landscape .2s linear forwards;
+  }
+
+
 }
 
 .cardDiscard {
@@ -77,8 +94,8 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 550px;
-  height: 650px;
+  width: 450px;
+  height: 550px;
   animation: attack 0.5s linear forwards;
 }
 
@@ -86,8 +103,8 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 550px;
-  height: 650px;
+  width: 450px;
+  height: 550px;
   animation: smashAttack 0.5s linear forwards;
 }
 
@@ -103,8 +120,8 @@
   position: absolute;
   top: 10%;
   left: 11%;
-  width: 350px;
-  height: 350px;
+  width: 300px;
+  height: 300px;
   animation: smashAttack 0.5s linear forwards;
 }
 
@@ -112,8 +129,8 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 550px;
-  height: 650px;
+  width: 450px;
+  height: 550px;
   animation: warriorUltimate 0.8s linear forwards;
 }
 
@@ -121,26 +138,26 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 550px;
-  height: 650px;
+  width: 450px;
+  height: 550px;
 }
 
 .mageUltimate {
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 550px;
-  height: 650px;
+  width: 450px;
+  height: 550px;
   animation: rotateExpertice 0.8s linear forwards;
 }
 
 .fade-in {
-  z-index: 500;
+  z-index: 700;
   animation: fade-in 0.3s linear forwards;
 }
 
 .fade-out {
-  z-index: 500;
+  z-index: 700;
   animation: fade-out 0.3s linear forwards;
 }
 
@@ -148,8 +165,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   animation: rotateExpertice 1s linear forwards;
 }
 
@@ -278,18 +295,21 @@
 @keyframes attack {
   0% {
     width: 0;
-    height: 650px;
+    height: 550px;
     visibility: hidden;
     opacity: 0;
   }
+
   50% {
     visibility: visible;
     opacity: 1;
-    width: 550px;
+    width: 450px;
   }
+
   99% {
     opacity: 1
   }
+
   100% {
     visibility: visible;
     opacity: 0;
@@ -326,11 +346,13 @@
     opacity: 0;
     transform: translateY(0);
   }
+
   50% {
     visibility: visible;
     opacity: 1;
     transform: translateY(100px);
   }
+
   100% {
     visibility: visible;
     opacity: 0;
@@ -338,14 +360,39 @@
   }
 }
 
-@keyframes drawCard {
+@keyframes drawCard-desktop {
   0% {
     width: 0;
     height: 0;
   }
+
   100% {
-    width: 11rem;
-    height: 14rem;
+    width: 8rem;
+    height: 10rem;
+  }
+}
+
+@keyframes drawCard-tablet-landscape {
+  0% {
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    width: 7rem;
+    height: 9rem;
+  }
+}
+
+@keyframes drawCard-mobile-landscape {
+  0% {
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+    width: 5rem;
+    height: 7rem;
   }
 }
 
@@ -354,6 +401,7 @@
     width: 11rem;
     height: 14rem;
   }
+
   100% {
     width: 0;
     height: 0;

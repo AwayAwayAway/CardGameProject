@@ -160,7 +160,7 @@ class ChooseMenu extends Menu {
 			playSoundEffect('.confirm-failed-audio');
 
 			if (enterName.value.length <= 1) {
-				shakeAnimation('.decision-btn', 'horizontal');
+				shakeAnimation('.decision__btn', 'horizontal');
 
 				enterName.value = 'You forgot enter name';
 				enterName.style.color = 'red';

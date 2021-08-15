@@ -202,11 +202,11 @@ export default class BoardView {
 
 		this.boardModel.battleField.classList.remove('hidden');
 
-		this.boardSelector.querySelector('.card-counter').style.display = 'none';
+		this.boardSelector.querySelector('.players-draw-info').style.display = 'none';
 	}
 
 	playerChooseInfoUpdate(text) {
-		this.boardSelector.querySelector('.player-name-choosing').textContent = text;
+		this.boardSelector.querySelector('.players-draw-info__name').textContent = text;
 	}
 
 	playerNameUpdate(name1, name2) {
@@ -313,7 +313,7 @@ export default class BoardView {
 		const hash = window.location.hash;
 		const state = decodeURIComponent(hash.substr(1));
 		const overlay = document.querySelector('.players-overlay');
-		const overlayClose = document.querySelector('.overlay__close');
+		const overlayClose = document.querySelector('.players-overlay__close');
 
 		if (state === 'restoredGame') {
 			overlay.classList.remove('hidden');
@@ -327,7 +327,7 @@ export default class BoardView {
 
 			const choiceYes = document.createElement('button');
 
-			choiceYes.className = 'accept';
+			choiceYes.className = 'players-draw-info__accept';
 			choiceYes.textContent = 'Yes';
 
 			const choiceNo = document.createElement('button');
@@ -346,7 +346,7 @@ export default class BoardView {
 
 	doContinueDecision(eventTarget) {
 		const overlay = document.querySelector('.players-overlay');
-		const overlayClose = document.querySelector('.overlay__close');
+		const overlayClose = document.querySelector('.players-overlay__close');
 		const divEl = document.querySelector('.confirm-continue');
 
 		switch (eventTarget.className) {
@@ -357,7 +357,7 @@ export default class BoardView {
 				overlayClose.classList.remove('hidden');
 
 				break;
-			case 'accept':
+			case 'players-draw-info__accept':
 				this.onRestoreGameData.notify();
 
 				break;

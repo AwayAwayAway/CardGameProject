@@ -239,7 +239,7 @@ function standartAttackAnimation(querySelector, className, src) {
 function ultimateSkillAnimation(querySelector, className, src, audio) {
 	const container = document.querySelector(querySelector).parentElement;
 	const overlay = document.querySelector('.players-overlay');
-	const overlayClose = document.querySelector('.overlay__close');
+	const overlayClose = document.querySelector('.players-overlay__close');
 	const image = document.createElement('img');
 
 	image.src = src;

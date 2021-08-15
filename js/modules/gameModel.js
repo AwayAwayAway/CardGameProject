@@ -105,7 +105,7 @@ export default class Game {
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
 			playSoundEffect('.confirm-failed-audio');
-			shakeAnimation('.accept', 'horizontal');
+			shakeAnimation('.players-draw-info__accept', 'horizontal');
 			return;
 		}
 
@@ -235,7 +235,7 @@ export default class Game {
 		const temp = localStorage.getItem('gameData');
 		const tempData = JSON.parse(temp);
 		const overlay = document.querySelector('.players-overlay');
-		const overlayClose = document.querySelector('.overlay__close');
+		const overlayClose = document.querySelector('.players-overlay__close');
 		const divEl = document.querySelector('.confirm-continue');
 		let activePlayerHand;
 

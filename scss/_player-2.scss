@@ -1,0 +1,75 @@
+@import "variables";
+@import "mixins";
+@import "player-1";
+
+.player-2 {
+  @extend .player-1;
+  left: -8%;
+
+  @include tablet-landscape {
+    left: -10%;
+  }
+
+  &__stamina {
+    @extend .player-1__stamina;
+    left: 91%;
+
+    @include mobile-landscape {
+      left: 100%;
+    }
+  }
+
+  &__pile-of-car {
+    @extend .player-1__pile-of-car;
+    left: 93%;
+
+    @include mobile-landscape {
+      left: 103%;
+    }
+  }
+
+  &__defence {
+    @extend .player-1__defence;
+    left: 0;
+
+    @include mobile-landscape {
+      left: 110%;
+    }
+  }
+
+  &__defence-value {
+    @extend .player-1__defence-value;
+  }
+
+  &__model {
+    @extend .player-1__model;
+  }
+
+  &__name {
+    @extend .player-1__name;
+  }
+
+  &__hp {
+    @extend .player-1__hp;
+  }
+
+  &__hp-bar {
+    @extend .player-1__hp-bar;
+  }
+
+  &__hp-value {
+    @extend .player-1__hp-value
+  }
+
+  &__hp-bar-inner {
+    @extend .player-1__hp-bar-inner
+  }
+
+  &__stamina-value {
+    @extend .player-1__stamina-value
+  }
+
+  &__stamina-maxvalue {
+    @extend .player-1__stamina-maxvalue
+  }
+}

@@ -1,0 +1,194 @@
+@import "variables";
+@import "mixins";
+
+.player-1 {
+  position: relative;
+  top: 34%;
+  left: 8%;
+  width: 400px;
+  height: 400px;
+  z-index: 600;
+
+  @include tablet-landscape {
+    width: 300px;
+    height: 300px;
+  }
+
+  @include mobile-landscape {
+    width: 200px;
+    height: 200px;
+  }
+
+  &__stamina {
+    background: url("../images/icons/Icon_stamina.png") center/cover no-repeat;
+    height: 110px;
+    width: 100px;
+    position: absolute;
+    bottom: -19%;
+    left: -15%;
+
+    @include tablet-landscape {
+      height: 80px;
+      width: 80px;
+    }
+
+    @include mobile-landscape {
+      bottom: 13%;
+      left: -30%;
+    }
+  }
+
+  &__stamina-value {
+    font-size: 2rem;
+    color: red;
+    position: absolute;
+    top: 36%;
+    left: 21%;
+    font-weight: bold;
+
+    @include tablet-landscape{
+      font-size: 1.5rem;
+    }
+  }
+
+  &__stamina-maxvalue {
+    position: absolute;
+    top: 36%;
+    left: 45%;
+    font-size: 2rem;
+    color: red;
+    font-weight: bold;
+
+    @include tablet-landscape{
+      font-size: 1.5rem;
+    }
+  }
+
+  &__pile-of-car {
+    background: url("../images/icons/Icon-CardsPile.png") center/cover no-repeat;
+    position: absolute;
+    bottom: -40%;
+    left: -13%;
+    width: 85px;
+    height: 85px;
+    cursor: pointer;
+
+    @include tablet-landscape{
+      width: 68px;
+      height: 70px;
+    }
+
+    @include mobile-landscape {
+      bottom: -50%;
+      left: -27%;
+    }
+  }
+
+  &__defence {
+    background: url("../images/icons/Icon_Block.png") center/cover no-repeat;
+    position: absolute;
+    top: 97%;
+    left: 87%;
+    color: white;
+    width: 60px;
+    height: 80px;
+
+    @include tablet-landscape {
+      width: 45px;
+      height: 60px;
+    }
+
+    @include mobile-landscape {
+      top: 86%;
+      left: -20%;
+    }
+  }
+
+  &__defence-value {
+    position: absolute;
+    top: 27%;
+    left: 31%;
+    font-size: 2.5rem;
+
+    @include tablet-landscape {
+      font-size: 2rem;
+    }
+  }
+
+  &__model {
+    width: 400px;
+    height: 400px;
+
+    @include tablet-landscape {
+      width: 300px;
+      height: 300px;
+    }
+
+    @include mobile-landscape {
+      width: 200px;
+      height: 200px;
+    }
+  }
+
+  &__name {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: -14%;
+    text-align: center;
+    color: white;
+    font-size: 2rem;
+    width: 100%;
+  }
+
+  &__hp {
+    display: flex;
+    position: absolute;
+    top: 104%;
+    left: 20%;
+
+    @include mobile-landscape {
+      top: 109%;
+      left: 10%;
+    }
+  }
+
+  &__hp-bar {
+    position: relative;
+    display: block;
+    height: 20px;
+    width: 240px;
+    border: 1px solid black;
+    border-radius: 20px;
+
+    @include tablet-landscape{
+      height: 15px;
+      width: 185px;
+    }
+  }
+
+  &__hp-value {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: cursive;
+    color: white;
+    top: -55%;
+
+    @include tablet-landscape {
+      font-size: 2rem;
+    }
+  }
+
+  &__hp-bar-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: red;
+    border-radius: 50px;
+    transition: all 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  }
+
+
+
+}

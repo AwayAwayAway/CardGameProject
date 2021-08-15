@@ -1,3 +1,6 @@
+@import "variables";
+@import "mixins";
+
 /* Start поле выбора карт и карт в руке */
 .cards-choose-field {
   width: 70vw;
@@ -11,17 +14,31 @@
   align-items: center;
   flex-wrap: wrap;
   z-index: 110;
+
+  @include tablet {
+    width: 90vw;
+    top: 58%;
+  }
+
+  @include tablet-landscape {
+
+  }
 }
 
 .cards {
   position: relative;
   margin-right: 1rem;
-  margin-top: 7rem;
+  margin-top: 2rem;
   cursor: pointer;
   transition: all .3s ease-in-out;
   background: center/cover no-repeat;
   outline: none;
   border: none;
+
+  @include mobile-landscape {
+    margin-right: 0;
+    margin-top: 0;
+  }
 }
 
 .card-in-hand-field {
@@ -63,30 +80,33 @@
   height: 100vh;
   z-index: 700;
   background: rgba(0, 0, 0, 0.9);
+
+  &__close {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    z-index: 505;
+    opacity: 1;
+    color: #cccccc;
+    cursor: pointer;
+  }
+
+  &__cards {
+    width: 70vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    z-index: 110;
+  }
+
 }
 
 
-.overlay__close {
-  position: absolute;
-  top: 10%;
-  right: 10%;
-  z-index: 505;
-  opacity: 1;
-  color: #cccccc;
-  cursor: pointer;
-}
 
-.players-overlay__cards {
-  width: 70vw;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  z-index: 110;
-}
 /* End поле выбора карт и карт в руке */

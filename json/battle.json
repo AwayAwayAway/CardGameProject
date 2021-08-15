@@ -73,7 +73,7 @@
     "id": 2,
     "role": "child",
     "tagName": "i",
-    "class": "far fa-times-circle overlay__close",
+    "class": "far fa-times-circle players-overlay__close",
     "content": null
   },
   {
@@ -87,35 +87,35 @@
     "id": 1,
     "role": "mainChild",
     "tagName": "div",
-    "class": "card-counter",
+    "class": "players-draw-info",
     "content": null
   },
   {
     "id": 2,
     "role": "child",
     "tagName": "div",
-    "class": "player-name-choosing",
+    "class": "players-draw-info__name",
     "content": null
   },
   {
     "id": 3,
     "role": "child",
     "tagName": "span",
-    "class": "count",
+    "class": "players-draw-info__count",
     "content": "0 "
   },
   {
     "id": 4,
     "role": "child",
     "tagName": "span",
-    "class": "max-count",
+    "class": "players-draw-info__max-count",
     "content": "/ 8"
   },
   {
     "id": 5,
     "role": "child",
     "tagName": "button",
-    "class": "accept",
+    "class": "players-draw-info__accept",
     "content": "Confirm"
   },
   {
