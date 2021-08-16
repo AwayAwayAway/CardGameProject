@@ -38,7 +38,7 @@ function switchPlayPause() {
 	const soundOffOn = document.querySelector('.soundIcon');
 	let backAudio;
 
-	if (state == 'battle-field') {
+	if (state == 'battle-field' || state == 'restoredGame') {
 		backAudio = document.querySelector('.background-music-battlefield');
 	} else {
 		backAudio = document.querySelector('.background-music-main-menu');
@@ -53,7 +53,7 @@ function switchPlayPause() {
 	}
 }
 
-//#TODO рефактор бэкгроунд музыки т.к. изменилась навигация по меню
+//# добавить вибрацию
 const checkBackgroundAudio = (function (querySelector) {
 	const currentHash = [];
 	const mainAudio = document.querySelector('.background-music-main-menu');
@@ -71,13 +71,27 @@ const checkBackgroundAudio = (function (querySelector) {
 		} else if (currentHash[currentHash.length - 1] === 'battle-field' && [...allAudio].some(element => element.paused)) {
 			mainAudio.pause();
 			audio.play();
-		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
-			currentHash[currentHash.length - 2] === 'battle-field' && [...allAudio].every(element => element.paused)) {
+		} else if (currentHash[currentHash.length - 1] === 'restoredGame' && [...allAudio].every(element => element.paused)) {
 			mainAudio.pause();
 			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
-			currentHash[currentHash.length - 2] === 'battle-field' && [...allAudio].some(element => element.paused)) {
+		} else if (currentHash[currentHash.length - 1] === 'restoredGame' && [...allAudio].some(element => element.paused)) {
+			mainAudio.pause();
+			audio.play();
+		} else if (currentHash[currentHash.length - 1] === 'main-menu' &&
+			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].every(element => element.paused)) {
+			mainAudio.pause();
+			audio.pause();
+		} else if (currentHash[currentHash.length - 1] === 'main-menu' &&
+			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].some(element => element.paused)) {
 			mainAudio.play();
+			audio.pause();
+		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
+			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].some(element => element.paused)) {
+			mainAudio.play();
+			audio.pause();
+		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
+			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].every(element => element.paused)) {
+			mainAudio.pause();
 			audio.pause();
 		}
 
@@ -171,6 +185,23 @@ function endTurnAnim(side) {
 	setTimeout(() => button.classList.remove('endTurnAnim'), 1000);
 }
 
+function attackAnimationEffect(querySelector, direction) {
+	const container = document.querySelector(querySelector);
+
+	switch (direction) {
+		case 'right':
+			container.classList.add('attackRight');
+
+			setTimeout(() => container.classList.remove('attackRight'), 1000);
+			break;
+		case 'left':
+			container.classList.add('attackLeft');
+
+			setTimeout(() => container.classList.remove('attackLeft'), 1000);
+			break;
+	}
+}
+
 function blockAnimationEffect(querySelector, className, src) {
 	const container = document.querySelector(querySelector).parentElement;
 	const image = document.createElement('img');
@@ -193,7 +224,23 @@ function attackAnimation(querySelector, className, src) {
 
 	container.appendChild(image);
 
+	window.navigator.vibrate([400]);
+
 	setTimeout(() => container.removeChild(image), 600);
+}
+
+function standartAttackAnimation(querySelector, className, src) {
+	const container = document.querySelector(querySelector).parentElement;
+	const image = document.createElement('img');
+
+	image.src = src;
+	image.className = className;
+
+	container.appendChild(image);
+
+	window.navigator.vibrate([400]);
+
+	setTimeout(() => container.removeChild(image), 400);
 }
 
 function multipleAttackAnimation(querySelector, className, src, amountEffect) {
@@ -219,22 +266,14 @@ function multipleAttackAnimation(querySelector, className, src, amountEffect) {
 
 		setTimeout(() => {
 			container.appendChild(elem);
+
+			window.navigator.vibrate([300, 150, 300, 150, 300]);
+
 			playSoundEffect('.strike-attack-audio');
+
 			setTimeout(() => container.removeChild(elem), 400);
 		}, index * 300);
 	});
-}
-
-function standartAttackAnimation(querySelector, className, src) {
-	const container = document.querySelector(querySelector).parentElement;
-	const image = document.createElement('img');
-
-	image.src = src;
-	image.className = className;
-
-	container.appendChild(image);
-
-	setTimeout(() => container.removeChild(image), 400);
 }
 
 function ultimateSkillAnimation(querySelector, className, src, audio) {
@@ -252,6 +291,8 @@ function ultimateSkillAnimation(querySelector, className, src, audio) {
 
 	setTimeout(() => {
 		container.appendChild(image);
+
+		window.navigator.vibrate(1000);
 
 		shakeAnimation(querySelector)
 
@@ -282,23 +323,6 @@ function playSoundEffect(querySelector) {
 	soundEffect.currentTime = 0;
 
 	soundEffect.play();
-}
-
-function attackAnimationEffect(querySelector, direction) {
-	const container = document.querySelector(querySelector);
-
-	switch (direction) {
-		case 'right':
-			container.classList.add('attackRight');
-
-			setTimeout(() => container.classList.remove('attackRight'), 1000);
-			break;
-		case 'left':
-			container.classList.add('attackLeft');
-
-			setTimeout(() => container.classList.remove('attackLeft'), 1000);
-			break;
-	}
 }
 
 function damageNumbersAnimation(querySelector, className, content) {

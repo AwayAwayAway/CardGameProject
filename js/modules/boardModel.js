@@ -33,6 +33,7 @@ export default class Board {
 		this.removeActionCard = new Events();
 		this.createAnimation = new Events();
 		this.endTurnAnimation = new Events();
+		this.notEnoughStamina = new Events();
 	}
 
 	// создаем деку в начале игры для игрока согласно классу
@@ -163,6 +164,7 @@ export default class Board {
 	//удаляем сыгранные карты из руки с проверкой
 	deletePlayedCard(condition, card) {
 		if (this.gameModel.tempCard.cost > this.gameModel.activePlayer.staminaPoints) {
+			this.notEnoughStamina.notify();
 			return;
 		}
 
@@ -258,14 +260,10 @@ export default class Board {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerOneName}'s Turn`;
 
 			this.endTurnAnimation.notify('left');
-
-			// endTurnAnim('left');
 		} else {
 			this.playersTurnInfo.textContent = `${this.gameModel.playersInfo.playerTwoName}'s Turn`;
 
 			this.endTurnAnimation.notify('right');
-
-			// endTurnAnim('right');
 		}
 	}
 }

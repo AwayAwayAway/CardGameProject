@@ -20,8 +20,8 @@
     top: 58%;
   }
 
-  @include tablet-landscape {
-
+  @include mobile-landscape {
+    top: 66%;
   }
 }
 

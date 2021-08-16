@@ -26,29 +26,27 @@ export default class BoardView {
 				playSoundEffect('.drag-audio')
 
 				function closure() {
-					console.log(self.boardSelector);
 					const coordinate = coordinateY;
 					const target = eventTarget;
 
-					self.boardSelector.addEventListener('touchend', function touchEnd (event) {
+					self.boardSelector.addEventListener('touchend',  function touchEnd (event) {
 						const comparison = parseFloat(coordinateY)  - parseFloat(event.changedTouches[0].pageY);
 
 						eventTarget.classList.remove('touchStartAnim');
 
 						playSoundEffect('.card-grab-cancel-audio');
 
-						console.log(comparison)
-
-						if(comparison > 140) {
+						if(comparison > 170) {
 							self.dropEvent.notify()
 							self.doCardAction.notify(self.gameModel.playerOneTurn)
 						}
 
-						document.removeEventListener('touchend', touchEnd);
+						this.removeEventListener('touchend', touchEnd);
 					});
 				}
 
 				closure();
+
 			}
 		};
 
@@ -105,28 +103,30 @@ export default class BoardView {
 
 		this.boardModel.playersDeckClose.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
 
-		// анимация карт в руке при наведении
-		this.boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify(event.target, 'focus'));
+		if("ontouchstart" in window) {
+			this.boardModel.cardInHand.addEventListener('touchstart', (event) => this.touchEvent(event));
+		} else {
+			// анимация карт в руке при наведении
+			this.boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify(event.target, 'focus'));
 
-		this.boardModel.cardInHand.addEventListener('mouseout', (event) => this.cardInHandChoosen.notify(event.target, 'blur'));
+			this.boardModel.cardInHand.addEventListener('mouseout', (event) => this.cardInHandChoosen.notify(event.target, 'blur'));
 
-		// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
-		this.boardModel.cardInHand.addEventListener('dragstart', (event) => this.grabCardStart.notify(event.target, 'focus'));
+			// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
+			this.boardModel.cardInHand.addEventListener('dragstart', (event) => this.grabCardStart.notify(event.target, 'focus'));
 
-		this.boardModel.cardInHand.addEventListener('dragend', (event) => this.grabCardEnd.notify(event.target, 'blur'));
+			this.boardModel.cardInHand.addEventListener('dragend', (event) => this.grabCardEnd.notify(event.target, 'blur'));
 
-		// prevent default behavior
-		this.boardModel.cardsPlayField.addEventListener('dragenter', (event) => this.preventDrag.notify(event));
+			// prevent default behavior
+			this.boardModel.cardsPlayField.addEventListener('dragenter', (event) => this.preventDrag.notify(event));
 
-		this.boardModel.cardsPlayField.addEventListener('dragover', (event) => this.preventDrag.notify(event));
+			this.boardModel.cardsPlayField.addEventListener('dragover', (event) => this.preventDrag.notify(event));
 
-		// играем карты
-		this.boardModel.cardsPlayField.addEventListener('drop', () => {
-			this.dropEvent.notify();
-			this.doCardAction.notify(this.gameModel.playerOneTurn);
-		})
-
-		this.boardModel.cardInHand.addEventListener('touchstart', (event) => this.touchEvent(event));
+			// играем карты
+			this.boardModel.cardsPlayField.addEventListener('drop', () => {
+				this.dropEvent.notify();
+				this.doCardAction.notify(this.gameModel.playerOneTurn);
+			})
+		}
 
 		this.boardModel.endTurn.addEventListener('click', () => this.endTurn.notify());
 
@@ -136,8 +136,6 @@ export default class BoardView {
 			playSoundEffect('.btn-click-audio');
 			this.showMenu()
 		});
-
-		// this.boardModel.menuIcon.addEventListener('click', () => );
 
 		this.boardModel.menu.addEventListener('click', (event) => this.navigateGame(event.target));
 
@@ -184,6 +182,8 @@ export default class BoardView {
 		this.boardModel.createAnimation.attach((querySelector, amount) => this.createAnimation(querySelector, amount));
 
 		this.boardModel.endTurnAnimation.attach((side) => this.endTurnAnimation(side));
+
+		this.boardModel.notEnoughStamina.attach(() => this.notEnoughStamina());
 	}
 
 	// need for start render cards when page is loaded
@@ -410,4 +410,9 @@ export default class BoardView {
 				break;
 		}
 	}
+
+	notEnoughStamina() {
+		this.gameModel.a
+	}
+
 }

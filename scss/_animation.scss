@@ -109,6 +109,13 @@
   height: 550px;
   animation: attack 0.5s linear forwards;
 
+  @include tablet {
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    animation: attack-tablet 0.5s linear forwards;
+  }
+
   @include mobile-landscape {
     width: 250px;
     height: 250px;
@@ -360,6 +367,30 @@
     visibility: visible;
     opacity: 1;
     width: 450px;
+  }
+
+  99% {
+    opacity: 1
+  }
+
+  100% {
+    visibility: visible;
+    opacity: 0;
+  }
+}
+
+@keyframes attack-tablet {
+  0% {
+    width: 0;
+    height: 350px;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  50% {
+    visibility: visible;
+    opacity: 1;
+    width: 350px;
   }
 
   99% {
