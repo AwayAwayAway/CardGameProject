@@ -92,32 +92,6 @@ export default class Players {
 		createCardAnim('.card-in-hand-field', 'single');
 	}
 
-	randomCardDiscard() {
-		let randomDiscard = Math.floor(Math.random() * this.boardModel.cardInHand.children.length);
-
-		//it will be error if you use DaggerThrow as the last card in hand so w check on this
-		if (this.boardModel.cardInHand.children.length > 0) {
-			discardCardAnim(this.boardModel.cardInHand.children[randomDiscard]);
-
-			playSoundEffect('.discard-card-audio');
-
-			setTimeout(() => this.cardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300)
-		}
-	}
-
-	cardRemove(element) {
-		//it will be error if you use DaggerThrow as the last card in hand so w check on this
-		if (this.boardModel.cardInHand.children.length > 0) {
-			discardCardAnim(element);
-
-			playSoundEffect('.discard-card-audio');
-
-			// setTimeout(() => this.cardDiscard.notify(element), 300)
-			this.cardDiscard.notify(element)
-		}
-	}
-
-	// we take condition only for card "expertise"
 	massiveRandomDraw(card, condition) {
 		let tempIndex = [];
 
@@ -142,6 +116,31 @@ export default class Players {
 		}
 
 		createCardAnim('.card-in-hand-field', 'single');
+	}
+
+	randomCardDiscard() {
+		let randomDiscard = Math.floor(Math.random() * this.boardModel.cardInHand.children.length);
+
+		//it will be error if you use DaggerThrow as the last card in hand so w check on this
+		if (this.boardModel.cardInHand.children.length > 0) {
+			discardCardAnim(this.boardModel.cardInHand.children[randomDiscard]);
+
+			playSoundEffect('.discard-card-audio');
+
+			setTimeout(() => this.cardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300)
+		}
+	}
+
+	cardRemove(element) {
+		//it will be error if you use DaggerThrow as the last card in hand so w check on this
+		if (this.boardModel.cardInHand.children.length > 0) {
+			discardCardAnim(element);
+
+			playSoundEffect('.discard-card-audio');
+
+			// setTimeout(() => this.cardDiscard.notify(element), 300)
+			this.cardDiscard.notify(element)
+		}
 	}
 
 	standartAttack(card) {

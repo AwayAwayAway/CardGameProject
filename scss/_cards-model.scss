@@ -17,11 +17,12 @@
 
   @include tablet {
     width: 90vw;
-    top: 58%;
+    top: 50%;
   }
 
   @include mobile-landscape {
-    top: 66%;
+    top: 77%;
+    width: 85vw;
   }
 }
 
@@ -72,8 +73,5 @@
   box-shadow: 0 0 70px #0015cf;
   border-radius: 10px;
 }
-
-
-
 
 /* End поле выбора карт и карт в руке */

@@ -15,18 +15,14 @@ export default class Board {
 		this.playersTurnInfo = document.querySelector('.players-action');
 		this.cardsPlayField = document.querySelector('.play-field');           // area for cards to drop and play their actions
 		this.soundOffOn = document.querySelector('.soundIcon');
-
 		this.playersOverlay = document.querySelector('.players-overlay');
 		this.playersDeck = document.querySelector('.players-overlay__cards');
 		this.playersDeckClose = document.querySelector('.players-overlay__close');
-
 		this.showDeckPlayer1 = document.querySelector('.player-1__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
 		this.showDeckPlayer2 = document.querySelector('.player-2__pile-of-car');           // возможность в игре посмотреть какие карты ты выбрал
-
 		this.menu = document.querySelector('.battle-field-nav');
 		this.menuIcon = document.querySelector('.battle-field-nav__icon');
 
-		// создаем событие на создание карт
 		this.onCreateCards = new Events();
 		this.onCounterChange = new Events();
 		this.removeCards = new Events();
@@ -45,16 +41,12 @@ export default class Board {
 				skillCollection[playerClassInfo.playerOneClass].forEach((element) => this.createCards(element, 'board'));
 
 				this.createAnimation.notify('.cards-choose-field', 'multiple');
-
-				// createCardAnim('.cards-choose-field', 'multiple');
 			}, 500)
 		} else {
 			setTimeout(() => {
 				skillCollection[playerClassInfo.playerTwoClass].forEach((element) => this.createCards(element, 'board'));
 
 				this.createAnimation.notify('.cards-choose-field', 'multiple');
-
-				// createCardAnim('.cards-choose-field', 'multiple');
 			}, 500)
 		}
 	}

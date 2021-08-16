@@ -74,7 +74,7 @@
   @include mobile-landscape {
     flex-direction: row;
     height: 20vh;
-    top: 45%;
+    top: 56%;
   }
 
   .warrior,
@@ -185,6 +185,12 @@
 
   @include tablet-landscape {
     left: 80%;
+  }
+
+  @include mobile-landscape {
+    height: 45px;
+    width: 100px;
+    bottom: 1%;
   }
 }
 
