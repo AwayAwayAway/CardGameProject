@@ -20,7 +20,7 @@ class MainMenu extends Menu {
 	constructor() {
 		super();
 
-		this.aboutGame = document.querySelector('.aboutButton')
+		this.aboutGame = document.querySelector('.aboutButton');
 
 		this.checkContinueCondition();
 
@@ -42,7 +42,7 @@ class MainMenu extends Menu {
 		const temp = localStorage.getItem('gameData');
 		const gameDate = JSON.parse(temp);
 
-		if(!temp) {
+		if (!temp) {
 			document.querySelector('.continueButton').addEventListener('click', (event) => event.stopPropagation());
 
 			document.querySelector('.continueButton').style.color = 'grey';
@@ -52,19 +52,19 @@ class MainMenu extends Menu {
 	createAboutRules() {
 		const divEl = document.createElement('div');
 		const closeBtn = document.createElement('div');
-		const img = document.createElement('img')
+		const img = document.createElement('img');
 
 		divEl.className = 'players-overlay fade-in';
 		closeBtn.className = 'closeRuleBtn';
-		img.src = '../images/rules.png'
-		img.className = 'rules'
+		img.src = '../images/rules.png';
+		img.className = 'rules';
 		closeBtn.textContent = 'Close';
 
 		divEl.appendChild(img);
 		divEl.appendChild(closeBtn);
 		this.mainElement.appendChild(divEl);
 
-		document.querySelector('.closeRuleBtn').addEventListener('click', () => this.removeAboutRules())
+		document.querySelector('.closeRuleBtn').addEventListener('click', () => this.removeAboutRules());
 
 		document.querySelector('.closeRuleBtn').addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
 
@@ -75,7 +75,7 @@ class MainMenu extends Menu {
 		const divEl = document.querySelector('.players-overlay');
 		divEl.className = 'players-overlay fade-out';
 
-		setTimeout(() => this.mainElement.removeChild(divEl), 500)
+		setTimeout(() => this.mainElement.removeChild(divEl), 500);
 	}
 }
 
@@ -116,14 +116,22 @@ class ChooseMenu extends Menu {
 
 		const {firstElementChild: enterName, lastElementChild: applyChoose} = this.source[4];
 
+		enterName.maxLength = '10';
+
 		// save name and model of character of each player
 		this.playerChooseCharacter = function () {
-			// const announcer = document.querySelector('.playerChoose');
-			const check = enterName.value.length >= 1 && enterName.value !== 'You forgot enter name' && [...options.children].some((child) => child.classList.contains('in-focus'));
+			const regex = /\w/;
+			const checkWarning = enterName.value !== 'You forgot enter name';
+			const classCheck = [...options.children].some((child) => child.classList.contains('in-focus'));
+			const regexCheck = regex.test(enterName.value);
 
 			//check if input is empty
-			if (!check) {
+			if (!checkWarning || !regexCheck) {
 				this.allertEmptyName();
+				this.allertClass();
+				return;
+			} else if (!classCheck) {
+				this.allertClass();
 				return;
 			}
 
@@ -136,12 +144,12 @@ class ChooseMenu extends Menu {
 
 			// record player's choose
 			if (playerOneTurn) {
-				playerOneName = enterName.value;
+				playerOneName = enterName.value.trim();
 				playerOneClass = temp[0].dataset.class;
 				announcer.textContent = 'Player 2: Choose your character';
 				enterName.value = '';
 			} else {
-				playerTwoName = enterName.value;
+				playerTwoName = enterName.value.trim();
 				playerTwoClass = temp[0].dataset.class;
 				announcer.textContent = 'Players chose their characters';
 				enterName.value = '';
@@ -150,7 +158,7 @@ class ChooseMenu extends Menu {
 			playerOneTurn = false;
 			playerTwoTurn = true;
 
-			playSoundEffect('.confirm-audio')
+			playSoundEffect('.confirm-audio');
 			this.removeStyles();
 			this.checkConditionToStartBattle();
 		};
@@ -159,23 +167,24 @@ class ChooseMenu extends Menu {
 		this.allertEmptyName = function () {
 			playSoundEffect('.confirm-failed-audio');
 
-			if (enterName.value.length <= 1) {
-				shakeAnimation('.decision__btn', 'horizontal');
+			shakeAnimation('.decision__btn', 'horizontal');
 
-				enterName.value = 'You forgot enter name';
-				enterName.style.color = 'red';
+			enterName.value = 'You forgot enter name';
+			enterName.style.color = 'red';
+			enterName.style.fontSize = '2rem';
+
+			setTimeout(() => {
+				enterName.value = '';
+				enterName.style.color = 'black';
 				enterName.style.fontSize = '2rem';
+			}, 1000);
+		};
 
-				setTimeout(() => {
-					enterName.value = '';
-					enterName.style.color = 'black';
-					enterName.style.fontSize = '2rem';
-				}, 1000);
-			}
-
+		this.allertClass = function () {
 			if ([...options.children].some((child) => child.classList.contains('in-focus'))) {
 				return;
 			} else {
+				playSoundEffect('.confirm-failed-audio');
 				shakeAnimation('.options', 'mix');
 			}
 		};
@@ -207,15 +216,12 @@ class ChooseMenu extends Menu {
 		this.startVisualAndSoundEffect = function (event) {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
-					shakeAnimation('.wrapper-choose-menu');
 					playSoundEffect('.warrior-selected-audio');
 					break;
 				case 'rogue':
-					shakeAnimation('.wrapper-choose-menu');
 					playSoundEffect('.rogue-selected-audio');
 					break;
 				case 'mage':
-					shakeAnimation('.wrapper-choose-menu');
 					playSoundEffect('.mage-selected-audio');
 					break;
 			}

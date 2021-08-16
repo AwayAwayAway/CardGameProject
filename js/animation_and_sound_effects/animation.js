@@ -267,7 +267,7 @@ function multipleAttackAnimation(querySelector, className, src, amountEffect) {
 		setTimeout(() => {
 			container.appendChild(elem);
 
-			window.navigator.vibrate([300, 150, 300, 150, 300]);
+			window.navigator.vibrate([200]);
 
 			playSoundEffect('.strike-attack-audio');
 
@@ -292,7 +292,7 @@ function ultimateSkillAnimation(querySelector, className, src, audio) {
 	setTimeout(() => {
 		container.appendChild(image);
 
-		window.navigator.vibrate(1000);
+		window.navigator.vibrate(800);
 
 		shakeAnimation(querySelector)
 

@@ -33,6 +33,10 @@
     padding: 3rem;
     transition: color .3s linear;
 
+    @include mobile-landscape {
+      padding: 2rem;
+    }
+
     &:hover,
     &:hover,
     &:hover {
@@ -40,7 +44,6 @@
       cursor: pointer;
     }
   }
-
 }
 
 .closeRuleBtn {
