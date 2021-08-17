@@ -1,9 +1,7 @@
 @mixin mobile {
   @media only screen and (min-width: 375px) and (max-width: 767px) { @content; }
 }
-//@mixin mobile-landscape {
-//  @media only screen and (min-width: 375px) and (max-width: 767px) and (orientation: landscape) { @content; }
-//}
+
 @mixin mobile-landscape {
   @media (max-height: 767px) { @content; }
 }

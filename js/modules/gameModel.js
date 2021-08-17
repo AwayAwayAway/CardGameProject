@@ -36,6 +36,9 @@ export default class Game {
 
 		// событие установить модельки персонажей игрокам
 		this.updatePlayersModels = new Events();
+
+		// анимация конца хода
+		this.endTurnAnimation = new Events();
 	}
 
 	start() {
@@ -81,6 +84,14 @@ export default class Game {
 			this.choosePlayerInfo.notify(`${this.playersInfo.playerOneName} is choosing`);
 		} else {
 			this.choosePlayerInfo.notify(`${this.playersInfo.playerTwoName} is choosing`);
+		}
+	};
+
+	setTextTurnInfo() {
+		if (this.playerOneTurn) {
+			this.endTurnAnimation.notify('left', `${this.playersInfo.playerOneName}'s Turn`);
+		} else {
+			this.endTurnAnimation.notify('right', `${this.playersInfo.playerTwoName}'s Turn`);
 		}
 	};
 
@@ -165,6 +176,7 @@ export default class Game {
 
 		if (this.playerOnePullOfCards.length > 1 && this.playerTwoPullOfCards.length > 1) {
 			this.selectionEnd.notify();
+			this.setTextTurnInfo();
 		} else {
 			this.selectionContinue.notify();
 			this.setTextChooseInfo();
@@ -252,6 +264,8 @@ export default class Game {
 		}
 
 		this.setActivePassivePlayer();
+
+		this.setTextTurnInfo();
 
 		player1.doRestorePlayerData('player1');
 		player2.doRestorePlayerData('player2');

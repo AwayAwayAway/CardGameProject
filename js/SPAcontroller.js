@@ -1,4 +1,4 @@
-import {checkBackgroundAudio, loading} from './animation_and_sound_effects/animation.js';
+import {checkBackgroundAudio, loadingScreenAnimation} from './animation_and_sound_effects/animation.js';
 import '../scss/main.scss';
 
 let gameConstructor = {};
@@ -11,53 +11,68 @@ document.addEventListener('click', (event) => switchHash(event));
 window.addEventListener('hashchange', renderPage);
 
 function renderPage() {
-	const hash = window.location.hash;
-	const state = decodeURIComponent(hash.substr(1));
+	const hash = decodeURIComponent(window.location.hash.substr(1));
+	// const state = decodeURIComponent(hash.substr(1));
 
-	switch (state) {
+	switch (hash) {
 		case '':
-			loading('mainMenuLoad');
+			loadingScreenAnimation('mainMenuLoad');
+
 			document.title = 'Main menu';
+
 			setTimeout(() => createMainPage(gameConstructor.mainMenu), 500)
+
 			break;
 		case 'choose-menu':
-			loading('chooseMenuLoad');
+			loadingScreenAnimation('chooseMenuLoad');
+
 			setTimeout(() => createMainPage(gameConstructor.chooseMenu), 500);
+
 			break;
 		case 'main-menu':
-			loading('mainMenuLoad');
+			loadingScreenAnimation('mainMenuLoad');
+
 			setTimeout(() => createMainPage(gameConstructor.mainMenu), 500);
+
 			break;
 		case 'battle-field':
-			loading('battleFieldLoad');
+			loadingScreenAnimation('battleFieldLoad');
+
 			setTimeout(() => createMainPage(gameConstructor.battle), 500);
+
 			break;
 		case 'restoredGame':
-			loading('battleFieldLoad');
+			loadingScreenAnimation('battleFieldLoad');
+
 			setTimeout(() => createMainPage(gameConstructor.battle), 500);
+
 			break;
 	}
 
-	setTimeout(() => checkBackgroundAudio(), 550) ;
+	setTimeout(() => checkBackgroundAudio('.sound-icon'), 600);
 }
 
 function switchHash(event) {
 	switch (event.target.className.split(' ')[0]) {
-		case 'startButton':
+		case 'start-button':
 			document.title = 'Choose menu';
 			location.hash = decodeURIComponent('choose-menu');
+
 			break;
 		case 'back-to-main-menu':
 			document.title = 'Main menu';
 			location.hash = decodeURIComponent('main-menu');
+
 			break;
-		case 'startGame':
+		case 'start-game':
 			document.title = 'Battlefield';
 			location.hash = decodeURIComponent('battle-field');
+
 			break;
-		case 'continueButton':
+		case 'continue-button':
 			document.title = 'Battlefield';
 			location.hash = decodeURIComponent('restoredGame');
+
 			break;
 	}
 }

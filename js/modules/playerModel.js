@@ -1,6 +1,10 @@
 import Events from './eventsModel';
-import {playSoundEffect, createCardAnim, discardCardAnim} from '../animation_and_sound_effects/animation.js';
-import {player1} from '../game';
+import {
+	playSoundEffect,
+	createCardAnimation,
+	discardCardAnimation,
+	notEnoughStaminaAnimation
+} from '../animation_and_sound_effects/animation.js';
 
 export default class Players {
 	constructor(game, board) {
@@ -44,6 +48,9 @@ export default class Players {
 	doAction() {
 		if (this.gameModel.activePlayer.staminaPoints < this.gameModel.tempCard.cost) {
 			playSoundEffect('.card-grab-cancel-audio');
+
+			(this.gameModel.playerOneTurn) ? notEnoughStaminaAnimation('player1') : notEnoughStaminaAnimation()
+
 			return;
 		}
 
@@ -89,7 +96,7 @@ export default class Players {
 			this.cardDraw.notify(this.gameModel.playerTwoPullOfCards[randomCardDraw]);
 		}
 
-		createCardAnim('.card-in-hand-field', 'single');
+		createCardAnimation('.card-in-hand-field', 'single');
 	}
 
 	massiveRandomDraw(card, condition) {
@@ -115,7 +122,7 @@ export default class Players {
 			}
 		}
 
-		createCardAnim('.card-in-hand-field', 'single');
+		createCardAnimation('.card-in-hand-field', 'single');
 	}
 
 	randomCardDiscard() {
@@ -123,7 +130,7 @@ export default class Players {
 
 		//it will be error if you use DaggerThrow as the last card in hand so w check on this
 		if (this.boardModel.cardInHand.children.length > 0) {
-			discardCardAnim(this.boardModel.cardInHand.children[randomDiscard]);
+			discardCardAnimation(this.boardModel.cardInHand.children[randomDiscard]);
 
 			playSoundEffect('.discard-card-audio');
 
@@ -134,11 +141,10 @@ export default class Players {
 	cardRemove(element) {
 		//it will be error if you use DaggerThrow as the last card in hand so w check on this
 		if (this.boardModel.cardInHand.children.length > 0) {
-			discardCardAnim(element);
+			discardCardAnimation(element);
 
 			playSoundEffect('.discard-card-audio');
 
-			// setTimeout(() => this.cardDiscard.notify(element), 300)
 			this.cardDiscard.notify(element)
 		}
 	}

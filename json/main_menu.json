@@ -17,28 +17,28 @@
     "id": 2,
     "role": "child",
     "tagName": "div",
-    "class": "continueButton",
+    "class": "continue-button",
     "content": "Continue"
   },
   {
     "id": 2,
     "role": "child",
     "tagName": "div",
-    "class": "startButton",
+    "class": "start-button",
     "content": "Start battle"
   },
   {
     "id": 3,
     "role": "child",
     "tagName": "div",
-    "class": "aboutButton",
+    "class": "about-button",
     "content": "About game"
   },
   {
     "id": 4,
     "role": "mainChild",
     "tagName": "i",
-    "class": "fas fa-volume-up soundIcon",
+    "class": "fas fa-volume-up sound-icon",
     "content": null
   },
   {

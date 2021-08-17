@@ -1,4 +1,4 @@
-import {switchPlayPause, playSoundEffect, shakeAnimation} from '../animation_and_sound_effects/animation.js';
+import {playPauseBackgroundAudio, playSoundEffect, shakeAnimation} from '../animation_and_sound_effects/animation.js';
 
 export default class Menu {
 	static createMainMenu() {
@@ -20,7 +20,7 @@ class MainMenu extends Menu {
 	constructor() {
 		super();
 
-		this.aboutGame = document.querySelector('.aboutButton');
+		this.aboutGame = document.querySelector('.about-button');
 
 		this.checkContinueCondition();
 
@@ -28,7 +28,7 @@ class MainMenu extends Menu {
 
 		const {1: soundOffOn} = this.source;
 
-		soundOffOn.addEventListener('click', switchPlayPause);
+		soundOffOn.addEventListener('click', playPauseBackgroundAudio);
 
 		[...this.mainElement.children].forEach((button) => {
 			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
@@ -43,9 +43,9 @@ class MainMenu extends Menu {
 		const gameDate = JSON.parse(temp);
 
 		if (!temp) {
-			document.querySelector('.continueButton').addEventListener('click', (event) => event.stopPropagation());
+			document.querySelector('.continue-button').addEventListener('click', (event) => event.stopPropagation());
 
-			document.querySelector('.continueButton').style.color = 'grey';
+			document.querySelector('.continue-button').style.color = 'grey';
 		}
 	}
 
@@ -54,8 +54,8 @@ class MainMenu extends Menu {
 		const closeBtn = document.createElement('div');
 		const img = document.createElement('img');
 
-		divEl.className = 'players-overlay fade-in';
-		closeBtn.className = 'closeRuleBtn';
+		divEl.className = 'players-overlay fade-in-animation';
+		closeBtn.className = 'close-rule-btn';
 		img.src = '../images/rules.png';
 		img.className = 'rules';
 		closeBtn.textContent = 'Close';
@@ -64,11 +64,11 @@ class MainMenu extends Menu {
 		divEl.appendChild(closeBtn);
 		this.mainElement.appendChild(divEl);
 
-		document.querySelector('.closeRuleBtn').addEventListener('click', () => this.removeAboutRules());
+		document.querySelector('.close-rule-btn').addEventListener('click', () => this.removeAboutRules());
 
-		document.querySelector('.closeRuleBtn').addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+		document.querySelector('.close-rule-btn').addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
 
-		document.querySelector('.closeRuleBtn').addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+		document.querySelector('.close-rule-btn').addEventListener('click', () => playSoundEffect('.btn-click-audio'));
 	}
 
 	removeAboutRules() {
@@ -114,24 +114,26 @@ class ChooseMenu extends Menu {
 
 		const {0: announcer, 1: description, 2: options, 3: startGame, 4: decision, 6: soundOffOn} = this.source;
 
-		const {firstElementChild: enterName, lastElementChild: applyChoose} = this.source[4];
+		const {firstElementChild: enterNameInput, lastElementChild: applyChoose} = this.source[4];
 
-		enterName.maxLength = '10';
+		enterNameInput.maxLength = '10';
 
 		// save name and model of character of each player
 		this.playerChooseCharacter = function () {
-			const regex = /\w/;
-			const checkWarning = enterName.value !== 'You forgot enter name';
+			const regexRule = /\w/;
+			const warningCheck = enterNameInput.value !== 'You forgot enter name';
 			const classCheck = [...options.children].some((child) => child.classList.contains('in-focus'));
-			const regexCheck = regex.test(enterName.value);
+			const regexCheck = regexRule.test(enterNameInput.value);
 
-			//check if input is empty
-			if (!checkWarning || !regexCheck) {
+			//check if input is empty or didnt class choosed
+			if (!warningCheck || !regexCheck) {
 				this.allertEmptyName();
 				this.allertClass();
+
 				return;
 			} else if (!classCheck) {
 				this.allertClass();
+
 				return;
 			}
 
@@ -144,22 +146,24 @@ class ChooseMenu extends Menu {
 
 			// record player's choose
 			if (playerOneTurn) {
-				playerOneName = enterName.value.trim();
+				playerOneName = enterNameInput.value.trim();
 				playerOneClass = temp[0].dataset.class;
 				announcer.textContent = 'Player 2: Choose your character';
-				enterName.value = '';
+				enterNameInput.value = '';
 			} else {
-				playerTwoName = enterName.value.trim();
+				playerTwoName = enterNameInput.value.trim();
 				playerTwoClass = temp[0].dataset.class;
 				announcer.textContent = 'Players chose their characters';
-				enterName.value = '';
+				enterNameInput.value = '';
 			}
 
 			playerOneTurn = false;
 			playerTwoTurn = true;
 
 			playSoundEffect('.confirm-audio');
+
 			this.removeStyles();
+
 			this.checkConditionToStartBattle();
 		};
 
@@ -169,14 +173,14 @@ class ChooseMenu extends Menu {
 
 			shakeAnimation('.decision__btn', 'horizontal');
 
-			enterName.value = 'You forgot enter name';
-			enterName.style.color = 'red';
-			enterName.style.fontSize = '2rem';
+			enterNameInput.value = 'You forgot enter name';
+			enterNameInput.style.color = 'red';
+			enterNameInput.style.fontSize = '2rem';
 
 			setTimeout(() => {
-				enterName.value = '';
-				enterName.style.color = 'black';
-				enterName.style.fontSize = '2rem';
+				enterNameInput.value = '';
+				enterNameInput.style.color = 'black';
+				enterNameInput.style.fontSize = '2rem';
 			}, 1000);
 		};
 
@@ -185,6 +189,7 @@ class ChooseMenu extends Menu {
 				return;
 			} else {
 				playSoundEffect('.confirm-failed-audio');
+
 				shakeAnimation('.options', 'mix');
 			}
 		};
@@ -192,7 +197,7 @@ class ChooseMenu extends Menu {
 		// check if both players choose character and enter nicknames, start fight
 		this.checkConditionToStartBattle = function () {
 			if (playerOneClass && playerTwoClass) {
-				const playersChoice = this.prepareToExtract();
+				const playersChoice = this.prepareToSaveData();
 
 				options.classList.add('hidden');
 				decision.classList.add('hidden');
@@ -258,7 +263,7 @@ class ChooseMenu extends Menu {
 			this.mainElement.style.backgroundImage = `url(\'./images/backgrounds/${event.target.textContent.toLowerCase()}.jpg\')`;
 		};
 
-		this.prepareToExtract = function () {
+		this.prepareToSaveData = function () {
 			return {
 				playerOneClass,
 				playerTwoClass,
@@ -276,7 +281,7 @@ class ChooseMenu extends Menu {
 		//run function to choose character or  alert empty input name
 		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
 
-		soundOffOn.addEventListener('click', switchPlayPause);
+		soundOffOn.addEventListener('click', playPauseBackgroundAudio);
 
 		document.addEventListener('keypress', (event) => {
 			if (event.code === 'Enter') {

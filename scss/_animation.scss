@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "keyframes";
 
 .go-to-choose-menu-anim {
   position: absolute;
@@ -35,96 +36,94 @@
 }
 
 .players-turn-info {
-  animation: turn-info-animate 2s ease-in-out forwards;
+  animation: playersTurnInfoAnimate 2s ease-in-out forwards;
 }
 
-.shakeX {
+.shake-x {
   animation: shakeX .3s linear forwards;
   animation-delay: 0s;
 }
 
-.shakeY {
+.shake-y {
   animation: shakeY .3s linear forwards;
   animation-delay: 0s;
 }
 
-.shakeMix {
+.shake-mix {
   animation: shakeMix .3s linear forwards;
   animation-delay: 0s;
 }
 
-.endTurnAnim {
-  animation: rotateEndTurn .7s linear forwards;
+.end-turn-animation {
+  animation: endTurnAnimate .7s linear forwards;
 }
 
-.cardsDrawAnim {
+.card-draw-animation {
   width: 8rem;
   height: 10rem;
-  animation: drawCard-desktop .2s linear forwards;
+  animation: cardDrawAnimateDesktop .2s linear forwards;
 
   @include tablet-landscape {
     width: 7rem;
     height: 9rem;
-    animation: drawCard-tablet-landscape .2s linear forwards;
+    animation: cardDrawAnimateTablet .2s linear forwards;
   }
 
   @include mobile-landscape {
     width: 5rem;
     height: 7rem;
-    animation: drawCard-mobile-landscape .2s linear forwards;
+    animation: cardDrawAnimateMobile .2s linear forwards;
   }
-
-
 }
 
-.cardDiscard {
-  animation: discardCard .2s linear forwards;
+.card-discard-animation {
+  animation: cardDiscardAnimate .2s linear forwards;
 }
 
-.touchStartAnim {
+.touch-start-animation {
   transform: scale(1.5) translateY(-18px);
   z-index: 100;
 }
 
-.shield {
+.shield-animation {
   position: absolute;
   top: 0;
   left: 30%;
   width: 200px;
   height: 200px;
-  animation: block 1s linear forwards;
+  animation: shieldAnimate 1s linear forwards;
 
   @include mobile-landscape {
     width: 100px;
     height: 100px;
-    animation: block-mobile 1s linear forwards;
+    animation: shieldAnimateMobile 1s linear forwards;
   }
 }
 
-.attack {
+.attack-animation {
   position: absolute;
   top: -16%;
   left: -6%;
   width: 450px;
   height: 550px;
-  animation: attack 0.5s linear forwards;
+  animation: attackAnimate 0.5s linear forwards;
 
   @include tablet {
     width: 400px;
     height: 400px;
     top: -10%;
-    animation: attack-tablet 0.5s linear forwards;
+    animation: attackAnimateTablet 0.5s linear forwards;
   }
 
   @include mobile-landscape {
     width: 250px;
     height: 250px;
     top: -10%;
-    animation: attack-mobile 0.5s linear forwards;
+    animation: attackAnimateMobile 0.5s linear forwards;
   }
 }
 
-.angerAttack {
+.anger-attack-animation {
   position: absolute;
   top: -16%;
   left: -6%;
@@ -139,15 +138,15 @@
   }
 }
 
-.attackRight {
+.attack-right-animation {
   animation: attackRight .5s ease-in-out forwards;
 }
 
-.attackLeft {
+.attack-left-animation {
   animation: attackLeft .5s ease-in-out forwards;
 }
 
-.smashAttack {
+.smash-attack-animation {
   position: absolute;
   top: 10%;
   left: 11%;
@@ -161,7 +160,7 @@
   }
 }
 
-.warriorUltimate {
+.warrior-ultimate-animation {
   position: absolute;
   top: -16%;
   left: -6%;
@@ -176,7 +175,7 @@
   }
 }
 
-.rogueUltimate {
+.rogue-ultimate-animation {
   position: absolute;
   top: -16%;
   left: -6%;
@@ -189,13 +188,13 @@
   }
 }
 
-.mageUltimate {
+.mage-ultimate-animation {
   position: absolute;
   top: -16%;
   left: -6%;
   width: 450px;
   height: 550px;
-  animation: rotateExpertice 0.8s linear forwards;
+  animation: refreshSkillAnimate 0.8s linear forwards;
 
   @include mobile-landscape {
     width: 250px;
@@ -204,28 +203,28 @@
   }
 }
 
-.fade-in {
+.fade-in-animation {
   z-index: 500;
-  animation: fade-in 0.3s linear forwards;
+  animation: fadeIn 0.5s linear forwards;
 }
 
-.fade-in-pile {
+.fade-out-animation {
+  z-index: 500;
+  animation: fadeOut 0.5s linear forwards;
+}
+
+.fade-in-pile-animation {
   z-index: 700;
-  animation: fade-in 0.3s linear forwards;
+  animation: fadeIn 0.3s linear forwards;
 }
 
-//.fade-out-pile {
-//  z-index: 700;
-//  animation: fade-out 0.3s linear forwards;
-//}
-
-.expertice {
+.refresh-skill-animation {
   position: absolute;
   top: 0;
   left: 0;
   width: 80px;
   height: 80px;
-  animation: rotateExpertice 1s linear forwards;
+  animation: refreshSkillAnimate 1s linear forwards;
 
   @include mobile-landscape {
     width: 50px;
@@ -233,15 +232,15 @@
   }
 }
 
-.defendValuePositive {
-  animation: DPanimatePositive .5s linear forwards;
+.defend-value-positive-animation {
+  animation: DefendAnimatePositive .5s linear forwards;
 }
 
-.defendValueNegative {
-  animation: DPanimateNegative .5s linear forwards;
+.defend-value-negative-animation {
+  animation: DefendAnimateNegative .5s linear forwards;
 }
 
-.damageNumberAnimate {
+.damage-number-animation {
   position: absolute;
   left: 0;
   top: 0;
@@ -252,481 +251,23 @@
   animation: damageNumberAnimate linear 1.5s forwards;
 }
 
-@keyframes damageNumberAnimate {
-  0% {
-    transform: translate(0px, 0px);
-    opacity: 1;
-  }
-  20% {
-    transform:  translate(-15px, -30px);
-  }
-  40% {
-    transform:  translate(-25px, 30px);
-  }
-  60% {
-    transform: translate(-35px, 60px);
-  }
-  80% {
-    transform:  translate(-45px, 90px);
-  }
-  99%{
-    opacity: 1;
-  }
-  100% {
-    transform:  translate(-66px, 120px);
-    opacity: 0;
-  }
+.win-info-animation {
+  background: linear-gradient(to right, #FFF 20%, #eb17de 40%, #FF0 60%, #FFF 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 1s linear infinite;
 }
 
-@keyframes warriorUltimate {
-  0% {
-    opacity: 0;
-  }
-
-  25% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-
-  75% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0;
-  }
+.pulse-animation {
+  border-radius: 20px;
+  animation: pulse 2s infinite;
 }
 
-@keyframes DPanimatePositive {
-  0% {
-    transform: scale(1.0);
-    color: white;
-  }
-  1%{
-    color: green;
-  }
-  50% {
-    transform: scale(1.5);
-    color: green;
-  }
-  99%{
-    color: green;
-  }
-  100% {
-    transform: scale(1.0);
-    color: white;
-  }
+.pulse-animation-enter {
+  border-radius: 20px;
+  animation: pulse 0.8s infinite;
 }
 
-@keyframes DPanimateNegative {
-  0% {
-    transform: scale(1.0);
-    color: white;
-  }
 
-  50% {
-    transform: scale(1.2);
-    color: red;
-  }
-
-  100% {
-    transform: scale(1.0);
-    color: white;
-  }
-}
-
-@keyframes smashAttack {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.5);
-  }
-  80% {
-    opacity: 1
-  }
-  100% {
-    opacity: 0;
-    transform: scale(1);
-  }
-}
-
-@keyframes attack {
-  0% {
-    width: 0;
-    height: 550px;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  50% {
-    visibility: visible;
-    opacity: 1;
-    width: 450px;
-  }
-
-  99% {
-    opacity: 1
-  }
-
-  100% {
-    visibility: visible;
-    opacity: 0;
-  }
-}
-
-@keyframes attack-tablet {
-  0% {
-    width: 0;
-    height: 350px;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  50% {
-    visibility: visible;
-    opacity: 1;
-    width: 350px;
-  }
-
-  99% {
-    opacity: 1
-  }
-
-  100% {
-    visibility: visible;
-    opacity: 0;
-  }
-}
-
-@keyframes attack-mobile {
-  0% {
-    width: 0;
-    height: 150px;
-    visibility: hidden;
-    opacity: 0;
-  }
-
-  50% {
-    visibility: visible;
-    opacity: 1;
-    width: 250px;
-  }
-
-  99% {
-    opacity: 1
-  }
-
-  100% {
-    visibility: visible;
-    opacity: 0;
-  }
-}
-
-@keyframes attackRight {
-  0% {
-    transform: translateX(0px);
-  }
-  50% {
-    transform: translateX(70px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
-
-@keyframes attackLeft {
-  0% {
-    transform: translateX(0px);
-  }
-  50% {
-    transform: translateX(-70px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
-
-@keyframes block {
-  0% {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(0);
-  }
-
-  50% {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(100px);
-  }
-
-  100% {
-    visibility: visible;
-    opacity: 0;
-    transform: translateY(200px);
-  }
-}
-
-@keyframes block-mobile {
-  0% {
-    visibility: hidden;
-    opacity: 0;
-    transform: translateY(0);
-  }
-
-  50% {
-    visibility: visible;
-    opacity: 1;
-    transform: translateY(50px);
-  }
-
-  100% {
-    visibility: visible;
-    opacity: 0;
-    transform: translateY(100px);
-  }
-}
-
-@keyframes drawCard-desktop {
-  0% {
-    width: 0;
-    height: 0;
-  }
-
-  100% {
-    width: 8rem;
-    height: 10rem;
-  }
-}
-
-@keyframes drawCard-tablet-landscape {
-  0% {
-    width: 0;
-    height: 0;
-  }
-
-  100% {
-    width: 7rem;
-    height: 9rem;
-  }
-}
-
-@keyframes drawCard-mobile-landscape {
-  0% {
-    width: 0;
-    height: 0;
-  }
-
-  100% {
-    width: 5rem;
-    height: 7rem;
-  }
-}
-
-@keyframes discardCard {
-  0% {
-    width: 11rem;
-    height: 14rem;
-  }
-
-  100% {
-    width: 0;
-    height: 0;
-  }
-}
-
-@keyframes shakeX {
-  0% {
-    transform: translateX(-10px);
-  }
-  25% {
-    transform: translateX(10px);
-  }
-  50% {
-    transform: translateX(-10px);
-  }
-  75% {
-    transform: translateX(10px);
-  }
-  100% {
-    transform: translateX(0px);
-  }
-}
-
-@keyframes shakeY {
-  0% {
-    transform: translateY(-10px);
-  }
-  25% {
-    transform: translateY(10px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  75% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes shakeMix {
-  0% {
-    transform: translateY(-10px);
-  }
-  5% {
-    transform: translateX(-10px);
-  }
-  25% {
-    transform: translateY(10px);
-  }
-  30% {
-    transform: translatex(10px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  55% {
-    transform: translateX(-10px);
-  }
-  75% {
-    transform: translateY(10px);
-  }
-  80% {
-    transform: translateY(10px);
-  }
-  99% {
-    transform: translateX(0px);
-  }
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-@keyframes loadingLeftRight {
-  0% {
-    width: 0;
-  }
-  50% {
-    width: 100%;
-  }
-  70% {
-    width: 100%;
-  }
-  100% {
-    width: 0;
-  }
-}
-
-@keyframes loadingBottom {
-  0% {
-    height: 0;
-  }
-  50% {
-    height: 100vh;
-  }
-  70% {
-    height: 100vh;
-  }
-  100% {
-    height: 0;
-  }
-}
-
-@keyframes turn-info-animate {
-  0% {
-    top: 30%;
-    width: 100%;
-    text-align: center;
-    background: #16dcef;
-    border-top: 3px solid white;
-    border-bottom: 3px solid white;
-    opacity: 0;
-  }
-  1% {
-    opacity: 1;
-  }
-  50% {
-    top: 30%;
-    width: 100%;
-    background: #16dcef;
-    text-align: center;
-    border-top: 3px solid white;
-    border-bottom: 3px solid white;
-  }
-  99% {
-    width: 100%;
-    text-align: center;
-  }
-  100% {
-    top: 1%;
-    background: none;
-    border: none;
-  }
-}
-
-@keyframes lets-battle {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.3);
-  }
-}
-
-@keyframes rotateEndTurn {
-  0% {
-    visibility: hidden;
-  }
-  1% {
-    visibility: visible;
-  }
-  2% {
-    transform: rotateX(0deg);
-  }
-  50% {
-    transform: rotateY(360deg);
-  }
-  100% {
-    transform: rotateY(0deg);
-  }
-}
-
-@keyframes rotateExpertice {
-  0% {
-    transform: rotateZ(0deg);
-  }
-  50% {
-    transform: rotateZ(360deg);
-  }
-  100% {
-    transform: rotateZ(0deg);
-    opacity: 0;
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-
-  100%{
-    opacity: 1;
-  }
-}
-
-@keyframes fade-out {
-  0% {
-    opacity: 1;
-  }
-
-  100%{
-    opacity: 0;
-  }
-}
 

@@ -27,9 +27,9 @@
     font-size: $mobile-font-size;
   }
 
-  .startButton,
-  .aboutButton,
-  .continueButton {
+  .start-button,
+  .about-button,
+  .continue-button {
     padding: 3rem;
     transition: color .3s linear;
 
@@ -46,7 +46,7 @@
   }
 }
 
-.closeRuleBtn {
+.close-rule-btn {
   color: white;
   position: absolute;
   bottom: 5%;
@@ -74,7 +74,7 @@
   }
 }
 
-.soundIcon {
+.sound-icon {
   position: absolute;
   top: 5%;
   left: 84%;

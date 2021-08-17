@@ -10,7 +10,7 @@
     "id": 14,
     "role": "mainChild",
     "tagName": "i",
-    "class": "fas fa-volume-up soundIcon hidden",
+    "class": "fas fa-volume-up sound-icon hidden",
     "content": null
   },
   {
@@ -185,7 +185,7 @@
     "id": 14,
     "role": "subChild",
     "tagName": "div",
-    "class": "player-1__pile-of-car",
+    "class": "player-1__pile-of-card",
     "content": null
   },
   {
@@ -276,7 +276,7 @@
     "id": 26,
     "role": "subChild",
     "tagName": "div",
-    "class": "player-2__pile-of-car",
+    "class": "player-2__pile-of-card",
     "content": null
   },
   {

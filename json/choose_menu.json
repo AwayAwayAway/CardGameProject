@@ -10,7 +10,7 @@
     "id": 10,
     "role": "mainChild",
     "tagName": "div",
-    "class": "playerChoose",
+    "class": "player-choose",
     "content": "Player 1: Choose your character"
   },
   {
@@ -79,7 +79,7 @@
     "id": 9,
     "role": "mainChild",
     "tagName": "div",
-    "class": "startGame btn",
+    "class": "start-game btn",
     "content": "Let's battle"
   },
   {
@@ -114,7 +114,7 @@
     "id": 14,
     "role": "mainChild",
     "tagName": "i",
-    "class": "fas fa-volume-up soundIcon hidden",
+    "class": "fas fa-volume-up sound-icon hidden",
     "content": null
   },
   {

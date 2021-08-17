@@ -6,19 +6,19 @@ import Players from './modules/playerModel';
 import PlayersView from './modules/playerView';
 import PlayersController from './modules/playerController';
 import BoardController from './modules/boardController';
-import {allowSaveConcede, battleground, endGame, player1HPstatus, player2HPstatus} from './modules/observerModel';
+import {allowSaveConcede, endGame} from './modules/observerModel';
 
-export const gameObserver = new Game();
+const gameObserver = new Game();
 
-export const boardModel = new Board(gameObserver);
+const boardModel = new Board(gameObserver);
 
-export const boardView = new BoardView(boardModel, gameObserver, document.querySelector('.wrapper-battle'));
+const boardView = new BoardView(boardModel, gameObserver, document.querySelector('.wrapper-battle'));
 
 const gameController = new GameController(gameObserver, boardView);
 
-export const player1 = new Players(gameObserver, boardModel);
+const player1 = new Players(gameObserver, boardModel);
 
-export const player2 = new Players(gameObserver, boardModel);
+const player2 = new Players(gameObserver, boardModel);
 
 const playersView = new PlayersView(player1, player2, gameObserver, document.querySelector('.wrapper-battle'));
 
@@ -34,18 +34,20 @@ gameObserver.start();
 
 boardView.init();
 
-winConditionObserver.observe(player1HPstatus, {
+winConditionObserver.observe(playersView.playerOneHPValue, {
 	childList: true,
 	subtree: true,
 	characterData: true
 });
 
-winConditionObserver.observe(player2HPstatus, {
+winConditionObserver.observe(playersView.playerTwoHPValue, {
 	childList: true,
 	subtree: true,
 	characterData: true
 });
 
-saveConcedeConditionObserver.observe(battleground, {
+saveConcedeConditionObserver.observe(boardView.battleField, {
 	attributes: true
 });
+
+export {gameObserver, boardModel, boardView, player1, player2};

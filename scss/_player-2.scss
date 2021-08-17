@@ -19,8 +19,8 @@
     }
   }
 
-  &__pile-of-car {
-    @extend .player-1__pile-of-car;
+  &__pile-of-card {
+    @extend .player-1__pile-of-card;
     left: 93%;
 
     @include mobile-landscape {

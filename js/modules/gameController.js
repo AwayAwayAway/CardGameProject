@@ -48,6 +48,8 @@ export default class GameController {
 
 	doEndTurn() {
 		this.gameModel.turnEndsNextPlayerTurn();
+
+		this.gameModel.setTextTurnInfo();
 	}
 
 	onSaveGameData() {

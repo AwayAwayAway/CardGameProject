@@ -1,5 +1,5 @@
 // animation through all menu loading black screen
-function loading(target) {
+const loadingScreenAnimation = target => {
 	switch (target) {
 		case 'mainMenuLoad':
 			let mainEl = document.createElement('div');
@@ -29,13 +29,13 @@ function loading(target) {
 			setTimeout(() => document.body.removeChild(battleEl), 1100);
 			break;
 	}
-}
+};
 
 // starting play backgorundMusic
-function switchPlayPause() {
+const playPauseBackgroundAudio = () => {
 	const hash = window.location.hash;
 	const state = decodeURIComponent(hash.substr(1));
-	const soundOffOn = document.querySelector('.soundIcon');
+	const soundOffOn = document.querySelector('.sound-icon');
 	let backAudio;
 
 	if (state == 'battle-field' || state == 'restoredGame') {
@@ -46,96 +46,106 @@ function switchPlayPause() {
 
 	if (backAudio.paused) {
 		backAudio.play();
-		soundOffOn.className = 'fas fa-volume-up soundIcon';
+		soundOffOn.className = 'fas fa-volume-up sound-icon';
 	} else {
 		backAudio.pause();
-		soundOffOn.className = 'fas fa-volume-mute soundIcon';
+		soundOffOn.className = 'fas fa-volume-mute sound-icon';
 	}
-}
+};
 
-//# добавить вибрацию
-const checkBackgroundAudio = (function (querySelector) {
-	const currentHash = [];
+
+const checkBackgroundAudio = (querySelector) => {
+	const currentHash = decodeURIComponent(window.location.hash.substr(1));
 	const mainAudio = document.querySelector('.background-music-main-menu');
 	const audio = document.querySelector('.background-music-battlefield');
 	const allAudio = document.querySelectorAll('.music');
 
-	return function () {
-		currentHash.push(decodeURIComponent(window.location.hash.substr(1)));
+	const soundOffOn = document.querySelector(querySelector);
 
-		const soundOffOn = document.querySelector(querySelector);
+	switch (currentHash) {
+		case 'battle-field':
+			if (mainAudio.paused && audio.paused) {
+				mainAudio.pause();
+				audio.pause();
+			} else {
+				mainAudio.pause();
+				audio.play();
+			}
 
-		if (currentHash[currentHash.length - 1] === 'battle-field' && [...allAudio].every(element => element.paused)) {
-			mainAudio.pause();
-			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'battle-field' && [...allAudio].some(element => element.paused)) {
-			mainAudio.pause();
-			audio.play();
-		} else if (currentHash[currentHash.length - 1] === 'restoredGame' && [...allAudio].every(element => element.paused)) {
-			mainAudio.pause();
-			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'restoredGame' && [...allAudio].some(element => element.paused)) {
-			mainAudio.pause();
-			audio.play();
-		} else if (currentHash[currentHash.length - 1] === 'main-menu' &&
-			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].every(element => element.paused)) {
-			mainAudio.pause();
-			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'main-menu' &&
-			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].some(element => element.paused)) {
-			mainAudio.play();
-			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
-			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].some(element => element.paused)) {
-			mainAudio.play();
-			audio.pause();
-		} else if (currentHash[currentHash.length - 1] === 'choose-menu' &&
-			currentHash[currentHash.length - 2] === 'battle-field' ||  currentHash[currentHash.length - 2] === 'restoredGame' && [...allAudio].every(element => element.paused)) {
-			mainAudio.pause();
-			audio.pause();
-		}
+			break;
+		case 'restoredGame':
+			if (mainAudio.paused && audio.paused) {
+				mainAudio.pause();
+				audio.pause();
+			} else {
+				mainAudio.pause();
+				audio.play();
+			}
 
-		if ([...allAudio].every(element => element.paused)) {
-			soundOffOn.className = 'fas fa-volume-mute soundIcon';
-		} else {
-			soundOffOn.className = 'fas fa-volume-up soundIcon';
-		}
-	};
-}('.soundIcon'));
+			break;
+		case 'main-menu':
+			if (mainAudio.paused && audio.paused) {
+				mainAudio.pause();
+				audio.pause();
+			} else {
+				audio.pause();
+				mainAudio.play();
+			}
+
+			break;
+		case 'choose-menu':
+			if (mainAudio.paused && audio.paused) {
+				mainAudio.pause();
+				audio.pause();
+			} else {
+				audio.pause();
+				mainAudio.play();
+			}
+
+			break;
+	}
+
+	if ([...allAudio].every(element => element.paused)) {
+		soundOffOn.className = 'fas fa-volume-mute sound-icon';
+	} else {
+		soundOffOn.className = 'fas fa-volume-up sound-icon';
+	}
+
+};
 
 // shake display when character choosed
-function shakeAnimation(queryElement, direction = 'horizontal') {
+const shakeAnimation = (queryElement, direction = 'horizontal') => {
 	const element = document.querySelector(queryElement);
 
 	switch (direction) {
 		case 'horizontal':
-			element.classList.remove('shakeX');
-			setTimeout(() => element.classList.add('shakeX'), 0);
-			setTimeout(() => element.classList.remove('shakeX'), 400);
+			element.classList.remove('shake-x');
+			setTimeout(() => element.classList.add('shake-x'), 0);
+			setTimeout(() => element.classList.remove('shake-x'), 400);
 			break;
 		case 'vertical':
-			element.classList.remove('shakeY');
-			setTimeout(() => element.classList.add('shakeY'), 0);
-			setTimeout(() => element.classList.remove('shakeY'), 400);
+			element.classList.remove('shake-y');
+			setTimeout(() => element.classList.add('shake-y'), 0);
+			setTimeout(() => element.classList.remove('shake-y'), 400);
 			break;
 		case 'mix':
-			element.classList.remove('shakeMix');
-			setTimeout(() => element.classList.add('shakeMix'), 0);
-			setTimeout(() => element.classList.remove('shakeMix'), 400);
+			element.classList.remove('shake-mix');
+			setTimeout(() => element.classList.add('shake-mix'), 0);
+			setTimeout(() => element.classList.remove('shake-mix'), 400);
 			break;
 	}
-}
+};
 
-function createCardAnim(querySelector, amount) {
+const createCardAnimation = (querySelector, amount) => {
 	let elementAnim = document.querySelector(querySelector);
 
 	switch (amount) {
 		case 'single':
 			for (let i = 0; i < [...elementAnim.children].length; i++) {
-				if (elementAnim.children[i].classList.contains('cardsDrawAnim')) {
+				if (elementAnim.children[i].classList.contains('card-draw-animation')) {
 					continue;
 				} else {
-					elementAnim.children[i].classList.add('cardsDrawAnim');
+					elementAnim.children[i].classList.add('card-draw-animation');
 
 					playSoundEffect('.push-card-audio');
 				}
@@ -143,21 +153,21 @@ function createCardAnim(querySelector, amount) {
 			break;
 		case 'multiple':
 			[...elementAnim.children].forEach((element, index) => setTimeout(() => {
-				element.classList.add('cardsDrawAnim');
+				element.classList.add('card-draw-animation');
 
 				playSoundEffect('.push-card-audio');
 			}, 250 * index));
 			break;
 		case 'overlay':
-			[...elementAnim.children].forEach(element => element.classList.add('cardsDrawAnim'));
+			[...elementAnim.children].forEach(element => element.classList.add('card-draw-animation'));
 	}
-}
+};
 
-function discardCardAnim(querySelector) {
-	querySelector.classList.add('cardDiscard');
-}
+const discardCardAnimation = querySelector => {
+	querySelector.classList.add('card-discard-animation');
+};
 
-function endTurnAnim(side) {
+const endTurnAnimation = side => {
 	const button = document.querySelector('.end-of-turn-btn');
 	const turnAnnouncer = document.querySelector('.players-action');
 
@@ -178,31 +188,31 @@ function endTurnAnim(side) {
 			break;
 	}
 
-	setTimeout(() => button.classList.add('endTurnAnim'), 1300);
+	setTimeout(() => button.classList.add('end-turn-animation'), 1300);
 
 	setTimeout(() => turnAnnouncer.classList.remove('players-turn-info'), 2100);
 
-	setTimeout(() => button.classList.remove('endTurnAnim'), 1000);
-}
+	setTimeout(() => button.classList.remove('end-turn-animation'), 1000);
+};
 
-function attackAnimationEffect(querySelector, direction) {
+const attackInDirectionAnimation = (querySelector, direction) => {
 	const container = document.querySelector(querySelector);
 
 	switch (direction) {
 		case 'right':
-			container.classList.add('attackRight');
+			container.classList.add('attack-right-animation');
 
-			setTimeout(() => container.classList.remove('attackRight'), 1000);
+			setTimeout(() => container.classList.remove('attack-right-animation'), 1000);
 			break;
 		case 'left':
-			container.classList.add('attackLeft');
+			container.classList.add('attack-left-animation');
 
-			setTimeout(() => container.classList.remove('attackLeft'), 1000);
+			setTimeout(() => container.classList.remove('attack-left-animation'), 1000);
 			break;
 	}
-}
+};
 
-function blockAnimationEffect(querySelector, className, src) {
+const blockAnimation = (querySelector, className, src) => {
 	const container = document.querySelector(querySelector).parentElement;
 	const image = document.createElement('img');
 
@@ -212,9 +222,11 @@ function blockAnimationEffect(querySelector, className, src) {
 	container.appendChild(image);
 
 	setTimeout(() => container.removeChild(image), 1000);
-}
+};
 
-function attackAnimation(querySelector, className, src) {
+//#TODO кроссбраузерность вибрации
+const attackAnimation = (querySelector, className, src) => {
+	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
 	const image = document.createElement('img');
 
@@ -224,12 +236,14 @@ function attackAnimation(querySelector, className, src) {
 
 	container.appendChild(image);
 
-	window.navigator.vibrate([400]);
+	navigator.vibrate([400]);
+
 
 	setTimeout(() => container.removeChild(image), 600);
-}
+};
 
-function standartAttackAnimation(querySelector, className, src) {
+const standardAttackAnimation = (querySelector, className, src) => {
+	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
 	const image = document.createElement('img');
 
@@ -238,12 +252,13 @@ function standartAttackAnimation(querySelector, className, src) {
 
 	container.appendChild(image);
 
-	window.navigator.vibrate([400]);
+	navigator.vibrate([400]);
 
 	setTimeout(() => container.removeChild(image), 400);
-}
+};
 
-function multipleAttackAnimation(querySelector, className, src, amountEffect) {
+const multipleAttackAnimation = (querySelector, className, src, amountEffect) => {
+	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
 
 	let effectStorage = [];
@@ -267,16 +282,17 @@ function multipleAttackAnimation(querySelector, className, src, amountEffect) {
 		setTimeout(() => {
 			container.appendChild(elem);
 
-			window.navigator.vibrate([200]);
+			navigator.vibrate([200]);
 
 			playSoundEffect('.strike-attack-audio');
 
 			setTimeout(() => container.removeChild(elem), 400);
 		}, index * 300);
 	});
-}
+};
 
-function ultimateSkillAnimation(querySelector, className, src, audio) {
+const ultimateSkillAnimation = (querySelector, className, src, audio) => {
+	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
 	const overlay = document.querySelector('.players-overlay');
 	const overlayClose = document.querySelector('.players-overlay__close');
@@ -286,34 +302,34 @@ function ultimateSkillAnimation(querySelector, className, src, audio) {
 	image.className = className;
 
 	overlay.classList.remove('hidden');
-	overlay.classList.add('fade-in');
+	overlay.classList.add('fade-in-animation');
 	overlayClose.classList.add('hidden');
 
 	setTimeout(() => {
 		container.appendChild(image);
 
-		window.navigator.vibrate(800);
+		navigator.vibrate(800);
 
-		shakeAnimation(querySelector)
+		shakeAnimation(querySelector);
 
 		playSoundEffect(audio);
 	}, 200);
 
 	setTimeout(() => {
 		container.removeChild(image);
-		overlay.classList.add('fade-out');
+		overlay.classList.add('fade-out-animation');
 
 	}, 1250);
 
 	setTimeout(() => {
 		overlay.classList.add('hidden');
-		overlay.classList.remove('fade-in');
-		overlay.classList.remove('fade-out');
+		overlay.classList.remove('fade-in-animation');
+		overlay.classList.remove('fade-out-animation');
 		overlayClose.classList.remove('hidden');
-	}, 1600);
-}
+	}, 1850);
+};
 
-function playSoundEffect(querySelector) {
+const playSoundEffect = querySelector => {
 	const soundEffect = document.querySelector(querySelector);
 
 	if (!soundEffect) {
@@ -323,9 +339,9 @@ function playSoundEffect(querySelector) {
 	soundEffect.currentTime = 0;
 
 	soundEffect.play();
-}
+};
 
-function damageNumbersAnimation(querySelector, className, content) {
+const damageNumbersAnimation = (querySelector, className, content) => {
 	const container = document.querySelector(querySelector).parentElement;
 
 	const divEl = document.createElement('div');
@@ -335,13 +351,49 @@ function damageNumbersAnimation(querySelector, className, content) {
 	container.appendChild(divEl);
 
 	setTimeout(() => container.removeChild(divEl), 1500);
-}
+};
 
+const notEnoughStaminaAnimation = (player) => {
+	let activePlayerUI;
+	const divEl = document.createElement('div');
+	const fistBubble = document.createElement('div');
+	const secondBubble = document.createElement('div');
+	const thirdBubble = document.createElement('div');
+
+	if (player === 'player1') {
+		activePlayerUI = document.querySelector('.player-1__model').parentElement;
+		divEl.className = 'not-enough-stamina-player-1 fade-in-animation';
+		fistBubble.className = 'not-enough-stamina-player-1__first-bubble';
+		secondBubble.className = 'not-enough-stamina-player-1__second-bubble';
+		thirdBubble.className = 'not-enough-stamina-player-1__third-bubble';
+	} else {
+		activePlayerUI = document.querySelector('.player-2__model').parentElement;
+		divEl.className = 'not-enough-stamina-player-2 fade-in-animation';
+		fistBubble.className = 'not-enough-stamina-player-2__first-bubble';
+		secondBubble.className = 'not-enough-stamina-player-2__second-bubble';
+		thirdBubble.className = 'not-enough-stamina-player-2__third-bubble';
+	}
+
+	thirdBubble.innerHTML = 'Not enough <span style = "color: brown;"> Energy</span>';
+	divEl.appendChild(fistBubble);
+	divEl.appendChild(secondBubble);
+	divEl.appendChild(thirdBubble);
+
+	activePlayerUI.appendChild(divEl);
+
+	setTimeout(() => {
+		divEl.classList.add('fade-out-animation')
+	}, 1500);
+
+	setTimeout(() => {
+		activePlayerUI.removeChild(divEl)
+	}, 2000);
+}
 export {
-	loading, switchPlayPause, checkBackgroundAudio, shakeAnimation,
-	createCardAnim, endTurnAnim, blockAnimationEffect, attackAnimation,
-	playSoundEffect, attackAnimationEffect, multipleAttackAnimation, discardCardAnim,
-	standartAttackAnimation, ultimateSkillAnimation, damageNumbersAnimation
+	loadingScreenAnimation, playPauseBackgroundAudio, checkBackgroundAudio, shakeAnimation,
+	createCardAnimation, discardCardAnimation, endTurnAnimation, attackInDirectionAnimation,
+	blockAnimation, attackAnimation, standardAttackAnimation, multipleAttackAnimation,
+	ultimateSkillAnimation, playSoundEffect, damageNumbersAnimation, notEnoughStaminaAnimation
 };
 
 

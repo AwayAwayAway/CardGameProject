@@ -143,7 +143,7 @@
   }
 }
 
-.playerChoose {
+.player-choose {
   @include tablet {
     font-size: 3rem;
   }
@@ -194,7 +194,7 @@
   }
 }
 
-.startGame {
+.start-game {
   position: absolute;
   top: 50%;
   left: 40%;
@@ -204,7 +204,7 @@
   opacity: 1;
   cursor: pointer;
   visibility: hidden;
-  animation: .5s linear 1s infinite alternate lets-battle;
+  animation: .5s linear 1s infinite alternate letsBattleAnimate;
 }
 
 .visible {
@@ -217,7 +217,7 @@
   visibility: hidden;
 }
 
-.soundIcon {
+.sound-icon {
   position: absolute;
   top: 5%;
   left: 84%;

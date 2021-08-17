@@ -1,7 +1,7 @@
 import Events from './eventsModel';
-import {createCardAnim, endTurnAnim, playSoundEffect} from '../animation_and_sound_effects/animation';
-import {gameObserver, player1} from '../game';
-import {player2} from '../game';
+import {player1, player2} from '../game';
+import {warningUnload, forbidClick} from './observerModel';
+import {createCardAnimation, endTurnAnimation, playSoundEffect} from '../animation_and_sound_effects/animation';
 
 export default class BoardView {
 	constructor(board, game, selector) {
@@ -11,7 +11,20 @@ export default class BoardView {
 
 		this.boardSelector = selector;
 
-		this.forbidClick = event => event.stopPropagation();
+		this.deckWrapper = this.boardSelector.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
+		this.acceptChoiceBtn = this.boardSelector.querySelector('.players-draw-info__accept');               // player accept cards he chose
+		this.cardsChooseCounter = this.boardSelector.querySelector('.players-draw-info__count');             // counter for amount of cards have been chosen(needs for alert)
+		this.cardInHandField = this.boardSelector.querySelector('.card-in-hand-field');              // field for cards in hand each player
+		this.battleField = this.boardSelector.querySelector('.battle-field');            // play field
+		this.endTurnBtn = this.boardSelector.querySelector('.end-of-turn-btn');             // end turn button
+		this.playersTurnInfo = this.boardSelector.querySelector('.players-action');
+		this.cardsPlayField = this.boardSelector.querySelector('.play-field');           // area for cards to drop and play their actions
+		this.soundOffOnIcon = this.boardSelector.querySelector('.sound-icon');
+		this.playersOverlay = this.boardSelector.querySelector('.players-overlay');
+		this.playersDeck = this.boardSelector.querySelector('.players-overlay__cards');
+		this.playersDeckClose = this.boardSelector.querySelector('.players-overlay__close');
+		this.menu = this.boardSelector.querySelector('.battle-field-nav');
+		this.menuIcon = this.boardSelector.querySelector('.battle-field-nav__icon');
 
 		this.touchEvent = event => {
 			const self = this;
@@ -21,7 +34,7 @@ export default class BoardView {
 			if(event.target.classList.contains('cards')) {
 				this.touchCardStart.notify(event.target);
 
-				event.target.classList.add('touchStartAnim');
+				event.target.classList.add('touch-start-animation');
 
 				playSoundEffect('.drag-audio')
 
@@ -32,7 +45,7 @@ export default class BoardView {
 					self.boardSelector.addEventListener('touchend',  function touchEnd (event) {
 						const comparison = parseFloat(coordinateY)  - parseFloat(event.changedTouches[0].pageY);
 
-						eventTarget.classList.remove('touchStartAnim');
+						eventTarget.classList.remove('touch-start-animation');
 
 						playSoundEffect('.card-grab-cancel-audio');
 
@@ -55,21 +68,11 @@ export default class BoardView {
 		// событие для this.gameModel закинуть в масиив выбранные карты
 		this.onDefineCards = new Events;
 
-		// событие на анимацию(подсветку выбора карт)
-		this.onAnimCards = new Events;
-
 		// событие на проверку набрали ли игроки карты
 		this.submitCardCheckChoose = new Events;
 
 		// навели убрали мышку на карту в руке
-		this.cardInHandChoosen = new Events();
-
-		// навели убрали мышку на карту в руке
 		this.grabCardStart = new Events();
-
-		this.grabCardEnd = new Events();
-
-		this.preventDrag = new Events();
 
 		this.touchCardStart = new Events();
 
@@ -81,6 +84,8 @@ export default class BoardView {
 
 		this.endTurn = new Events();
 
+		this.onClosePileCards = new Events();
+
 		this.showPlayerDeck = new Events();
 
 		this.soundOffOn = new Events();
@@ -91,75 +96,83 @@ export default class BoardView {
 
 		this.onConcede = new Events();
 
-		this.boardModel.btnAccept.addEventListener('click', () => this.onDefineCards.notify());
-
-		this.boardModel.btnAccept.addEventListener('click', () => this.submitCardCheckChoose.notify());
-
-		// событие клик подстветка выбора карт
-		this.boardModel.decWrapper.addEventListener('click', (event) => this.onAnimCards.notify(event.target));
-
-		// показываем карты какие наюрал игрок на этапе выбора
-		this.boardModel.battleField.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
-
-		this.boardModel.playersDeckClose.addEventListener('click', (event) => this.showPlayerDeck.notify(event.target));
-
 		if("ontouchstart" in window) {
-			this.boardModel.cardInHand.addEventListener('touchstart', (event) => this.touchEvent(event));
-		} else {
-			// анимация карт в руке при наведении
-			this.boardModel.cardInHand.addEventListener('mouseover', (event) => this.cardInHandChoosen.notify(event.target, 'focus'));
+			this.cardInHandField.addEventListener('touchstart', (event) => this.touchEvent(event));
 
-			this.boardModel.cardInHand.addEventListener('mouseout', (event) => this.cardInHandChoosen.notify(event.target, 'blur'));
+			// событие клик подстветка выбора карт
+			this.deckWrapper.addEventListener('touchstart', (event) => this.cardChooseAnim(event.target));
+		} else {
+			// событие клик подстветка выбора карт
+			this.deckWrapper.addEventListener('click', (event) => this.cardChooseAnim(event.target));
+
+			// анимация карт в руке при наведении
+			this.cardInHandField.addEventListener('mouseover', (event) => this.cardChooseAnimInHandAdd(event.target));
+
+			this.cardInHandField.addEventListener('mouseout', (event) => this.cardChooseAnimInHandRemove(event.target));
 
 			// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
-			this.boardModel.cardInHand.addEventListener('dragstart', (event) => this.grabCardStart.notify(event.target, 'focus'));
+			this.cardInHandField.addEventListener('dragstart', (event) => this.dragCardStartAnimation(event.target));
 
-			this.boardModel.cardInHand.addEventListener('dragend', (event) => this.grabCardEnd.notify(event.target, 'blur'));
+			this.cardInHandField.addEventListener('dragstart', (event) => this.grabCardStart.notify(event.target));
 
-			// prevent default behavior
-			this.boardModel.cardsPlayField.addEventListener('dragenter', (event) => this.preventDrag.notify(event));
+			this.cardInHandField.addEventListener('dragend', (event) => this.dragCardEndAnimation(event.target));
 
-			this.boardModel.cardsPlayField.addEventListener('dragover', (event) => this.preventDrag.notify(event));
+			this.cardsPlayField.addEventListener('dragenter', (event) => this.dragCardEnterAnimation(event));
+
+			this.cardsPlayField.addEventListener('dragover', (event) => event.preventDefault());
 
 			// играем карты
-			this.boardModel.cardsPlayField.addEventListener('drop', () => {
+			this.cardsPlayField.addEventListener('drop', () => {
 				this.dropEvent.notify();
 				this.doCardAction.notify(this.gameModel.playerOneTurn);
+				this.deletePlayfieldAnimation();
 			})
 		}
 
-		this.boardModel.endTurn.addEventListener('click', () => this.endTurn.notify());
+		this.acceptChoiceBtn.addEventListener('click', () => {
+			this.onDefineCards.notify()
 
-		this.boardModel.soundOffOn.addEventListener('click', () => this.soundOffOn.notify());
+			this.submitCardCheckChoose.notify();
+		});
 
-		this.boardModel.menuIcon.addEventListener('click', () => {
+		this.battleField.addEventListener('click', (event) => {
+			this.showPlayerDeck.notify(event.target);
+
+			this.openCloseOverlay(event.target)
+		});
+
+		this.playersDeckClose.addEventListener('click', (event) => {
+			this.onClosePileCards.notify();
+
+			this.openCloseOverlay(event.target);
+		});
+
+		this.endTurnBtn.addEventListener('click', () => this.endTurn.notify());
+
+		this.soundOffOnIcon.addEventListener('click', () => this.soundOffOn.notify());
+
+		this.menuIcon.addEventListener('click', () => {
 			playSoundEffect('.btn-click-audio');
+
 			this.showMenu()
 		});
 
-		this.boardModel.menu.addEventListener('click', (event) => this.navigateGame(event.target));
+		this.menu.addEventListener('click', (event) => this.navigateGame(event.target));
 
-		[...this.boardModel.menu.getElementsByTagName('li')].forEach((button) => {
+		[...this.menu.getElementsByTagName('li')].forEach((button) => {
 			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+
 			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
 		});
 
-		this.boardSelector.querySelector('.save-progress').addEventListener('click', this.forbidClick);
+		this.boardSelector.querySelector('.save-progress').addEventListener('click', forbidClick);
 
-		this.boardSelector.querySelector('.concede').addEventListener('click', this.forbidClick);
+		this.boardSelector.querySelector('.concede').addEventListener('click', forbidClick);
 
-		window.addEventListener('beforeunload', (event) => {
-			event.preventDefault();
-			event.returnValue = '';
-		});
+		window.addEventListener('beforeunload', warningUnload);
 
-
-		// подписываемся на событие в модели
 		// this.boardModel создала карты надо их отобразить
 		this.boardModel.onCreateCards.attach((card, place) => this.drawCards(card, place));
-
-		// модель меняет количество набранных карт отображаем
-		this.boardModel.onCounterChange.attach((info) => this.counterUpdate(info));
 
 		// событие this.gameModel проверяет набранны ли у игроков карты
 		this.gameModel.selectionEnd.attach(() => this.selectionEndUpdate());
@@ -181,73 +194,75 @@ export default class BoardView {
 
 		this.boardModel.createAnimation.attach((querySelector, amount) => this.createAnimation(querySelector, amount));
 
-		this.boardModel.endTurnAnimation.attach((side) => this.endTurnAnimation(side));
-
-		this.boardModel.notEnoughStamina.attach(() => this.notEnoughStamina());
+		this.gameModel.endTurnAnimation.attach((btnSide, textInfo) => this.endTurnAnimation(btnSide, textInfo));
 	}
 
 	// need for start render cards when page is loaded
 	init() {
-		this.onLoadCreate.notify();
-		this.checkRestoreGame();
+		if (localStorage.getItem('gameData')) {
+			this.checkRestoreGame();
+			return;
+		} else {
+			this.onLoadCreate.notify();
+		}
 	};
 
 	drawCards(card, place) {
 		switch (place) {
 			case 'board':
-				this.boardModel.decWrapper.appendChild(card);
+				this.deckWrapper.appendChild(card);
 
 				break;
 			case 'hand':
-				this.boardModel.cardInHand.appendChild(card);
+				this.cardInHandField.appendChild(card);
 
 				break;
 			case 'overlay':
-				this.boardModel.playersDeck.appendChild(card);
+				this.playersDeck.appendChild(card);
 
 				break;
 		}
 
-		this.boardModel.cardsChooseCounter.textContent = '0';
+		this.cardsChooseCounter.textContent = '0';
 
-		this.boardModel.cardsChooseCounter.style = 'color: white';
+		this.cardsChooseCounter.style = 'color: white';
 	};
 
 	extraCardsToRemove(cards, place) {
 
 		if (place == 'board' && cards.length > 0) {
 			for (let i = 0; i < cards.length; i++) {
-				this.boardModel.decWrapper.removeChild(cards[i]);
+				this.deckWrapper.removeChild(cards[i]);
 			}
 		}
 
 		if (place == 'hand' && cards.length > 0) {
 			for (let i = 0; i < cards.length; i++) {
-				this.boardModel.cardInHand.removeChild(cards[i]);
+				this.cardInHandField.removeChild(cards[i]);
 			}
 		}
 
 		if (place == 'overlay' && cards.length > 0) {
 			for (let i = 0; i < cards.length; i++) {
-				this.boardModel.playersDeck.removeChild(cards[i]);
+				this.playersDeck.removeChild(cards[i]);
 			}
 		}
 	}
 
 	deleteActionCard(card) {
-		this.boardModel.cardInHand.removeChild(card);
+		this.cardInHandField.removeChild(card);
 	}
 
 	counterUpdate(info) {
-		this.boardModel.cardsChooseCounter.textContent = info.number;
+		this.cardsChooseCounter.textContent = info.number;
 
-		this.boardModel.cardsChooseCounter.style = `color: ${info.color}`;
+		this.cardsChooseCounter.style = `color: ${info.color}`;
 	};
 
 	selectionEndUpdate() {
-		this.boardModel.decWrapper.style.display = 'none';
+		this.deckWrapper.style.display = 'none';
 
-		this.boardModel.battleField.classList.remove('hidden');
+		this.battleField.classList.remove('hidden');
 
 		this.boardSelector.querySelector('.players-draw-info').style.display = 'none';
 	}
@@ -313,11 +328,13 @@ export default class BoardView {
 	}
 
 	createAnimation(querySelector, amount) {
-		createCardAnim(querySelector, amount);
+		createCardAnimation(querySelector, amount);
 	}
 
-	endTurnAnimation(side) {
-		endTurnAnim(side);
+	endTurnAnimation(btnSide, textInfo) {
+		endTurnAnimation(btnSide);
+
+		this.playersTurnInfo.textContent = textInfo;
 	}
 
 	showMenu() {
@@ -336,20 +353,28 @@ export default class BoardView {
 	navigateGame(eventTarget) {
 		switch (eventTarget.className.split(' ')[0]) {
 			case 'return-to-main-menu':
+				this.showMenu();
+
 				document.title = 'Main menu';
 				location.hash = decodeURIComponent('main-menu');
 
 				break;
 			case 'return-to-choose-menu':
+				this.showMenu();
+
 				document.title = 'Choose menu';
 				location.hash = decodeURIComponent('choose-menu');
 
 				break;
 			case 'save-progress':
+				this.showMenu();
+
 				this.saveGameProgres.notify();
 
 				break;
 			case 'concede':
+				this.showMenu();
+
 				this.doConcede();
 
 				break;
@@ -359,13 +384,11 @@ export default class BoardView {
 	checkRestoreGame() {
 		const hash = window.location.hash;
 		const state = decodeURIComponent(hash.substr(1));
-		const overlay = document.querySelector('.players-overlay');
-		const overlayClose = document.querySelector('.players-overlay__close');
 
 		if (state === 'restoredGame') {
-			overlay.classList.remove('hidden');
-			overlay.classList.add('fade-in');
-			overlayClose.classList.add('hidden');
+			this.playersOverlay.classList.remove('hidden');
+			this.playersOverlay.classList.add('fade-in-animation');
+			this.playersDeckClose.classList.add('hidden');
 
 			const divEl = document.createElement('div');
 
@@ -385,34 +408,129 @@ export default class BoardView {
 			divEl.appendChild(choiceYes);
 			divEl.appendChild(choiceNo);
 
-			overlay.appendChild(divEl);
+			this.playersOverlay.appendChild(divEl);
 
 			this.boardSelector.querySelector('.confirm-continue').addEventListener('click', (event) => this.doContinueDecision(event.target));
 		}
 	}
 
 	doContinueDecision(eventTarget) {
-		const overlay = document.querySelector('.players-overlay');
-		const overlayClose = document.querySelector('.players-overlay__close');
 		const divEl = document.querySelector('.confirm-continue');
 
 		switch (eventTarget.className) {
 			case 'confirm-continue__reject':
-				overlay.removeChild(divEl);
+				this.playersOverlay.removeChild(divEl);
 
-				overlay.classList.add('hidden');
-				overlayClose.classList.remove('hidden');
+				this.playersOverlay.classList.add('hidden');
+				this.playersDeckClose.classList.remove('hidden');
+
+				this.onLoadCreate.notify();
 
 				break;
 			case 'confirm-continue__accept':
+				this.playersOverlay.classList.remove('fade-in-animation');
+
 				this.onRestoreGameData.notify();
 
 				break;
 		}
 	}
 
-	notEnoughStamina() {
-		this.gameModel.a
+	//добавляем стили для перетаскивания
+	dragCardStartAnimation(eventTarget) {
+		playSoundEffect('.drag-audio');
+
+		if (eventTarget !== this.cardInHandField) {
+			setTimeout(() => eventTarget.classList.add('invisible'), 0);
+
+			this.cardsPlayField.classList.add('pulse-animation');
+		}
 	}
 
+	dragCardEndAnimation(eventTarget) {
+		playSoundEffect('.card-grab-cancel-audio');
+
+		if (eventTarget !== this.cardInHandField) {
+			eventTarget.classList.remove('invisible');
+		}
+
+		this.cardsPlayField.classList.remove('pulse-animation');
+	}
+
+	dragCardEnterAnimation(event) {
+		event.preventDefault();
+
+		this.cardsPlayField.classList.add('pulse-animation-enter');
+	}
+
+	deletePlayfieldAnimation() {
+		this.cardsPlayField.classList.remove('pulse-animation-enter');
+
+		this.cardsPlayField.classList.remove('pulse-animation');
+	}
+
+	// подсветка выбранных карт
+	cardChooseAnim(eventTarget) {
+		let target = eventTarget;
+
+		if (target !== this.deckWrapper) {
+			target.classList.toggle('card-to-select');
+		}
+
+		if (target.classList.contains('card-to-select')) {
+			playSoundEffect('.card-selected-audio')
+		}
+
+		let counter = document.getElementsByClassName('card-to-select').length;
+
+		let counterInfo = {};
+
+		counterInfo.number = counter;
+
+		if (counter > 8) {
+			counterInfo.color = 'red';
+		} else if (counter == 8) {
+			counterInfo.color = 'green';
+		} else if (counter > 0 && counter < 8) {
+			counterInfo.color = 'cyan';
+		} else {
+			counterInfo.color = 'white';
+		}
+
+		this.counterUpdate(counterInfo);
+	}
+
+	//анимация выбора только одной карты для игры в руке
+	cardChooseAnimInHandAdd(eventTarget) {
+		let target = eventTarget;
+
+		if (target !== this.cardInHandField) {
+			target.classList.add('card-to-action');
+		}
+	}
+
+	//анимация выбора только одной карты для игры в руке
+	cardChooseAnimInHandRemove(eventTarget) {
+		let target = eventTarget;
+
+		if (target !== this.cardInHandField) {
+			target.classList.remove('card-to-action');
+		}
+	}
+
+	openCloseOverlay(target) {
+		if(target.classList.contains('player-1__pile-of-card') || target.classList.contains('player-2__pile-of-card')) {
+			this.playersOverlay.classList.remove('hidden');
+			this.playersOverlay.classList.add('fade-in-pile-animation');
+
+			playSoundEffect('.overlay-open-audio');
+		}
+
+		if(target.classList.contains('players-overlay__close')) {
+			this.playersOverlay.classList.remove('fade-in-pile-animation');
+			this.playersOverlay.classList.add('hidden');
+
+			playSoundEffect('.overlay-close-audio');
+		}
+	}
 }
