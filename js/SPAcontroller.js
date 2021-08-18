@@ -1,5 +1,6 @@
 import {checkBackgroundAudio, loadingScreenAnimation} from './animation_and_sound_effects/animation.js';
 import '../scss/main.scss';
+import '../dist/spa.css';
 
 let gameConstructor = {};
 
