@@ -899,13 +899,7 @@ var Board = /*#__PURE__*/function () {
     value: function createCards(card, appendPlace) {
       var draggable = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
       var elDiv = card.icon;
-
-      if (appendPlace === 'hand') {
-        elDiv.setAttribute('class', 'cards-hand');
-      } else {
-        elDiv.setAttribute('class', 'cards');
-      }
-
+      elDiv.setAttribute('class', 'cards');
       elDiv.setAttribute('data-info', "".concat(card.id));
 
       if (draggable) {
@@ -1117,7 +1111,7 @@ var BoardView = /*#__PURE__*/function () {
     this.onRestoreGameData = new _eventsModel__WEBPACK_IMPORTED_MODULE_0__.default();
     this.onConcede = new _eventsModel__WEBPACK_IMPORTED_MODULE_0__.default();
 
-    if ("ontouchstart" in window) {
+    if ('ontouchstart' in window) {
       this.cardInHandField.addEventListener('touchstart', function (event) {
         return _this.touchEvent(event);
       }); // событие клик подстветка выбора карт
@@ -1129,6 +1123,13 @@ var BoardView = /*#__PURE__*/function () {
       // событие клик подстветка выбора карт
       this.deckWrapper.addEventListener('click', function (event) {
         return _this.cardChooseAnim(event.target);
+      }); // анимация карт в руке при наведении
+
+      this.cardInHandField.addEventListener('mouseover', function (event) {
+        return _this.cardChooseAnimInHandAdd(event.target);
+      });
+      this.cardInHandField.addEventListener('mouseout', function (event) {
+        return _this.cardChooseAnimInHandRemove(event.target);
       }); // анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
 
       this.cardInHandField.addEventListener('dragstart', function (event) {
@@ -1399,14 +1400,12 @@ var BoardView = /*#__PURE__*/function () {
       switch (eventTarget.className.split(' ')[0]) {
         case 'return-to-main-menu':
           this.showMenu();
-          window.removeEventListener('beforeunload', _observerModel__WEBPACK_IMPORTED_MODULE_2__.warningUnload);
           document.title = 'Main menu';
           location.hash = decodeURIComponent('main-menu');
           break;
 
         case 'return-to-choose-menu':
           this.showMenu();
-          window.removeEventListener('beforeunload', _observerModel__WEBPACK_IMPORTED_MODULE_2__.warningUnload);
           document.title = 'Choose menu';
           location.hash = decodeURIComponent('choose-menu');
           break;
@@ -1427,9 +1426,6 @@ var BoardView = /*#__PURE__*/function () {
     value: function checkRestoreGame() {
       var _this2 = this;
 
-      // const hash = window.location.hash;
-      // const state = decodeURIComponent(hash.substr(1));
-      // if (state === 'restoredGame') {
       this.playersOverlay.classList.remove('hidden');
       this.playersOverlay.classList.add('fade-in-animation');
       this.playersDeckClose.classList.add('hidden');
@@ -1447,7 +1443,7 @@ var BoardView = /*#__PURE__*/function () {
       this.playersOverlay.appendChild(divEl);
       this.boardSelector.querySelector('.confirm-continue').addEventListener('click', function (event) {
         return _this2.doContinueDecision(event.target);
-      }); // }
+      });
     }
   }, {
     key: "doContinueDecision",
@@ -1533,6 +1529,26 @@ var BoardView = /*#__PURE__*/function () {
       }
 
       this.counterUpdate(counterInfo);
+    } //анимация выбора только одной карты для игры в руке
+
+  }, {
+    key: "cardChooseAnimInHandAdd",
+    value: function cardChooseAnimInHandAdd(eventTarget) {
+      var target = eventTarget;
+
+      if (target !== this.cardInHandField) {
+        target.classList.add('card-to-action');
+      }
+    } //анимация выбора только одной карты для игры в руке
+
+  }, {
+    key: "cardChooseAnimInHandRemove",
+    value: function cardChooseAnimInHandRemove(eventTarget) {
+      var target = eventTarget;
+
+      if (target !== this.cardInHandField) {
+        target.classList.remove('card-to-action');
+      }
     }
   }, {
     key: "openCloseOverlay",

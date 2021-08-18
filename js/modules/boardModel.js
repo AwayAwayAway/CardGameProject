@@ -55,12 +55,7 @@ export default class Board {
 	createCards(card, appendPlace, draggable = false) {
 		let elDiv = card.icon;
 
-		if(appendPlace === 'hand') {
-			elDiv.setAttribute('class', 'cards-hand');
-		} else {
-			elDiv.setAttribute('class', 'cards');
-		}
-
+		elDiv.setAttribute('class', 'cards');
 		elDiv.setAttribute('data-info', `${card.id}`);
 
 		if (draggable) {

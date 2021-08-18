@@ -729,7 +729,7 @@ textarea {
   .play-again {
     font-size: 2rem;
     display: block;
-    top: 25%; } }
+    top: 35%; } }
 
 .play-again__reject {
   background: linear-gradient(#d249dc, #ef1678); }
@@ -1430,10 +1430,11 @@ textarea {
       top: 50%; } }
   @media screen and (max-height: 767px) {
     .cards-choose-field {
-      top: 70%;
-      width: 85vw; } }
+      width: 85vw;
+      transform: translateX(-50%);
+      bottom: 3%; } }
 
-.cards, .cards-hand {
+.cards {
   position: relative;
   margin-right: 1rem;
   margin-top: 2rem;
@@ -1445,14 +1446,9 @@ textarea {
   width: 0;
   height: 0; }
   @media screen and (max-height: 767px) {
-    .cards, .cards-hand {
+    .cards {
       margin-right: 0;
       margin-top: 0; } }
-
-.cards-hand {
-  transition: all .3s linear; }
-  .cards-hand:hover {
-    transform: translateY(-10%); }
 
 .card-in-hand-field {
   position: absolute;
@@ -1469,6 +1465,11 @@ textarea {
   background: center/cover no-repeat;
   outline: none;
   border: none; }
+
+.card-to-action {
+  border: none;
+  outline: none;
+  transform: translateY(-10%); }
 
 .card-to-select {
   border: none;
