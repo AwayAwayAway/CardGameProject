@@ -92,9 +92,6 @@ export const skillCollectionImages = {
 
 export const animationCollectionImages = preloadSkillImages(animationCollectionLinks);
 
-console.log(skillCollectionImages);
-console.log(animationCollectionImages);
-
 
 
 

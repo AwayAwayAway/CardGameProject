@@ -83,6 +83,9 @@ const proposePlayAgain = () => {
 	});
 
 	choiceNo.addEventListener('click', () => {
+		window.removeEventListener('beforeunload', warningUnload);
+		boardView.playersTurnInfo.display= 'none';
+		divEl.style.display = 'none';
 		document.title = 'Main menu';
 		location.hash = decodeURIComponent('main-menu');
 	});

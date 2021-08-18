@@ -44,6 +44,15 @@
   }
 }
 
+.cards-hand {
+  @extend .cards;
+  transition: all .3s linear;
+
+  &:hover {
+    transform: translateY(-10%);
+  }
+}
+
 .card-in-hand-field {
   position: absolute;
   left: 50%;
@@ -62,11 +71,11 @@
   border: none;
 }
 
-.card-to-action {
-  border: none;
-  outline: none;
-  transform: translateY(-10%);
-}
+//.card-to-action {
+//  border: none;
+//  outline: none;
+//  transform: translateY(-10%);
+//}
 
 .card-to-select {
   border: none;

@@ -47,26 +47,27 @@
 }
 
 .close-rule-btn {
-  color: white;
+  color: #00fc2a;
   position: absolute;
   bottom: 5%;
   right: 5%;
   cursor: pointer;
   transition: color .3s ease-in-out;
-  border: 2px dotted white;
+  border: 2px dotted #ef1678;
   padding: 1rem;
   border-radius: 20px;
 
-  @include desktop {
-    font-size: $tablet-font-size;
+  @include tablet-landscape {
+    bottom: 3%;
+    font-size: 2rem;
   }
 
-  @include tablet {
-    font-size: $tablet-font-size;
-  }
-
-  @include mobile {
-    font-size: $mobile-font-size;
+  @include mobile-landscape {
+    right: 1%;
+    bottom: 9%;
+    font-size: 1.2rem;
+    text-orientation: upright;
+    writing-mode: vertical-rl;
   }
 
   &:hover {
@@ -96,7 +97,60 @@
 
 }
 
-.rules {
-  height: 90vh;
-  width: 100%;
+.about-game {
+  color: white;
+  font-size: 2rem;
+  margin: 2rem 2rem;
+
+  @include tablet-landscape {
+    font-size: 1.5rem;
+    margin: 1rem 1rem;
+  }
+
+  @include mobile-landscape {
+    font-size: 1.3rem;
+    margin: 1rem 1rem;
+  }
+
+  p {
+    margin-top: 5rem;
+
+    @include tablet-landscape {
+      margin-top: 1.5rem;
+    }
+
+    @include mobile-landscape {
+      margin-top: 1.2rem;
+    }
+  }
+
+  #about-game__stamina {
+    width: 100px;
+    height: 100px;
+
+    @include mobile-landscape {
+      width: 56px;
+      height: auto;
+    }
+  }
+
+  img {
+    width: 110px;
+    height: auto;
+
+    @include mobile-landscape {
+      width: 75px;
+      height: auto;
+    }
+  }
+
+  i {
+    font-size: 4rem;
+    margin: 0 2rem;
+
+    @include mobile-landscape {
+      font-size: 2rem;
+      margin: 0 1rem;
+    }
+  }
 }

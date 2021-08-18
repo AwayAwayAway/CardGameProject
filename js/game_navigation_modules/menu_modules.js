@@ -36,6 +36,14 @@ class MainMenu extends Menu {
 		});
 
 		this.aboutGame.addEventListener('click', () => this.createAboutRules());
+
+		this.rulesPage = `<div class = "about-game">
+			<p>Defeat your opponent by playing <span style="color:brown">Cards</span><img src="./images/cards/warrior/strike.png" alt="card"> from your hand by swipe it up or drag it in the center of battlefield.</p>
+			<p>Cards require <span style="color: orange">Energy</span> to play. You can see it on a card in the top left corner. Once you are out of Energy, <img id = "about-game__stamina" src="./images/icons/out-of-energy.png" alt="cards">end your turn.</p>
+			<p>At start of your turn, new cards are drawn and your <span>Energy</span> is replenished.</p>
+			<p>Play defensive card to gain <span style="color:blue">Block</span><img src="./images/cards/warrior/defend_w.png" alt="card"> <span>Block</span> reduces incoming attack damage.</p>
+			<p>If you want to save your game, just use menu <i class="fas fa-bars"></i> and select "save progress" button.</p>
+		</div>`
 	}
 
 	checkContinueCondition() {
@@ -52,15 +60,15 @@ class MainMenu extends Menu {
 	createAboutRules() {
 		const divEl = document.createElement('div');
 		const closeBtn = document.createElement('div');
-		const img = document.createElement('img');
+		const content = document.createElement('div');
 
 		divEl.className = 'players-overlay fade-in-animation';
 		closeBtn.className = 'close-rule-btn';
-		img.src = '../images/rules.png';
-		img.className = 'rules';
+		content.innerHTML = `${this.rulesPage}`;
+
 		closeBtn.textContent = 'Close';
 
-		divEl.appendChild(img);
+		divEl.appendChild(content);
 		divEl.appendChild(closeBtn);
 		this.mainElement.appendChild(divEl);
 
@@ -73,7 +81,7 @@ class MainMenu extends Menu {
 
 	removeAboutRules() {
 		const divEl = document.querySelector('.players-overlay');
-		divEl.className = 'players-overlay fade-out';
+		divEl.className = 'players-overlay fade-out-animation';
 
 		setTimeout(() => this.mainElement.removeChild(divEl), 500);
 	}

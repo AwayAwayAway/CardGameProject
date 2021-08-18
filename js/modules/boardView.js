@@ -105,11 +105,6 @@ export default class BoardView {
 			// событие клик подстветка выбора карт
 			this.deckWrapper.addEventListener('click', (event) => this.cardChooseAnim(event.target));
 
-			// анимация карт в руке при наведении
-			this.cardInHandField.addEventListener('mouseover', (event) => this.cardChooseAnimInHandAdd(event.target));
-
-			this.cardInHandField.addEventListener('mouseout', (event) => this.cardChooseAnimInHandRemove(event.target));
-
 			// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
 			this.cardInHandField.addEventListener('dragstart', (event) => this.dragCardStartAnimation(event.target));
 
@@ -357,6 +352,7 @@ export default class BoardView {
 			case 'return-to-main-menu':
 				this.showMenu();
 
+				window.removeEventListener('beforeunload', warningUnload);
 				document.title = 'Main menu';
 				location.hash = decodeURIComponent('main-menu');
 
@@ -364,6 +360,7 @@ export default class BoardView {
 			case 'return-to-choose-menu':
 				this.showMenu();
 
+				window.removeEventListener('beforeunload', warningUnload);
 				document.title = 'Choose menu';
 				location.hash = decodeURIComponent('choose-menu');
 
@@ -500,24 +497,6 @@ export default class BoardView {
 		}
 
 		this.counterUpdate(counterInfo);
-	}
-
-	//анимация выбора только одной карты для игры в руке
-	cardChooseAnimInHandAdd(eventTarget) {
-		let target = eventTarget;
-
-		if (target !== this.cardInHandField) {
-			target.classList.add('card-to-action');
-		}
-	}
-
-	//анимация выбора только одной карты для игры в руке
-	cardChooseAnimInHandRemove(eventTarget) {
-		let target = eventTarget;
-
-		if (target !== this.cardInHandField) {
-			target.classList.remove('card-to-action');
-		}
 	}
 
 	openCloseOverlay(target) {
