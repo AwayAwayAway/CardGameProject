@@ -1,15 +1,14 @@
 import Cards from './modules/cardsModel';
 import {gameObserver} from './game';
 import {boardModel} from './game';
-
-//#TODO refactor "backflip"
+import {skillCollectionImages} from './modules/preloadImages';
 
 //START CREATING WARRIOR'S CARDS
-const strike_w = new Cards(0, 'attack', 1, 6, './images/cards/warrior/strike.png', 'strike_w');
+const strike_w = new Cards(0, 'attack', 1, 6, skillCollectionImages.warrior.strike_w, 'strike_w');
 
-const bash = new Cards(1, 'attack', 1, 8, './images/cards/warrior/bash.png', 'bash');
+const bash = new Cards(1, 'attack', 1, 8, skillCollectionImages.warrior.bash, 'bash');
 
-const anger = new Cards(2, 'attackAddEffect', 1, 6, './images/cards/warrior/anger.png', 'anger',
+const anger = new Cards(2, 'attackAddEffect', 1, 6, skillCollectionImages.warrior.anger, 'anger',
 	() => {
 		let effect;
 		if (gameObserver.activePlayer.healthPoints < 40) {
@@ -20,7 +19,7 @@ const anger = new Cards(2, 'attackAddEffect', 1, 6, './images/cards/warrior/ange
 		return effect;
 	});
 
-const bodySlam = new Cards(3, 'attackAddEffect', 2, 0, './images/cards/warrior/bodySlam.png', 'bodySlam', () => {
+const bodySlam = new Cards(3, 'attackAddEffect', 2, 0, skillCollectionImages.warrior.bodySlam, 'bodySlam', () => {
 	let effect;
 	if (gameObserver.activePlayer.defendPoints > 0) {
 		effect = gameObserver.activePlayer.defendPoints;
@@ -30,9 +29,9 @@ const bodySlam = new Cards(3, 'attackAddEffect', 2, 0, './images/cards/warrior/b
 	return effect;
 });
 
-const perfecedStrike = new Cards(4, 'attackAddEffect', 1, 6, './images/cards/warrior/perfectedStrike.png', 'perfectedStrike', () => 6 + boardModel.cardInHand.children.length);
+const perfectedStrike = new Cards(4, 'attackAddEffect', 1, 6, skillCollectionImages.warrior.perfectedStrike, 'perfectedStrike', () => 6 + boardModel.cardInHand.children.length);
 
-const bludgeon = new Cards(5, 'attackAddEffect', 3, 12, './images/cards/warrior/bludgeon.png', 'bludgeon', () => {
+const bludgeon = new Cards(5, 'attackAddEffect', 3, 12, skillCollectionImages.warrior.bludgeon, 'bludgeon', () => {
 	let effect;
 	if (gameObserver.passivePlayer.healthPoints > 50) {
 		effect = 17;
@@ -42,9 +41,9 @@ const bludgeon = new Cards(5, 'attackAddEffect', 3, 12, './images/cards/warrior/
 	return effect;
 });
 
-const defend_w = new Cards(6, 'defend', 1, 5, './images/cards/warrior/defend_R.png', 'defend_w');
+const defend_w = new Cards(6, 'defend', 1, 5, skillCollectionImages.warrior.defend_w, 'defend_w');
 
-const armaments = new Cards(7, 'defendAddEffect', 1, 5, './images/cards/warrior/armaments.png', 'armaments', () => {
+const armaments = new Cards(7, 'defendAddEffect', 1, 5, skillCollectionImages.warrior.armaments, 'armaments', () => {
 	let effect;
 	if (gameObserver.activePlayer.defendPoints === 0) {
 		effect = 7;
@@ -54,51 +53,51 @@ const armaments = new Cards(7, 'defendAddEffect', 1, 5, './images/cards/warrior/
 	return effect;
 });
 
-const ironWave = new Cards(8, 'defendAndAttack', 1, 5, './images/cards/warrior/ironWave.png', 'ironWave', () => 5);
+const ironWave = new Cards(8, 'defendAndAttack', 1, 5, skillCollectionImages.warrior.ironWave, 'ironWave', () => 5);
 
-const warcry = new Cards(9, 'defendDrawDiscard', 0, 1, './images/cards/warrior/warcry.png', 'warcry');
+const warcry = new Cards(9, 'defendDrawDiscard', 0, 1, skillCollectionImages.warrior.warcry, 'warcry');
 
-const bloodletting = new Cards(10, 'defendDrawDiscard', 0, 3, './images/cards/warrior/bloodletting.png', 'bloodletting');
+const bloodletting = new Cards(10, 'defendDrawDiscard', 0, 3, skillCollectionImages.warrior.bloodletting, 'bloodletting');
 
-const entrench = new Cards(11, 'defendAddEffect', 2, 2, './images/cards/warrior/entrench.png', 'entrench', () => gameObserver.activePlayer.defendPoints * 2 - gameObserver.activePlayer.defendPoints);
+const entrench = new Cards(11, 'defendAddEffect', 2, 2, skillCollectionImages.warrior.entrench, 'entrench', () => gameObserver.activePlayer.defendPoints * 2 - gameObserver.activePlayer.defendPoints);
 
 //START CREATING ROGUE'S CARDS
-const strike_r = new Cards(0, 'attack', 1, 6, './images/cards/rogue/strike_G.png', 'strike_r');
+const strike_r = new Cards(0, 'attack', 1, 6, skillCollectionImages.rogue.strike_r, 'strike_r');
 
-const daggerThrow = new Cards(1, 'attackDrawDiscard', 1, 9, './images/cards/rogue/r_dagger-throw.png', 'daggerThrow');
+const daggerThrow = new Cards(1, 'attackDrawDiscard', 1, 9, skillCollectionImages.rogue.daggerThrow, 'daggerThrow');
 
-const flechettes = new Cards(2, 'attackAddEffect', 1, 3, './images/cards/rogue/flechettes.png', 'flechettes', () => 3 * boardModel.cardInHand.children.length);
+const flechettes = new Cards(2, 'attackAddEffect', 1, 3, skillCollectionImages.rogue.flechettes, 'flechettes', () => 3 * boardModel.cardInHand.children.length);
 
-const riddleWithHoles = new Cards(3, 'attackAddEffect', 2, 7, './images/cards/rogue/riddleWithHoles.png', 'riddleWithHoles');
+const riddleWithHoles = new Cards(3, 'attackAddEffect', 2, 7, skillCollectionImages.rogue.riddleWithHoles, 'riddleWithHoles');
 
-const slice = new Cards(4, 'attack', 0, 4, './images/cards/rogue/slice.png', 'slice');
+const slice = new Cards(4, 'attack', 0, 4, skillCollectionImages.rogue.slice, 'slice');
 
-const quickSlash = new Cards(5, 'attackDrawDiscard', 1, 7, './images/cards/rogue/quickSlash.png', 'quickSlash');
+const quickSlash = new Cards(5, 'attackDrawDiscard', 1, 7, skillCollectionImages.rogue.quickSlash, 'quickSlash');
 
-const survivor = new Cards(6, 'defendDrawDiscard', 1, 8, './images/cards/rogue/survivor.png', 'survivor');
+const survivor = new Cards(6, 'defendDrawDiscard', 1, 8, skillCollectionImages.rogue.survivor, 'survivor');
 
-const deflect = new Cards(7, 'defend', 0, 4, './images/cards/rogue/deflect.png', 'deflect');
+const deflect = new Cards(7, 'defend', 0, 4, skillCollectionImages.rogue.deflect, 'deflect');
 
-const backFlip = new Cards(8, 'defendDrawDiscard', 1, 1, './images/cards/rogue/backflip.png', 'backFlip', () => 5);
+const backFlip = new Cards(8, 'defendDrawDiscard', 1, 1, skillCollectionImages.rogue.backFlip, 'backFlip', () => 5);
 
-const prepared = new Cards(9, 'defendDrawDiscard', 0, 1, './images/cards/rogue/prepared.png', 'prepared');
+const prepared = new Cards(9, 'defendDrawDiscard', 0, 1, skillCollectionImages.rogue.prepared, 'prepared');
 
-const expertise = new Cards(10, 'defendDrawDiscard', 1, 5, './images/cards/rogue/expertise.png', 'expertise');
+const expertise = new Cards(10, 'defendDrawDiscard', 1, 5, skillCollectionImages.rogue.expertise, 'expertise');
 
-const dash = new Cards(11, 'defendAndAttack', 2, 10, './images/cards/rogue/dash.png', 'dash', () => 8);
+const dash = new Cards(11, 'defendAndAttack', 2, 10, skillCollectionImages.rogue.dash, 'dash', () => 8);
 
 //START CREATING MAGE'S CARDS
-const strike_m = new Cards(0, 'attack', 1, 6, './images/cards/mage/strike_P.png', 'strike_m');
+const strike_m = new Cards(0, 'attack', 1, 6, skillCollectionImages.mage.strike_m, 'strike_m');
 
-const cutThroughFate = new Cards(1, 'attackDrawDiscard', 1, 7, './images/cards/mage/cutThroughFate.png', 'cutThroughFate', () => 2);
+const cutThroughFate = new Cards(1, 'attackDrawDiscard', 1, 7, skillCollectionImages.mage.cutThroughFate, 'cutThroughFate', () => 2);
 
-const reachHeaven = new Cards(2, 'attack', 2, 12, './images/cards/mage/reachHeaven.png', 'reachHeaven');
+const reachHeaven = new Cards(2, 'attack', 2, 12, skillCollectionImages.mage.reachHeaven, 'reachHeaven');
 
-const signatureMove = new Cards(3, 'attackAddEffect', 2, 0, './images/cards/mage/signatureMove.png', 'signatureMove', () => gameObserver.passivePlayer.defendPoints);
+const signatureMove = new Cards(3, 'attackAddEffect', 2, 0, skillCollectionImages.mage.signatureMove, 'signatureMove', () => gameObserver.passivePlayer.defendPoints);
 
-const tantrum = new Cards(4, 'attackAddEffect', 1, 3, './images/cards/mage/tantrum.png', 'tantrum', () => 3 + (Math.floor(Math.random() * (6 - 1)) + 1));
+const tantrum = new Cards(4, 'attackAddEffect', 1, 3, skillCollectionImages.mage.tantrum, 'tantrum', () => 3 + (Math.floor(Math.random() * (6 - 1)) + 1));
 
-const judjment = new Cards(5, 'attackAddEffect', 2, 0, './images/cards/mage/judgment.png', 'judjment', () => {
+const judgment = new Cards(5, 'attackAddEffect', 2, 0, skillCollectionImages.mage.judgment, 'judgment', () => {
 	let effect;
 	if (gameObserver.passivePlayer.healthPoints <= 15) {
 		effect = 0;
@@ -106,7 +105,7 @@ const judjment = new Cards(5, 'attackAddEffect', 2, 0, './images/cards/mage/judg
 	return effect;
 });
 
-const masterReality = new Cards(6, 'defendAddEffect', 1, 5, './images/cards/mage/masterReality.png', 'masterReality', () => {
+const masterReality = new Cards(6, 'defendAddEffect', 1, 5, skillCollectionImages.mage.masterReality, 'masterReality', () => {
 	let effect;
 	if (gameObserver.activePlayer.defendPoints == 0) {
 		effect = 10;
@@ -116,19 +115,19 @@ const masterReality = new Cards(6, 'defendAddEffect', 1, 5, './images/cards/mage
 	return effect;
 });
 
-const defend_m = new Cards(7, 'defend', 1, 5, './images/cards/mage/defend_P.png', 'defend_m');
+const defend_m = new Cards(7, 'defend', 1, 5, skillCollectionImages.mage.defend_m, 'defend_m');
 
-const meditate = new Cards(8, 'defendAddEffect', 1, 3, './images/cards/mage/meditate.png', 'meditate');
+const meditate = new Cards(8, 'defendAddEffect', 1, 3, skillCollectionImages.mage.meditate, 'meditate');
 
-const thirdEye = new Cards(9, 'defendDrawDiscard', 1, 7, './images/cards/mage/thirdEye.png', 'thirdEye');
+const thirdEye = new Cards(9, 'defendDrawDiscard', 1, 7, skillCollectionImages.mage.thirdEye, 'thirdEye');
 
-const nirvana = new Cards(10, 'defendAddEffect', 1, 0, './images/cards/mage/nirvana.png', 'nirvana', () => gameObserver.passivePlayer.defendPoints);
+const nirvana = new Cards(10, 'defendAddEffect', 1, 0, skillCollectionImages.mage.nirvana, 'nirvana', () => gameObserver.passivePlayer.defendPoints);
 
-const alpha = new Cards(11, 'defendDrawDiscard', 1, 4, './images/cards/mage/alpha.png', 'alpha');
-
+const alpha = new Cards(11, 'defendDrawDiscard', 1, 4, skillCollectionImages.mage.alpha, 'alpha');
 
 export const skillCollection = {
-	warrior: [strike_w, bash, anger, bodySlam, perfecedStrike, bludgeon, defend_w, armaments, ironWave, warcry, bloodletting, entrench],
+	warrior: [strike_w, bash, anger, bodySlam, perfectedStrike, bludgeon, defend_w, armaments, ironWave, warcry, bloodletting, entrench],
 	rogue: [strike_r, daggerThrow, flechettes, riddleWithHoles, slice, quickSlash, survivor, deflect, backFlip, prepared, expertise, dash],
-	mage: [strike_m, cutThroughFate, reachHeaven, signatureMove, tantrum, judjment, masterReality, defend_m, meditate, thirdEye, nirvana, alpha]
+	mage: [strike_m, cutThroughFate, reachHeaven, signatureMove, tantrum, judgment, masterReality, defend_m, meditate, thirdEye, nirvana, alpha]
 };
+

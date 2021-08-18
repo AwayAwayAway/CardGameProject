@@ -187,6 +187,10 @@
     left: 80%;
   }
 
+  @include tablet {
+    left: 80%;
+  }
+
   @include mobile-landscape {
     height: 45px;
     width: 100px;

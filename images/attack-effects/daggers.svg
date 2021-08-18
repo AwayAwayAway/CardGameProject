@@ -4,37 +4,37 @@
         #dagger1 {
         transform-box: fill-box;
         transform-origin: center;
-        animation: dagger1 0.5s linear forwards;
+        animation: dagger1 0.9s linear forwards;
         }
 
         #dagger2 {
         transform-box: fill-box;
         transform-origin: center;
-        animation: dagger2 0.5s linear forwards;
+        animation: dagger2 0.9s linear forwards;
         }
 
         #dagger3 {
         transform-box: fill-box;
         transform-origin: center;
-        animation: dagger3 0.5s linear forwards;
+        animation: dagger3 0.9s linear forwards;
         }
 
         #dagger4 {
         transform-box: fill-box;
         transform-origin: center;
-        animation: dagger4 0.5s linear forwards;
+        animation: dagger4 0.9s linear forwards;
         }
 
         #dagger5 {
         transform-box: fill-box;
         transform-origin: center;
-        animation: dagger5 0.5s linear forwards;
+        animation: dagger5 0.9s linear forwards;
         }
 
         #dagger6 {
         transform-box: fill-box;
         transform-origin: center;
-        animation: dagger6 0.5s linear forwards;
+        animation: dagger6 0.9s linear forwards;
         }
 
         @keyframes dagger1 {

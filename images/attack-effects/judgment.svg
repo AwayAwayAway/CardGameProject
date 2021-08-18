@@ -3,7 +3,7 @@
         #hammer {
         transform-origin: 75% 100%;
         transform-box: fill-box;
-        animation: rotateHammer .5s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards reverse
+        animation: rotateHammer 0.9s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards reverse;
         }
 
         @keyframes rotateHammer {

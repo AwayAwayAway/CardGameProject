@@ -21,7 +21,7 @@
   }
 
   @include mobile-landscape {
-    top: 77%;
+    top: 70%;
     width: 85vw;
   }
 }
@@ -35,6 +35,8 @@
   background: center/cover no-repeat;
   outline: none;
   border: none;
+  width: 0;
+  height: 0;
 
   @include mobile-landscape {
     margin-right: 0;

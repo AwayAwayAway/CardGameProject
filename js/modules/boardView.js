@@ -334,6 +334,8 @@ export default class BoardView {
 	endTurnAnimation(btnSide, textInfo) {
 		endTurnAnimation(btnSide);
 
+		playSoundEffect('.end-turn-audio');
+
 		this.playersTurnInfo.textContent = textInfo;
 	}
 
@@ -382,10 +384,10 @@ export default class BoardView {
 	}
 
 	checkRestoreGame() {
-		const hash = window.location.hash;
-		const state = decodeURIComponent(hash.substr(1));
+		// const hash = window.location.hash;
+		// const state = decodeURIComponent(hash.substr(1));
 
-		if (state === 'restoredGame') {
+		// if (state === 'restoredGame') {
 			this.playersOverlay.classList.remove('hidden');
 			this.playersOverlay.classList.add('fade-in-animation');
 			this.playersDeckClose.classList.add('hidden');
@@ -411,7 +413,7 @@ export default class BoardView {
 			this.playersOverlay.appendChild(divEl);
 
 			this.boardSelector.querySelector('.confirm-continue').addEventListener('click', (event) => this.doContinueDecision(event.target));
-		}
+		// }
 	}
 
 	doContinueDecision(eventTarget) {
@@ -454,7 +456,7 @@ export default class BoardView {
 			eventTarget.classList.remove('invisible');
 		}
 
-		this.cardsPlayField.classList.remove('pulse-animation');
+		this.deletePlayfieldAnimation();
 	}
 
 	dragCardEnterAnimation(event) {

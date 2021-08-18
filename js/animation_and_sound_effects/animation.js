@@ -214,9 +214,8 @@ const attackInDirectionAnimation = (querySelector, direction) => {
 
 const blockAnimation = (querySelector, className, src) => {
 	const container = document.querySelector(querySelector).parentElement;
-	const image = document.createElement('img');
+	const image = src;
 
-	image.src = src;
 	image.className = className;
 
 	container.appendChild(image);
@@ -224,81 +223,64 @@ const blockAnimation = (querySelector, className, src) => {
 	setTimeout(() => container.removeChild(image), 1000);
 };
 
-//#TODO кроссбраузерность вибрации
 const attackAnimation = (querySelector, className, src) => {
-	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
-	const image = document.createElement('img');
+	const image = src;
 
-	image.src = src;
 	image.style.transform = `rotate(${Math.floor(Math.random() * (360 - 1) + 1)}deg)`;
 	image.className = className;
 
 	container.appendChild(image);
 
-	navigator.vibrate([400]);
-
+	window.navigator.vibrate([400]);
 
 	setTimeout(() => container.removeChild(image), 600);
 };
 
 const standardAttackAnimation = (querySelector, className, src) => {
-	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
-	const image = document.createElement('img');
+	const image = src;
 
-	image.src = src;
 	image.className = className;
 
 	container.appendChild(image);
 
-	navigator.vibrate([400]);
+	window.navigator.vibrate([400]);
 
 	setTimeout(() => container.removeChild(image), 400);
 };
 
 const multipleAttackAnimation = (querySelector, className, src, amountEffect) => {
-	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
-
-	let effectStorage = [];
+	const image = src;
 
 	for (let i = 0; i < amountEffect; i++) {
-		const image = document.createElement('img');
-		effectStorage.push(image);
-	}
-
-	effectStorage.forEach((elem, index) => {
-		elem.src = src;
-
-		if (index === 1) {
-			elem.style.transform = 'rotate(30deg)';
-		} else if (index === 2) {
-			elem.style.transform = 'rotate(315deg)';
-		}
-
-		elem.className = className;
-
 		setTimeout(() => {
-			container.appendChild(elem);
+			if (i === 1) {
+				image.style.transform = 'rotate(30deg)';
+			} else if (i === 2) {
+				image.style.transform = 'rotate(315deg)';
+			}
 
-			navigator.vibrate([200]);
+			image.className = className;
+
+			container.appendChild(image);
+
+			window.navigator.vibrate([200]);
 
 			playSoundEffect('.strike-attack-audio');
+		}, i * 300)
+	}
 
-			setTimeout(() => container.removeChild(elem), 400);
-		}, index * 300);
-	});
+	setTimeout(() => container.removeChild(image), 1300);
 };
 
 const ultimateSkillAnimation = (querySelector, className, src, audio) => {
-	navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 	const container = document.querySelector(querySelector).parentElement;
 	const overlay = document.querySelector('.players-overlay');
 	const overlayClose = document.querySelector('.players-overlay__close');
-	const image = document.createElement('img');
+	const image = src;
 
-	image.src = src;
 	image.className = className;
 
 	overlay.classList.remove('hidden');
@@ -308,7 +290,7 @@ const ultimateSkillAnimation = (querySelector, className, src, audio) => {
 	setTimeout(() => {
 		container.appendChild(image);
 
-		navigator.vibrate(800);
+		window.navigator.vibrate(800);
 
 		shakeAnimation(querySelector);
 
@@ -318,7 +300,6 @@ const ultimateSkillAnimation = (querySelector, className, src, audio) => {
 	setTimeout(() => {
 		container.removeChild(image);
 		overlay.classList.add('fade-out-animation');
-
 	}, 1250);
 
 	setTimeout(() => {
@@ -389,6 +370,7 @@ const notEnoughStaminaAnimation = (player) => {
 		activePlayerUI.removeChild(divEl)
 	}, 2000);
 }
+
 export {
 	loadingScreenAnimation, playPauseBackgroundAudio, checkBackgroundAudio, shakeAnimation,
 	createCardAnimation, discardCardAnimation, endTurnAnimation, attackInDirectionAnimation,

@@ -53,14 +53,15 @@ export default class Board {
 	}
 
 	createCards(card, appendPlace, draggable = false) {
-		let elDiv = document.createElement('div');
+		let elDiv = card.icon;
 
 		elDiv.setAttribute('class', 'cards');
 		elDiv.setAttribute('data-info', `${card.id}`);
-		elDiv.style.backgroundImage = `url(${card.icon})`;
 
 		if (draggable) {
 			elDiv.setAttribute('draggable', 'true');
+		} else {
+			elDiv.setAttribute('draggable', 'false');
 		}
 
 		this.onCreateCards.notify(elDiv, appendPlace);

@@ -184,7 +184,7 @@ export default class Players {
 			return;
 		}
 
-		if (card.name == 'judjment') {
+		if (card.name == 'judgment') {
 			let sideEffect = card.sideEffect();
 
 			if (sideEffect == undefined) {
