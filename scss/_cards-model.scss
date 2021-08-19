@@ -45,6 +45,24 @@
   }
 }
 
+.cards-restored {
+  @extend .cards;
+  width: 8rem;
+  height: 10rem;
+
+  @include tablet-landscape {
+    width: 7rem;
+    height: 9rem;
+  }
+
+  @include mobile-landscape {
+    width: 5rem;
+    height: 7rem;
+  }
+}
+
+
+
 .card-in-hand-field {
   position: absolute;
   left: 50%;

@@ -46,7 +46,11 @@ const forbidSaveConcede = () => {
 const hideInterfaceElements = () => {
 	boardView.cardInHandField.classList.add('hidden');
 
-	boardView.endTurnBtn.classList.add('hidden')
+	boardView.endTurnBtn.classList.add('hidden');
+
+	boardView.playerOneCollection.classList.add('hidden');
+
+	boardView.playerOneCollection.classList.add('hidden');
 
 	document.querySelector('.background-music-battlefield').pause();
 

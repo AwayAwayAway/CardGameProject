@@ -1,22 +1,19 @@
 import Events from './eventsModel';
 import {skillCollection} from '../cards';
-import {playSoundEffect} from '../animation_and_sound_effects/animation.js';
 
 export default class Board {
 	constructor(model) {
 		this.gameModel = model;
+		this.currentHand = null;
 
 		this.deckWrapper = document.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
 		this.cardInHand = document.querySelector('.card-in-hand-field');              // field for cards in hand each player
-		this.playersTurnInfo = document.querySelector('.players-action');
 		this.playersDeck = document.querySelector('.players-overlay__cards');
 
 		this.onCreateCards = new Events();
-
-		this.removeCards = new Events();
-		this.removeActionCard = new Events();
-		this.createAnimation = new Events();
-		// this.endTurnAnimation = new Events();
+		this.onRemoveCards = new Events();
+		this.onRemoveActionCard = new Events();
+		this.onCreateCardAnimation = new Events();
 	}
 
 	// создаем деку в начале игры для игрока согласно классу
@@ -27,28 +24,30 @@ export default class Board {
 			setTimeout(() => {
 				skillCollection[playerClassInfo.playerOneClass].forEach((element) => this.createCards(element, 'board'));
 
-				this.createAnimation.notify('.cards-choose-field', 'multiple');
+				this.onCreateCardAnimation.notify('.cards-choose-field', 'multiple');
 			}, 500)
 		} else {
 			setTimeout(() => {
 				skillCollection[playerClassInfo.playerTwoClass].forEach((element) => this.createCards(element, 'board'));
 
-				this.createAnimation.notify('.cards-choose-field', 'multiple');
+				this.onCreateCardAnimation.notify('.cards-choose-field', 'multiple');
 			}, 500)
 		}
 	}
 
 	showCardsForPlayers(eventTarget) {
+		this.currentHand = [...this.cardInHand.children];
+
 		if (eventTarget.classList.contains('player-1__pile-of-card')) {
 			this.gameModel.playerOnePullOfCards.forEach((element) => this.createCards(element, 'overlay'));
 
-			this.createAnimation.notify('.players-overlay__cards', 'overlay')
+			this.onCreateCardAnimation.notify('.players-overlay__cards', 'overlay')
 		}
 
 		if (eventTarget.classList.contains('player-2__pile-of-card')) {
 			this.gameModel.playerTwoPullOfCards.forEach((element) => this.createCards(element, 'overlay'));
 
-			this.createAnimation.notify('.players-overlay__cards', 'overlay')
+			this.onCreateCardAnimation.notify('.players-overlay__cards', 'overlay')
 		}
 	}
 
@@ -89,13 +88,23 @@ export default class Board {
 				this.createCards(this.gameModel.playerOnePullOfCards[tempIndex[i]], 'hand', true);
 			}
 
-			this.createAnimation.notify('.card-in-hand-field', 'multiple');
+			this.onCreateCardAnimation.notify('.card-in-hand-field', 'multiple');
 		} else {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerTwoPullOfCards[tempIndex[i]], 'hand', true);
 			}
 
-			this.createAnimation.notify('.card-in-hand-field', 'multiple');
+			this.onCreateCardAnimation.notify('.card-in-hand-field', 'multiple');
+		}
+	}
+
+	restoreHand() {
+		if([...this.cardInHand.children].length === 0) {
+			this.currentHand.forEach((element) => {
+				element.className = 'cards cards-restored';
+				element.setAttribute('draggable', 'true')
+			});
+			this.currentHand.forEach((element) => this.cardInHand.appendChild(element));
 		}
 	}
 
@@ -115,7 +124,7 @@ export default class Board {
 				break;
 		}
 
-		this.removeCards.notify(orderToRemove, place);
+		this.onRemoveCards.notify(orderToRemove, place);
 	}
 
 	//удаляем сыгранные карты из руки с проверкой
@@ -127,10 +136,10 @@ export default class Board {
 
 		switch (condition) {
 			case 'playedCard':
-				this.removeActionCard.notify(this.gameModel.dragCard);
+				this.onRemoveActionCard.notify(this.gameModel.dragCard);
 				break;
 			case 'randomCard':
-				this.removeActionCard.notify(card);
+				this.onRemoveActionCard.notify(card);
 				break;
 		}
 	}

@@ -23,22 +23,22 @@ export default class Game {
 		this.tempCard = null; // карта которая играется
 
 		// событие выбор карт завершен
-		this.selectionEnd = new Events();
+		this.onSelectionEnd = new Events();
 
 		// событие выбор карт продолжается
-		this.selectionContinue = new Events();
+		this.onSelectionContinue = new Events();
 
 		// событие изменить кто выбирает карты
-		this.choosePlayerInfo = new Events();
+		this.onChangePlayerInfo = new Events();
 
 		// событие установить никнеймы игрокам
-		this.updatePlayersNames = new Events();
+		this.onUpdatePlayersNames = new Events();
 
 		// событие установить модельки персонажей игрокам
-		this.updatePlayersModels = new Events();
+		this.onUpdatePlayersModels = new Events();
 
 		// анимация конца хода
-		this.endTurnAnimation = new Events();
+		this.onEndTurnAnimation = new Events();
 	}
 
 	start() {
@@ -70,28 +70,28 @@ export default class Game {
 
 	// устанавливаем никнеймы игрокам из объекта
 	setPlayersNames() {
-		this.updatePlayersNames.notify(this.playersInfo.playerOneName, this.playersInfo.playerTwoName);
+		this.onUpdatePlayersNames.notify(this.playersInfo.playerOneName, this.playersInfo.playerTwoName);
 	};
 
 	// устанавливаем модельки игроков согласно выбору
 	setPlayersModels() {
-		this.updatePlayersModels.notify(this.playersInfo.playerOneClass, this.playersInfo.playerTwoClass);
+		this.onUpdatePlayersModels.notify(this.playersInfo.playerOneClass, this.playersInfo.playerTwoClass);
 	};
 
 	// показываем какой игрок выбирает карты
 	setTextChooseInfo() {
 		if (this.playerOneTurn) {
-			this.choosePlayerInfo.notify(`${this.playersInfo.playerOneName} is choosing`);
+			this.onChangePlayerInfo.notify(`${this.playersInfo.playerOneName} is choosing`);
 		} else {
-			this.choosePlayerInfo.notify(`${this.playersInfo.playerTwoName} is choosing`);
+			this.onChangePlayerInfo.notify(`${this.playersInfo.playerTwoName} is choosing`);
 		}
 	};
 
 	setTextTurnInfo() {
 		if (this.playerOneTurn) {
-			this.endTurnAnimation.notify('left', `${this.playersInfo.playerOneName}'s Turn`);
+			this.onEndTurnAnimation.notify('left', `${this.playersInfo.playerOneName}'s Turn`);
 		} else {
-			this.endTurnAnimation.notify('right', `${this.playersInfo.playerTwoName}'s Turn`);
+			this.onEndTurnAnimation.notify('right', `${this.playersInfo.playerTwoName}'s Turn`);
 		}
 	};
 
@@ -175,10 +175,12 @@ export default class Game {
 		}
 
 		if (this.playerOnePullOfCards.length > 1 && this.playerTwoPullOfCards.length > 1) {
-			this.selectionEnd.notify();
+			this.onSelectionEnd.notify();
+
 			this.setTextTurnInfo();
 		} else {
-			this.selectionContinue.notify();
+			this.onSelectionContinue.notify();
+
 			this.setTextChooseInfo();
 		}
 	};
@@ -270,7 +272,7 @@ export default class Game {
 		player1.doRestorePlayerData('player1');
 		player2.doRestorePlayerData('player2');
 
-		this.selectionEnd.notify(activePlayerHand);
+		this.onSelectionEnd.notify(activePlayerHand);
 
 		overlay.removeChild(divEl);
 

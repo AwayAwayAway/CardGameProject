@@ -7,20 +7,20 @@ export default class PlayersController {
 		this.boardView = boardView;
 		this.playersView = playerView;
 
-		if (this.boardView.hasOwnProperty('doCardAction')) {
-			this.boardView.doCardAction.attach((priority) => this.playCard(priority));
+		if (this.boardView.hasOwnProperty('onDropCardAction')) {
+			this.boardView.onDropCardAction.attach((priority) => this.doPlayCardAction(priority));
 		}
 
-		if (this.boardView.hasOwnProperty('endTurn')) {
-			this.boardView.endTurn.attach(() => this.doEndTurn());
+		if (this.boardView.hasOwnProperty('onEndTurn')) {
+			this.boardView.onEndTurn.attach(() => this.doEndTurn());
 		}
 
-		if (this.playersView.hasOwnProperty('updateInitialValue')) {
-			this.playersView.updateInitialValue.attach(() => this.updateInitialValue());
+		if (this.playersView.hasOwnProperty('onUpdateInitialValue')) {
+			this.playersView.onUpdateInitialValue.attach(() => this.doUpdateInitialValue());
 		}
 
-		if (this.boardView.hasOwnProperty('saveGameProgres')) {
-			this.boardView.saveGameProgres.attach(() => this.onSavePlayerData());
+		if (this.boardView.hasOwnProperty('onSaveGameProgres')) {
+			this.boardView.onSaveGameProgres.attach(() => this.doSavePlayerData());
 		}
 
 		if (this.boardView.hasOwnProperty('onConcede')) {
@@ -28,7 +28,7 @@ export default class PlayersController {
 		}
 	}
 
-	playCard(priority) {
+	doPlayCardAction(priority) {
 		if (priority) {
 			this.playerOneModel.doAction();
 		} else {
@@ -42,12 +42,12 @@ export default class PlayersController {
 		this.playerTwoModel.updateInitialValues();
 	}
 
-	updateInitialValue() {
+	doUpdateInitialValue() {
 		this.playerOneModel.updateInitialValues();
 		this.playerTwoModel.updateInitialValues();
 	}
 
-	onSavePlayerData() {
+	doSavePlayerData() {
 		this.playerOneModel.savePlayerData();
 		this.playerTwoModel.savePlayerData();
 	}

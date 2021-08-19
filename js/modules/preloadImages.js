@@ -46,7 +46,7 @@ const skillCollectionLinks = {
 		quickSlash: './images/cards/rogue/quickSlash.png',
 		survivor: './images/cards/rogue/survivor.png',
 		deflect: './images/cards/rogue/deflect.png',
-		backFlip: './images/cards/rogue/backFlip.png',
+		backFlip: './images/cards/rogue/backflip.png',
 		prepared: './images/cards/rogue/prepared.png',
 		expertise: './images/cards/rogue/expertise.png',
 		dash: './images/cards/rogue/dash.png'
@@ -91,7 +91,3 @@ export const skillCollectionImages = {
 };
 
 export const animationCollectionImages = preloadSkillImages(animationCollectionLinks);
-
-
-
-

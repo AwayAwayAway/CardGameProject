@@ -12,47 +12,43 @@ export default class PlayersView {
 		this.playerOneModel = playerOneModel;
 		this.playerTwoModel = playerTwoModel;
 		this.gameModel = gameModel;
-		const playerContainer = container;
+		this.playerContainer = container;
 
-		this.updateInitialValue = new Events();
+		this.onUpdateInitialValue = new Events();
 
-		this.playerOneHPValue = playerContainer.querySelector('.player-1__hp-value');
-		this.playerOneDefenceValue = playerContainer.querySelector('.player-1__defence-value');
-		this.playerOneStaminaValue = playerContainer.querySelector('.player-1__stamina-value');
-		this.playerOneHP = playerContainer.querySelector('.player-1__hp-bar-inner');
+		this.playerOneHPValue = this.playerContainer.querySelector('.player-1__hp-value');
+		this.playerOneDefenceValue = this.playerContainer.querySelector('.player-1__defence-value');
+		this.playerOneStaminaValue = this.playerContainer.querySelector('.player-1__stamina-value');
+		this.playerOneHP = this.playerContainer.querySelector('.player-1__hp-bar-inner');
 
-		this.playerTwoHPValue = playerContainer.querySelector('.player-2__hp-value');
-		this.playerTwoDefenceValue = playerContainer.querySelector('.player-2__defence-value');
-		this.playerTwoStaminaValue = playerContainer.querySelector('.player-2__stamina-value');
-		this.playerTwoHP = playerContainer.querySelector('.player-2__hp-bar-inner');
+		this.playerTwoHPValue = this.playerContainer.querySelector('.player-2__hp-value');
+		this.playerTwoDefenceValue = this.playerContainer.querySelector('.player-2__defence-value');
+		this.playerTwoStaminaValue = this.playerContainer.querySelector('.player-2__stamina-value');
+		this.playerTwoHP = this.playerContainer.querySelector('.player-2__hp-bar-inner');
 
-		this.playerOneModel.playerViewUpdate.attach((state) => {
+		this.playerOneModel.onPlayerViewUpdate.attach((state) => {
 			if (state) {
-				this.updateViewHP();
+				this.renderViewHP();
 			} else {
-				this.updateViewStamina();
+				this.renderViewStamina();
 			}
 		});
-		this.playerTwoModel.playerViewUpdate.attach((state) => {
+		this.playerTwoModel.onPlayerViewUpdate.attach((state) => {
 			if (state) {
-				this.updateViewHP();
+				this.renderViewHP();
 			} else {
-				this.updateViewStamina();
+				this.renderViewStamina();
 			}
 		});
 
-		this.playerOneModel.actionAnimation.attach(() => this.doAnimation());
-		this.playerTwoModel.actionAnimation.attach(() => this.doAnimation());
+		this.playerOneModel.onCardActionAnimation.attach(() => this.renderAnimation());
+		this.playerTwoModel.onCardActionAnimation.attach(() => this.renderAnimation());
 
-		this.gameModel.selectionEnd.attach(() => {
-			this.updateViewHP();
-			this.updateViewDef();
-			this.updateViewStamina();
-		});
+		this.gameModel.onSelectionEnd.attach(() => this.renderWholeUI(false));
 	}
 
 	// устанавливаем первые параметры здоровье, защита, стамина
-	updateViewHP() {
+	renderViewHP() {
 		this.playerOneHPValue.textContent = this.playerOneModel.healthPoints;
 
 		this.playerOneHP.style.width = this.playerOneModel.healthPoints + '%';
@@ -62,7 +58,7 @@ export default class PlayersView {
 		this.playerTwoHP.style.width = this.playerTwoModel.healthPoints + '%';
 	};
 
-	updateViewDef() {
+	renderViewDef() {
 		this.playerOneDefenceValue.textContent = this.playerOneModel.defendPoints;
 
 		this.playerTwoDefenceValue.textContent = this.playerTwoModel.defendPoints;
@@ -89,7 +85,7 @@ export default class PlayersView {
 		}
 	};
 
-	updateViewStamina() {
+	renderViewStamina() {
 		this.playerOneStaminaValue.textContent = this.playerOneModel.staminaPoints;
 
 		this.playerTwoStaminaValue.textContent = this.playerTwoModel.staminaPoints;
@@ -107,7 +103,17 @@ export default class PlayersView {
 		damageNumbersAnimation(passivePlayerUI, 'damage-number-animation', resultContent);
 	};
 
-	doAnimation() {
+	renderWholeUI(damage, passivePlayerUI) {
+		this.renderViewHP();
+		this.renderViewDef();
+		this.renderViewStamina();
+
+		if(damage) {
+			this.updateDamageNumbers(passivePlayerUI);
+		}
+	}
+
+	renderAnimation() {
 		let activePlayerUI;
 		let passivePlayerUI;
 		let direction;
@@ -128,18 +134,18 @@ export default class PlayersView {
 			case 'strike_r':
 			case 'quickSlash':
 				attackInDirectionAnimation(activePlayerUI, direction);
+
 				attackAnimation(passivePlayerUI, 'attack-animation', animationCollectionImages.warriorAttack);
 
 				setTimeout(() => {
 					shakeAnimation(passivePlayerUI);
+
 					playSoundEffect('.strike-attack-audio');
 				}, 200);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'defend_w':
@@ -153,11 +159,14 @@ export default class PlayersView {
 			case 'thirdEye':
 			case 'survivor':
 				blockAnimation(activePlayerUI, 'shield-animation', animationCollectionImages.defend);
+
 				playSoundEffect('.defend-audio');
 
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateInitialValue.notify();
+				this.renderViewDef();
+
+				this.renderViewStamina();
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'bodySlam':
@@ -170,11 +179,11 @@ export default class PlayersView {
 					playSoundEffect('.bash-attack-audio');
 				}, 200);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
+				this.renderWholeUI();
+
 				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'slice':
@@ -187,27 +196,27 @@ export default class PlayersView {
 
 				shakeAnimation(passivePlayerUI);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'daggerThrow':
 				setTimeout(() => {
 					attackInDirectionAnimation(activePlayerUI, direction);
+
 					attackAnimation(passivePlayerUI, 'smash-attack-animation', animationCollectionImages.smash);
 
 					shakeAnimation(passivePlayerUI);
+
 					playSoundEffect('.bash-attack-audio');
 				}, 200);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
+				this.renderWholeUI();
+
 				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'anger':
@@ -217,14 +226,13 @@ export default class PlayersView {
 
 				setTimeout(() => {
 					shakeAnimation(passivePlayerUI);
+
 					playSoundEffect('.anger-audio');
 				}, 200);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'reachHeaven':
@@ -234,14 +242,13 @@ export default class PlayersView {
 
 				setTimeout(() => {
 					shakeAnimation(passivePlayerUI);
+
 					playSoundEffect('.mage-strong-audio');
 				}, 200);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'ironWave':
@@ -252,15 +259,16 @@ export default class PlayersView {
 
 				setTimeout(() => {
 					attackInDirectionAnimation(activePlayerUI, direction);
+
 					standardAttackAnimation(passivePlayerUI, 'anger-attack-animation', animationCollectionImages.anger);
+
 					shakeAnimation(passivePlayerUI);
+
 					playSoundEffect('.bash-attack-audio');
 
-					this.updateViewHP();
-					this.updateViewDef();
-					this.updateViewStamina();
-					this.updateDamageNumbers(passivePlayerUI);
-					this.updateInitialValue.notify();
+					this.renderWholeUI(true, passivePlayerUI);
+
+					this.onUpdateInitialValue.notify();
 				}, 400);
 
 				break;
@@ -269,13 +277,13 @@ export default class PlayersView {
 
 				setTimeout(() => {
 					shakeAnimation(activePlayerUI);
+
 					playSoundEffect('.bloodletting-audio');
 				}, 200);
 
+				this.renderViewHP();
 
-				this.updateViewHP();
-
-				this.updateInitialValue.notify();
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'warcry':
@@ -283,7 +291,7 @@ export default class PlayersView {
 
 				playSoundEffect('.warcry-audio');
 
-				this.updateViewStamina();
+				this.renderViewStamina();
 
 				break;
 			case 'meditate':
@@ -292,7 +300,7 @@ export default class PlayersView {
 
 				playSoundEffect('.meditate-audio');
 
-				this.updateViewStamina();
+				this.renderViewStamina();
 
 				break;
 			case 'cutThroughFate':
@@ -300,20 +308,28 @@ export default class PlayersView {
 
 				playSoundEffect('.defend-audio');
 
-				this.updateViewDef();
-				this.updateViewStamina();
+				this.renderViewDef();
+
+				this.renderViewStamina();
+
 				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+
+				this.onUpdateInitialValue.notify();
 
 				setTimeout(() => {
 					attackInDirectionAnimation(activePlayerUI, direction);
+
 					standardAttackAnimation(passivePlayerUI, 'anger-attack-animation', animationCollectionImages.mageEffect);
+
 					shakeAnimation(passivePlayerUI);
+
 					playSoundEffect('.mage-attack-audio');
 
-					this.updateViewHP();
-					this.updateViewDef();
-					this.updateInitialValue.notify();
+					this.renderViewHP();
+
+					this.renderViewDef();
+
+					this.onUpdateInitialValue.notify();
 				}, 400);
 
 				break;
@@ -326,17 +342,15 @@ export default class PlayersView {
 
 				setTimeout(() => shakeAnimation(passivePlayerUI), 200);
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'expertise':
 				blockAnimation(activePlayerUI, 'refresh-skill-animation', animationCollectionImages.serpentRing);
 
-				this.updateViewStamina();
+				this.renderViewStamina();
 
 				break;
 			case 'bludgeon':
@@ -346,11 +360,9 @@ export default class PlayersView {
 
 				ultimateSkillAnimation(passivePlayerUI, 'warrior-ultimate-animation', animationCollectionImages.flash, '.flash-audio');
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'riddleWithHoles':
@@ -358,11 +370,9 @@ export default class PlayersView {
 
 				ultimateSkillAnimation(passivePlayerUI, 'rogue-ultimate-animation', animationCollectionImages.daggersSvg, '.backstab-audio');
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'signatureMove':
@@ -370,11 +380,9 @@ export default class PlayersView {
 
 				ultimateSkillAnimation(passivePlayerUI, 'mage-ultimate-animation', animationCollectionImages.mageAttack, '.mage-ultimate-audio');
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 			case 'judgment':
@@ -382,11 +390,9 @@ export default class PlayersView {
 
 				ultimateSkillAnimation(passivePlayerUI, 'rogue-ultimate-animation', animationCollectionImages.judgmentSvg, '.judj-audio');
 
-				this.updateViewHP();
-				this.updateViewDef();
-				this.updateViewStamina();
-				this.updateDamageNumbers(passivePlayerUI);
-				this.updateInitialValue.notify();
+				this.renderWholeUI(true, passivePlayerUI);
+
+				this.onUpdateInitialValue.notify();
 
 				break;
 		}

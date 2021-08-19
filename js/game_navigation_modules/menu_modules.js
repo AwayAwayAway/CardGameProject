@@ -126,6 +126,28 @@ class ChooseMenu extends Menu {
 
 		enterNameInput.maxLength = '10';
 
+		options.addEventListener('click', (event) => this.setBackground(event));
+
+		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
+
+		[...options.children].forEach(hover => hover.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio')));
+
+		//run function to choose character or  alert empty input name
+		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
+
+		soundOffOn.addEventListener('click', playPauseBackgroundAudio);
+
+		document.addEventListener('keypress', (event) => {
+			if (event.code === 'Enter') {
+				this.playerChooseCharacter();
+			}
+		});
+
+		[...document.querySelectorAll('.btn')].forEach((button) => {
+			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+		});
+		
 		// save name and model of character of each player
 		this.playerChooseCharacter = function () {
 			const regexRule = /\w/;
@@ -135,12 +157,12 @@ class ChooseMenu extends Menu {
 
 			//check if input is empty or didnt class choosed
 			if (!warningCheck || !regexCheck) {
-				this.allertEmptyName();
-				this.allertClass();
+				this.alertEmptyName();
+				this.alertClass();
 
 				return;
 			} else if (!classCheck) {
-				this.allertClass();
+				this.alertClass();
 
 				return;
 			}
@@ -176,7 +198,7 @@ class ChooseMenu extends Menu {
 		};
 
 		// alert for empty input
-		this.allertEmptyName = function () {
+		this.alertEmptyName = function () {
 			playSoundEffect('.confirm-failed-audio');
 
 			shakeAnimation('.decision__btn', 'horizontal');
@@ -192,7 +214,7 @@ class ChooseMenu extends Menu {
 			}, 1000);
 		};
 
-		this.allertClass = function () {
+		this.alertClass = function () {
 			if ([...options.children].some((child) => child.classList.contains('in-focus'))) {
 				return;
 			} else {
@@ -200,6 +222,12 @@ class ChooseMenu extends Menu {
 
 				shakeAnimation('.options', 'mix');
 			}
+		};
+
+		this.removeStyles = function () {
+			[...options.children].forEach((child) => {
+				child.classList.remove('in-focus');
+			});
 		};
 
 		// check if both players choose character and enter nicknames, start fight
@@ -219,23 +247,20 @@ class ChooseMenu extends Menu {
 			}
 		};
 
-		this.removeStyles = function () {
-			[...options.children].forEach((child) => {
-				child.classList.remove('in-focus');
-			});
-		};
-
 		// function trigger audio and shake animation
 		this.startVisualAndSoundEffect = function (event) {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
 					playSoundEffect('.warrior-selected-audio');
+
 					break;
 				case 'rogue':
 					playSoundEffect('.rogue-selected-audio');
+
 					break;
 				case 'mage':
 					playSoundEffect('.mage-selected-audio');
+
 					break;
 			}
 		};
@@ -247,12 +272,15 @@ class ChooseMenu extends Menu {
 			switch (character) {
 				case 'warrior':
 					[...description.children].forEach((element, index) => element.textContent = characterDescription[0][keys[index]]);
+
 					break;
 				case 'rogue':
 					[...description.children].forEach((element, index) => element.textContent = characterDescription[1][keys[index]]);
+
 					break;
 				case 'mage':
 					[...description.children].forEach((element, index) => element.textContent = characterDescription[2][keys[index]]);
+
 					break;
 			}
 		};
@@ -279,27 +307,5 @@ class ChooseMenu extends Menu {
 				playerTwoName
 			};
 		};
-
-		options.addEventListener('click', (event) => this.setBackground(event));
-
-		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
-
-		[...options.children].forEach(hover => hover.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio')));
-
-		//run function to choose character or  alert empty input name
-		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
-
-		soundOffOn.addEventListener('click', playPauseBackgroundAudio);
-
-		document.addEventListener('keypress', (event) => {
-			if (event.code === 'Enter') {
-				this.playerChooseCharacter();
-			}
-		});
-
-		[...document.querySelectorAll('.btn')].forEach((button) => {
-			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
-			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
-		});
 	}
 }

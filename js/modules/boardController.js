@@ -4,94 +4,96 @@ export default class BoardController {
 	constructor(game, board, playerModel1, playerModel2, view) {
 		this.gameModel = game;
 		this.boardModel = board;
+		this.boardView = view;
 		this.player1 = playerModel1;
 		this.player2 = playerModel2;
-		this.boardView = view;
 
 		if (this.boardView.hasOwnProperty('onLoadCreate')) {
-			this.boardView.onLoadCreate.attach((card, place) => this.createCard(card, place));
+			this.boardView.onLoadCreate.attach((card, place) => this.doCreateCardsForChoose(card, place));
 		}
 
-		if (this.boardView.hasOwnProperty('dropEvent')) {
-			this.boardView.dropEvent.attach(() => this.deleteActionCard());
+		if (this.gameModel.hasOwnProperty('onSelectionContinue')) {
+			this.gameModel.onSelectionContinue.attach(() => this.doCreateCardsForChoose());
 		}
 
-		if (this.boardView.hasOwnProperty('endTurn')) {
-			this.boardView.endTurn.attach(() => this.createCardsInHand());
+		if (this.gameModel.hasOwnProperty('onSelectionEnd')) {
+			this.gameModel.onSelectionEnd.attach((restoredCards) => this.doCreateCardsInHand(restoredCards));
 		}
 
-		if (this.boardView.hasOwnProperty('showPlayerDeck')) {
-			this.boardView.showPlayerDeck.attach((event) => this.showPlayersDeck(event));
+		if (this.boardView.hasOwnProperty('onDropCard')) {
+			this.boardView.onDropCard.attach(() => this.doDeleteActionCard());
+		}
+
+		if (this.boardView.hasOwnProperty('onEndTurn')) {
+			this.boardView.onEndTurn.attach(() => this.doCreateCardsInHand());
+		}
+
+		if (this.boardView.hasOwnProperty('onShowPlayerDeck')) {
+			this.boardView.onShowPlayerDeck.attach((event) => this.doShowPlayersDeck(event));
 		}
 
 		if (this.boardView.hasOwnProperty('onClosePileCards')) {
-			this.boardView.onClosePileCards.attach(() => this.deleteOverlayCards());
+			this.boardView.onClosePileCards.attach(() => this.doDeleteOverlayCards());
 		}
 
-		if (this.gameModel.hasOwnProperty('selectionContinue')) {
-			this.gameModel.selectionContinue.attach(() => this.createCard());
+		if (this.player1.hasOwnProperty('onCardDraw')) {
+			this.player1.onCardDraw.attach((card) => this.doCreateCardInHand(card));
 		}
 
-		if (this.gameModel.hasOwnProperty('selectionEnd')) {
-			this.gameModel.selectionEnd.attach((restoredCards) => this.createCardsInHand(restoredCards));
+		if (this.player2.hasOwnProperty('onCardDraw')) {
+			this.player2.onCardDraw.attach((card) => this.doCreateCardInHand(card));
 		}
 
-		if (this.player1.hasOwnProperty('cardDraw')) {
-			this.player1.cardDraw.attach((card) => this.addCardInHand(card));
+		if (this.player1.hasOwnProperty('onCardDiscard')) {
+			this.player1.onCardDiscard.attach((card) => this.doDeleteRandomCard(card));
 		}
 
-		if (this.player2.hasOwnProperty('cardDraw')) {
-			this.player2.cardDraw.attach((card) => this.addCardInHand(card));
+		if (this.player2.hasOwnProperty('onCardDiscard')) {
+			this.player2.onCardDiscard.attach((card) => this.doDeleteRandomCard(card));
 		}
 
-		if (this.player1.hasOwnProperty('cardDiscard')) {
-			this.player1.cardDiscard.attach((card) => this.deleteRandomCard(card));
-		}
-
-		if (this.player2.hasOwnProperty('cardDiscard')) {
-			this.player2.cardDiscard.attach((card) => this.deleteRandomCard(card));
-		}
-
-		if (this.boardView.hasOwnProperty('soundOffOn')) {
-			this.boardView.soundOffOn.attach(() => this.turnOnOfSound());
+		if (this.boardView.hasOwnProperty('onSoundSwitch')) {
+			this.boardView.onSoundSwitch.attach(() => this.doTurnOnOfSound());
 		}
 	}
 
-	createCard() {
+	doCreateCardsForChoose() {
 		this.boardModel.createCardsForChoose(this.gameModel);
 	}
 
-	createCardsInHand(restoredCards) {
+	doCreateCardsInHand(restoredCards) {
 		if(restoredCards) {
 			restoredCards.forEach(element => this.boardModel.createCards(element, 'hand', true));
 
-			this.boardModel.createAnimation.notify('.card-in-hand-field', 'multiple');
+			this.boardModel.onCreateCardAnimation.notify('.card-in-hand-field', 'multiple');
 		} else {
 			this.boardModel.pullRandomCardsInHand();
 		}
 	}
 
-	deleteActionCard() {
+	doDeleteActionCard() {
 		this.boardModel.deletePlayedCard('playedCard');
 	}
 
-	deleteRandomCard(card) {
+	doDeleteRandomCard(card) {
 		this.boardModel.deletePlayedCard('randomCard', card);
 	}
 
-	deleteOverlayCards() {
+	doDeleteOverlayCards() {
 		this.boardModel.removeExtraCards('overlay');
+
+		this.boardModel.restoreHand();
 	}
 
-	addCardInHand(card) {
+	doCreateCardInHand(card) {
 		this.boardModel.createCards(card, 'hand', true);
 	}
 
-	showPlayersDeck(eventTarget) {
+	doShowPlayersDeck(eventTarget) {
 		this.boardModel.showCardsForPlayers(eventTarget);
 	}
 
-	turnOnOfSound() {
+	doTurnOnOfSound() {
 		playPauseBackgroundAudio();
 	}
 }

@@ -4,36 +4,36 @@ export default class GameController {
 		this.boardView = view;
 
 		if (this.boardView.hasOwnProperty('onDefineCards')) {
-			this.boardView.onDefineCards.attach(() => this.defineCards());
+			this.boardView.onDefineCards.attach(() => this.doDefineCards());
 		}
 
-		if (this.boardView.hasOwnProperty('submitCardCheckChoose')) {
-			this.boardView.submitCardCheckChoose.attach(() => this.doCardCheckChoose());
+		if (this.boardView.hasOwnProperty('onCheckChosenCards')) {
+			this.boardView.onCheckChosenCards.attach(() => this.doCardCheckChoose());
 		}
 
-		if (this.boardView.hasOwnProperty('grabCardStart')) {
-			this.boardView.grabCardStart.attach((eventTarget) => this.actionCard(eventTarget));
+		if (this.boardView.hasOwnProperty('onGrabCardStart')) {
+			this.boardView.onGrabCardStart.attach((eventTarget) => this.doInitActionCard(eventTarget));
 		}
 
-		if (this.boardView.hasOwnProperty('touchCardStart')) {
-			this.boardView.touchCardStart.attach((eventTarget) => this.actionCard(eventTarget));
+		if (this.boardView.hasOwnProperty('onTouchCardStart')) {
+			this.boardView.onTouchCardStart.attach((eventTarget) => this.doInitActionCard(eventTarget));
 		}
 
-		if (this.boardView.hasOwnProperty('endTurn')) {
-			this.boardView.endTurn.attach(() => this.doEndTurn());
+		if (this.boardView.hasOwnProperty('onEndTurn')) {
+			this.boardView.onEndTurn.attach(() => this.doEndTurn());
 		}
 
-		if (this.boardView.hasOwnProperty('saveGameProgres')) {
-			this.boardView.saveGameProgres.attach(() => this.onSaveGameData());
+		if (this.boardView.hasOwnProperty('onSaveGameProgres')) {
+			this.boardView.onSaveGameProgres.attach(() => this.doSaveGameData());
 		}
 
 		if (this.boardView.hasOwnProperty('onRestoreGameData')) {
-			this.boardView.onRestoreGameData.attach(() => this.startRestoreData());
+			this.boardView.onRestoreGameData.attach(() => this.doStartRestoreData());
 		}
 	}
 
 	// событие на кнопку подтверждения выбора карт, запоминаем что выбрал в масси
-	defineCards() {
+	doDefineCards() {
 		this.gameModel.definePlayersCardSet();
 	}
 
@@ -42,7 +42,7 @@ export default class GameController {
 		this.gameModel.checkCardsSelectionEnd();
 	}
 
-	actionCard(eventTarget) {
+	doInitActionCard(eventTarget) {
 		this.gameModel.initActionCard(eventTarget);
 	}
 
@@ -52,11 +52,11 @@ export default class GameController {
 		this.gameModel.setTextTurnInfo();
 	}
 
-	onSaveGameData() {
+	doSaveGameData() {
 		this.gameModel.saveGameData();
 	}
 
-	startRestoreData() {
+	doStartRestoreData() {
 		this.gameModel.doRestoreGameData()
 	}
 }

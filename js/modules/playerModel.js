@@ -15,10 +15,10 @@ export default class Players {
 		this.gameModel = game;
 		this.boardModel = board;
 
-		this.playerViewUpdate = new Events();
-		this.cardDraw = new Events();
-		this.cardDiscard = new Events();
-		this.actionAnimation = new Events();
+		this.onPlayerViewUpdate = new Events();
+		this.onCardDraw = new Events();
+		this.onCardDiscard = new Events();
+		this.onCardActionAnimation = new Events();
 
 		this.initialHP = 100;
 		this.initialDP = 7;
@@ -33,9 +33,9 @@ export default class Players {
 
 	updateView(state) {
 		if(state) {
-			this.playerViewUpdate.notify('concede');
+			this.onPlayerViewUpdate.notify('concede');
 		} else {
-			this.playerViewUpdate.notify();
+			this.onPlayerViewUpdate.notify();
 		}
 
 	};
@@ -91,9 +91,9 @@ export default class Players {
 		let randomCardDraw = Math.floor(Math.random() * this.gameModel.playerOnePullOfCards.length);
 
 		if (this.gameModel.playerOneTurn) {
-			this.cardDraw.notify(this.gameModel.playerOnePullOfCards[randomCardDraw]);
+			this.onCardDraw.notify(this.gameModel.playerOnePullOfCards[randomCardDraw]);
 		} else {
-			this.cardDraw.notify(this.gameModel.playerTwoPullOfCards[randomCardDraw]);
+			this.onCardDraw.notify(this.gameModel.playerTwoPullOfCards[randomCardDraw]);
 		}
 
 		createCardAnimation('.card-in-hand-field', 'single');
@@ -114,11 +114,11 @@ export default class Players {
 
 		if (this.gameModel.playerOneTurn) {
 			for (let i = 0; i < tempIndex.length; i++) {
-				this.cardDraw.notify(this.gameModel.playerOnePullOfCards[tempIndex[i]]);
+				this.onCardDraw.notify(this.gameModel.playerOnePullOfCards[tempIndex[i]]);
 			}
 		} else {
 			for (let i = 0; i < tempIndex.length; i++) {
-				this.cardDraw.notify(this.gameModel.playerTwoPullOfCards[tempIndex[i]]);
+				this.onCardDraw.notify(this.gameModel.playerTwoPullOfCards[tempIndex[i]]);
 			}
 		}
 
@@ -134,7 +134,7 @@ export default class Players {
 
 			playSoundEffect('.discard-card-audio');
 
-			setTimeout(() => this.cardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300)
+			setTimeout(() => this.onCardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300)
 		}
 	}
 
@@ -145,7 +145,7 @@ export default class Players {
 
 			playSoundEffect('.discard-card-audio');
 
-			this.cardDiscard.notify(element)
+			this.onCardDiscard.notify(element)
 		}
 	}
 
@@ -167,7 +167,7 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.actionAnimation.notify();
+		this.onCardActionAnimation.notify();
 	};
 
 	sideEffectAttack(card) {
@@ -179,7 +179,7 @@ export default class Players {
 
 			this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 
 			return;
 		}
@@ -188,14 +188,14 @@ export default class Players {
 			let sideEffect = card.sideEffect();
 
 			if (sideEffect == undefined) {
-				this.actionAnimation.notify();
+				this.onCardActionAnimation.notify();
 
 				return;
 			}
 
 			this.gameModel.passivePlayer.healthPoints = sideEffect;
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 
 			return;
 		}
@@ -226,15 +226,12 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.actionAnimation.notify();
+		this.onCardActionAnimation.notify();
 	};
 
 	attackDrawDiscard(card) {
 		// some of cards have special side effect, so we do additional if check
 		// to make for them special methods
-		// if (this.gameModel.activePlayer.staminaPoints < card.cost) {
-		// 	return;
-		// }
 
 		if (this.gameModel.passivePlayer.defendPoints) {
 			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
@@ -270,14 +267,14 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.actionAnimation.notify();
+		this.onCardActionAnimation.notify();
 	};
 
 	standartDefend(card) {
 		this.gameModel.activePlayer.defendPoints += card.effect;
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.actionAnimation.notify();
+		this.onCardActionAnimation.notify();
 	};
 
 	sideEffectDefend(card) {
@@ -287,7 +284,7 @@ export default class Players {
 			this.gameModel.activePlayer.defendPoints = sideEffect;
 			this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 
 			return;
 		}
@@ -303,7 +300,7 @@ export default class Players {
 				this.gameModel.activePlayer.staminaPoints += card.effect;
 			}
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 
 			return;
 		}
@@ -314,7 +311,7 @@ export default class Players {
 			this.gameModel.activePlayer.defendPoints += sideEffect;
 			this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 		}
 	};
 
@@ -337,15 +334,12 @@ export default class Players {
 		this.gameModel.activePlayer.defendPoints += card.effect;
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.actionAnimation.notify();
+		this.onCardActionAnimation.notify();
 	};
 
 	defendDrawDiscard(card) {
 		// some of cards have special side effect, so we do additional if check
 		// to make for them special methods
-		// if (this.gameModel.activePlayer.staminaPoints < card.cost) {
-		// 	return;
-		// }
 
 		if (card.name == 'prepared') {
 			this.randomCardDiscard();
@@ -357,7 +351,7 @@ export default class Players {
 		if (card.name == 'warcry') {
 			this.randomCardDraw();
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 
 			return;
 		}
@@ -373,7 +367,7 @@ export default class Players {
 
 			this.gameModel.activePlayer.healthPoints -= card.effect;
 
-			this.actionAnimation.notify();
+			this.onCardActionAnimation.notify();
 
 			return;
 		}
@@ -410,7 +404,7 @@ export default class Players {
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
-		this.actionAnimation.notify();
+		this.onCardActionAnimation.notify();
 	};
 
 	savePlayerData() {
