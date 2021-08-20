@@ -4,9 +4,21 @@
 
 .player-2 {
   @extend .player-1;
-  left: -8%;
+  left: -4%;
 
   @include tablet-landscape {
+    left: -10%;
+  }
+
+  @include tablet-portrait {
+    left: -7%;
+  }
+
+  @include mobile-landscape {
+    left: -10%;
+  }
+
+  @include small-mobile-landscape {
     left: -10%;
   }
 
@@ -15,7 +27,19 @@
     left: 91%;
 
     @include mobile-landscape {
-      left: 100%;
+      left: 105%;
+    }
+
+    @include small-mobile-landscape {
+      left: 105%;
+    }
+
+    @include mobile-portrait {
+      left: 82%;
+    }
+
+    @include small-mobile-portrait {
+      left: 82%;
     }
   }
 
@@ -24,7 +48,19 @@
     left: 93%;
 
     @include mobile-landscape {
-      left: 103%;
+      left: 108%;
+    }
+
+    @include small-mobile-landscape {
+      left: 108%;
+    }
+
+    @include small-mobile-portrait {
+      left: 77%;
+    }
+
+    @include mobile-portrait {
+      left: 77%;
     }
   }
 
@@ -33,7 +69,11 @@
     left: 0;
 
     @include mobile-landscape {
-      left: 110%;
+      left: 112%;
+    }
+
+    @include small-mobile-landscape {
+      left: 112%;
     }
   }
 

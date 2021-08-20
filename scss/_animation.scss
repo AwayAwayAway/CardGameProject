@@ -74,6 +74,24 @@
     height: 7rem;
     animation: cardDrawAnimateMobile .2s linear forwards;
   }
+
+  @include small-mobile-landscape {
+    width: 5rem;
+    height: 7rem;
+    animation: cardDrawAnimateMobile .2s linear forwards;
+  }
+
+  @include mobile-portrait {
+    width: 12rem;
+    height: 14rem;
+    animation: cardDrawAnimateMobilePort .2s linear forwards;
+  }
+
+  @include small-mobile-portrait {
+    width: 12rem;
+    height: 14rem;
+    animation: cardDrawAnimateMobilePort .2s linear forwards;
+  }
 }
 
 .card-discard-animation {
@@ -108,7 +126,7 @@
   height: 550px;
   animation: attackAnimate 0.5s linear forwards;
 
-  @include tablet {
+  @include tablet-portrait {
     width: 400px;
     height: 400px;
     top: -10%;
@@ -120,6 +138,20 @@
     height: 250px;
     top: -10%;
     animation: attackAnimateMobile 0.5s linear forwards;
+  }
+
+  @include mobile-portrait {
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    animation: attackAnimateTablet 0.5s linear forwards;
+  }
+
+  @include small-mobile-portrait {
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    animation: attackAnimateTablet 0.5s linear forwards;
   }
 }
 
@@ -135,6 +167,20 @@
     width: 250px;
     height: 250px;
     top: -10%;
+  }
+
+  @include mobile-portrait {
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    animation: smashAttack 0.5s linear forwards;
+  }
+
+  @include small-mobile-portrait {
+    width: 400px;
+    height: 400px;
+    top: -10%;
+    animation: smashAttack 0.5s linear forwards;
   }
 }
 
@@ -158,6 +204,16 @@
     width: 150px;
     height: 150px;
   }
+
+  //@include mobile-portrait {
+  //  width: 150px;
+  //  height: 150px;
+  //}
+  //
+  //@include small-mobile-portrait {
+  //  width: 150px;
+  //  height: 150px;
+  //}
 }
 
 .warrior-ultimate-animation {

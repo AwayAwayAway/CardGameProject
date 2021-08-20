@@ -39,21 +39,21 @@
     "role": "subChild",
     "tagName": "li",
     "class": "save-progress",
-    "content": "Save progress"
+    "content": "Save game"
   },
   {
     "id": 1,
     "role": "subChild",
     "tagName": "li",
     "class": "return-to-main-menu",
-    "content": "Back to main menu"
+    "content": "Main menu"
   },
   {
     "id": 1,
     "role": "subChild",
     "tagName": "li",
     "class": "return-to-choose-menu",
-    "content": "Back to choose menu"
+    "content": "Selection menu"
   },
   {
     "id": 1,

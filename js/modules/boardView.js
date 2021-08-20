@@ -110,10 +110,10 @@ export default class BoardView {
 			this.cardInHandField.addEventListener('touchstart', (event) => this.touchEvent(event));
 
 			// событие клик подстветка выбора карт
-			this.deckWrapper.addEventListener('touchstart', (event) => this.renderCardSelected(event.target));
+			this.deckWrapper.addEventListener('touchstart', (event) => this.renderCardSelected(event));
 		} else {
 			// событие клик подстветка выбора карт
-			this.deckWrapper.addEventListener('click', (event) => this.renderCardSelected(event.target));
+			this.deckWrapper.addEventListener('click', (event) => this.renderCardSelected(event));
 
 			// анимация карт в руке при наведении
 			this.cardInHandField.addEventListener('mouseover', (event) => this.renderCardSelectedInHand(event.target));
@@ -250,8 +250,10 @@ export default class BoardView {
 	}
 
 	// подсветка выбранных карт
-	renderCardSelected(eventTarget) {
-		let target = eventTarget;
+	renderCardSelected(event) {
+		event.preventDefault();
+
+		let target = event.target;
 
 		if (target !== this.deckWrapper) {
 			target.classList.toggle('card-to-select');

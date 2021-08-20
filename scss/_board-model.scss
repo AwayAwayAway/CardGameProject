@@ -15,6 +15,16 @@
   padding-top: 2rem;
   color: white;
 
+  @include mobile-portrait {
+    padding-top: 4rem;
+    font-size: 4rem;
+  }
+
+  @include small-mobile-portrait {
+    padding-top: 4rem;
+    font-size: 4rem;
+  }
+
   &__count {
     margin-right: 1.1rem;
 
@@ -23,6 +33,10 @@
     }
 
     @include mobile-landscape {
+      font-size: 2.5rem;
+    }
+
+    @include small-mobile-landscape {
       font-size: 2.5rem;
     }
   }
@@ -35,6 +49,10 @@
     @include mobile-landscape {
       font-size: 2.5rem;
     }
+
+    @include small-mobile-landscape {
+      font-size: 2.5rem;
+    }
   }
 
   &__name {
@@ -45,6 +63,11 @@
     }
 
     @include mobile-landscape {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    @include small-mobile-landscape {
       margin: 0;
       font-size: 2rem;
     }
@@ -70,6 +93,27 @@
       width: 135px;
       font-size: 1.5rem;
     }
+
+    @include small-mobile-landscape {
+      display: inline;
+      margin-left: 3.5rem;
+      padding: 0;
+      height: 42px;
+      width: 135px;
+      font-size: 1.5rem;
+    }
+
+    @include mobile-portrait {
+      height: 80px;
+      width: 250px;
+      font-size: 3.4rem;
+    }
+
+    @include small-mobile-portrait {
+      height: 80px;
+      width: 250px;
+      font-size: 3.4rem;
+    }
   }
 }
 
@@ -88,11 +132,22 @@
     top: 25%;
   }
 
+  @include small-mobile-landscape {
+    font-size: 2rem;
+    display: block;
+    top: 25%;
+  }
+
   &__reject {
     @extend .players-draw-info__accept;
     background: linear-gradient(#d249dc, #ef1678);
 
     @include mobile-landscape {
+      display: block;
+      margin: 1.5rem auto;
+    }
+
+    @include small-mobile-landscape {
       display: block;
       margin: 1.5rem auto;
     }
@@ -102,6 +157,11 @@
     @extend .players-draw-info__accept;
 
     @include mobile-landscape {
+      display: block;
+      margin: 1.5rem auto;
+    }
+
+    @include small-mobile-landscape {
       display: block;
       margin: 1.5rem auto;
     }
@@ -117,11 +177,22 @@
     top: 35%;
   }
 
+  @include small-mobile-landscape {
+    font-size: 2rem;
+    display: block;
+    top: 35%;
+  }
+
   &__reject {
     @extend .confirm-continue__reject;
     background: linear-gradient(#d249dc, #ef1678);
 
     @include mobile-landscape {
+      display: block;
+      margin: 1.5rem auto;
+    }
+
+    @include small-mobile-landscape {
       display: block;
       margin: 1.5rem auto;
     }
@@ -134,10 +205,14 @@
       display: block;
       margin: 1.5rem auto;
     }
+
+    @include small-mobile-landscape {
+      display: block;
+      margin: 1.5rem auto;
+    }
   }
 }
 /* End Счетчик набранных карт и Alert если выбранно слишком много */
-
 
 /* Start игровое поле */
 .battle-field {
@@ -176,6 +251,11 @@
     font-size: 2rem;
     height: 6rem;
   }
+
+  @include small-mobile-landscape {
+    font-size: 2rem;
+    height: 6rem;
+  }
 }
 
 .end-of-turn-btn {
@@ -193,7 +273,7 @@
   text-align: center;
   align-items: center;
 
-  @include tablet {
+  @include tablet-portrait {
     top: 47%;
   }
 
@@ -203,6 +283,22 @@
     font-size: 1rem;
     border: 3px solid white;
     top: 30%;
+  }
+
+  @include small-mobile-landscape {
+    height: 50px;
+    width: 50px;
+    font-size: 1rem;
+    border: 3px solid white;
+    top: 30%;
+  }
+
+  @include mobile-portrait {
+    top: 42%;
+  }
+
+  @include small-mobile-portrait {
+    top: 42%;
   }
 }
 
@@ -222,13 +318,34 @@
     flex-direction: row;
   }
 
+  @include small-mobile-landscape {
+    top: 2%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+  }
+
+  @include mobile-portrait {
+    align-items: self-start;
+    left: 5%;
+  }
+
+  @include small-mobile-portrait {
+    align-items: self-start;
+    left: 5%;
+  }
+
 
   &__icon {
     color: #d4b7b7;
     cursor: pointer;
 
-    @include tablet-landscape {
-      font-size: 3rem;
+    @include mobile-portrait {
+      font-size: 5rem;
+    }
+
+    @include small-mobile-portrait {
+      font-size: 5rem;
     }
   }
 
@@ -244,7 +361,19 @@
     @include mobile-landscape {
       font-size: 1rem;
       margin-left: 1rem;
+    }
 
+    @include small-mobile-landscape {
+      font-size: 1rem;
+      margin-left: 1rem;
+    }
+
+    @include mobile-portrait {
+      font-size: 2.35rem;
+    }
+
+    @include small-mobile-portrait {
+      font-size: 2.35rem;
     }
 
     li {
@@ -258,7 +387,14 @@
 
       @include mobile-landscape {
         margin: 0.5rem;
+      }
 
+      @include mobile-portrait {
+        margin: 1.3rem 1rem 0 1rem;
+      }
+
+      @include small-mobile-portrait {
+        margin: 1.3rem 1rem 0 1rem;
       }
     }
 
@@ -306,6 +442,14 @@
     opacity: 1;
     color: #cccccc;
     cursor: pointer;
+
+    @include mobile-portrait {
+      font-size: 7rem;
+    }
+
+    @include small-mobile-portrait {
+      font-size: 7rem;
+    }
   }
 
   &__cards {

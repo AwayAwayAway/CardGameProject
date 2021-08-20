@@ -188,6 +188,8 @@ const endTurnAnimation = side => {
 			break;
 	}
 
+	button.style.display = 'flex';
+
 	setTimeout(() => button.classList.add('end-turn-animation'), 1300);
 
 	setTimeout(() => turnAnnouncer.classList.remove('players-turn-info'), 2100);

@@ -20,13 +20,33 @@
   font-size: 2rem;
   font-family: 'Oswald', sans-serif;
 
-  @include tablet {
+  @include tablet-portrait {
     width: 90vw;
+    font-size: 1.7rem;
   }
 
   @include tablet-landscape {
+    width: 80vw;
     font-size: 1.2rem;
     top: 14%;
+  }
+
+  @include mobile-portrait {
+    width: 70vw;
+  }
+
+  @include mobile-landscape {
+    width: 90vw;
+    font-size: 1.2rem;
+  }
+
+  @include small-mobile-landscape {
+    width: 90vw;
+    font-size: 1.2rem;
+  }
+
+  @include small-mobile-portrait {
+    width: 70%;
   }
 
   h1 {
@@ -41,6 +61,18 @@
     @include mobile-landscape {
       font-size: 2rem;
     }
+
+    @include small-mobile-landscape {
+      font-size: 2rem;
+    }
+
+    @include mobile-portrait {
+      font-size: 7rem;
+    }
+
+    @include small-mobile-portrait {
+      font-size: 7rem;
+    }
   }
 
   p {
@@ -48,6 +80,18 @@
 
     @include mobile-landscape {
       padding-top: 0.5rem;
+    }
+
+    @include small-mobile-landscape {
+      padding-top: 0.5rem;
+    }
+
+    @include mobile-portrait {
+      font-size: 2.5rem;
+    }
+
+    @include small-mobile-portrait {
+      font-size: 2.5rem;
     }
   }
 }
@@ -61,7 +105,7 @@
   width: 80vw;
   transition: all .3s ease-in-out;
 
-  @include tablet {
+  @include tablet-portrait {
     flex-direction: column;
     width: 50vw;
     left: 6%;
@@ -74,10 +118,30 @@
     top: 35%;
   }
 
+  @include mobile-portrait {
+    flex-direction: column;
+    height: 29vh;
+    top: 45%;
+    left: 7%;
+  }
+
   @include mobile-landscape {
-    flex-direction: row;
-    height: 20vh;
-    top: 56%;
+    height: 16vh;
+    top: 54%;
+    left: 10%;
+  }
+
+  @include small-mobile-landscape {
+    height: 16vh;
+    top: 54%;
+    left: 10%;
+  }
+
+  @include small-mobile-portrait {
+    flex-direction: column;
+    height: 29vh;
+    top: 45%;
+    left: 7%;
   }
 
   .warrior,
@@ -91,8 +155,8 @@
     cursor: pointer;
     transition: all .3s ease-in-out;
 
-    @include tablet {
-      margin-top: 1rem;
+    @include tablet-portrait {
+      margin-top: 3rem;
     }
 
     @include tablet-landscape {
@@ -102,7 +166,21 @@
     }
 
     @include mobile-landscape {
-      margin-right: 1rem;
+      font-size: 2rem;
+      margin-right: 2rem;
+    }
+
+    @include small-mobile-landscape {
+      font-size: 2rem;
+      margin-right: 2rem;
+    }
+
+    @include mobile-portrait {
+      font-size: 5rem;
+    }
+
+    @include small-mobile-portrait {
+      font-size: 5rem;
     }
   }
 }
@@ -115,8 +193,16 @@
   left: 10%;
   transition: all .3s ease-in-out;
 
-  @include tablet {
+  @include tablet-portrait {
     left: 6%;
+  }
+
+  @include mobile-portrait {
+    top: 74%;
+  }
+
+  @include small-mobile-portrait {
+    top: 74%;
   }
 
   &__btn {
@@ -133,6 +219,26 @@
       padding: 0.5rem;
       font-size: 1.5rem;
     }
+
+    @include mobile-portrait {
+      width: 13rem;
+      font-size: 3rem;
+    }
+
+    @include mobile-landscape {
+      padding: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    @include small-mobile-landscape {
+      padding: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    @include small-mobile-portrait {
+      width: 13rem;
+      font-size: 3rem;
+    }
   }
 
   &__enter-name {
@@ -143,11 +249,21 @@
     text-align: center;
     font-size: 2rem;
     outline: none;
+
+    @include mobile-portrait {
+      width: 30rem;
+      font-size: 3rem;
+    }
+
+    @include small-mobile-portrait {
+      width: 30rem;
+      font-size: 3rem;
+    }
   }
 }
 
 .player-choose {
-  @include tablet {
+  @include tablet-portrait {
     font-size: 3rem;
   }
 
@@ -158,13 +274,29 @@
   @include mobile-landscape {
     font-size: 2rem;
   }
+
+  @include small-mobile-landscape {
+    font-size: 2rem;
+  }
+
+  @include mobile-portrait {
+    font-size: 4rem;
+    width: 60vw;
+    padding: 2rem;
+  }
+
+  @include small-mobile-portrait {
+    font-size: 4rem;
+    width: 60vw;
+    padding: 2rem;
+  }
 }
 
 .in-focus {
   box-shadow: 5px 5px 50px #00fc2a;
   transform: translateY(-1.5rem);
 
-  @include tablet {
+  @include tablet-portrait {
     transform: translateX(1.5rem);
   }
 
@@ -173,6 +305,10 @@
   }
 
   @include mobile-landscape {
+    transform: translateY(-1.1rem);
+  }
+
+  @include small-mobile-landscape {
     transform: translateY(-1.1rem);
   }
 }
@@ -190,14 +326,32 @@
     left: 80%;
   }
 
-  @include tablet {
+  @include tablet-portrait {
     left: 80%;
   }
 
   @include mobile-landscape {
     height: 45px;
     width: 100px;
-    bottom: 1%;
+    left: 85%;
+    bottom: 3%;
+  }
+
+  @include small-mobile-landscape {
+    height: 45px;
+    width: 100px;
+    left: 85%;
+    bottom: 3%;
+  }
+
+  @include mobile-portrait {
+    height: 95px;
+    width: 210px;
+  }
+
+  @include small-mobile-portrait {
+    height: 95px;
+    width: 210px;
   }
 }
 
