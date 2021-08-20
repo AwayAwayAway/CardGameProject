@@ -32,7 +32,7 @@ const saveConcedeConditionObserver = new MutationObserver(allowSaveConcede);
 
 gameObserver.start();
 
-boardView.init();
+// boardView.init();
 
 winConditionObserver.observe(playersView.playerOneHPValue, {
 	childList: true,

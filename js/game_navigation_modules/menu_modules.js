@@ -47,14 +47,25 @@ class MainMenu extends Menu {
 	}
 
 	checkContinueCondition() {
-		const temp = localStorage.getItem('gameData');
-		const gameDate = JSON.parse(temp);
+		fetch('https://parseapi.back4app.com/classes/CardGameContainer/', {
+			method: 'GET',
+			headers: {
+				'X-Parse-Application-Id': 'uU4nbtVfuBneX95bxKyjBuyG82Wr3Wg1JrTjEYr7',
+				'X-Parse-REST-API-Key': 'UAnSqROzrtRZuMkgY3MgoEkhsp0040aUBca0dWGm',
+			}
+		})
+			.then(res => {
+				if(res.ok) {
+					return res.json();
+				}
+			})
+			.then(data => {
+				if(data.results[0].gameSaved.hasOwnProperty('gameFinished')) {
+					document.querySelector('.continue-button').addEventListener('click', (event) => event.stopPropagation());
 
-		if (!temp) {
-			document.querySelector('.continue-button').addEventListener('click', (event) => event.stopPropagation());
-
-			document.querySelector('.continue-button').style.color = 'grey';
-		}
+					document.querySelector('.continue-button').style.color = 'grey';
+				}
+			})
 	}
 
 	createAboutRules() {

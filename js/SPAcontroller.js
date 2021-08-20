@@ -1,6 +1,6 @@
+import {skillCollectionImages, animationCollectionImages} from './modules/preloadImages';
 import {checkBackgroundAudio, loadingScreenAnimation} from './animation_and_sound_effects/animation.js';
 import '../scss/main.scss';
-// import '../dist/spa.css';
 
 let gameConstructor = {};
 
@@ -13,7 +13,6 @@ window.addEventListener('hashchange', renderPage);
 
 function renderPage() {
 	const hash = decodeURIComponent(window.location.hash.substr(1));
-	// const state = decodeURIComponent(hash.substr(1));
 
 	switch (hash) {
 		case '':
@@ -79,54 +78,25 @@ function switchHash(event) {
 }
 
 function gameConstructorInit() {
-	$.ajax(
-		{
-			url: 'json/main_menu.json',
-			type: 'GET',
-			dataType: 'json',
-			success: saveMainMenu,
-			error: errorHandler
-		}
-	);
-}
+	fetch('json/main_menu.json')
+		.then(res => res.json())
+		.then(data => {
+			gameConstructor.mainMenu = data;
 
-function saveMainMenu(data) {
-	gameConstructor.mainMenu = data;
+			fetch('json/choose_menu.json')
+				.then(res => res.json())
+				.then(data => {
+					gameConstructor.chooseMenu = data;
 
-	$.ajax(
-		{
-			url: 'json/choose_menu.json',
-			type: 'GET',
-			dataType: 'json',
-			success: saveChooseMenu,
-			error: errorHandler
-		}
-	);
-}
+					fetch('json/battle.json')
+						.then(res => res.json())
+						.then(data => {
+							gameConstructor.battle = data;
 
-function saveChooseMenu(data) {
-	gameConstructor.chooseMenu = data;
-
-	$.ajax(
-		{
-			url: 'json/battle.json',
-			type: 'GET',
-			dataType: 'json',
-			success: saveBattle,
-			error: errorHandler
-		}
-	);
-
-}
-
-function saveBattle(data) {
-	gameConstructor.battle = data;
-
-	renderPage();
-}
-
-function errorHandler(jqXHR, statusStr, errorStr) {
-	alert(statusStr + ' ' + errorStr);
+							renderPage()
+						});
+				});
+		});
 }
 
 // create page from JSON functions

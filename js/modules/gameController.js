@@ -23,12 +23,16 @@ export default class GameController {
 			this.boardView.onEndTurn.attach(() => this.doEndTurn());
 		}
 
-		if (this.boardView.hasOwnProperty('onSaveGameProgres')) {
-			this.boardView.onSaveGameProgres.attach(() => this.doSaveGameData());
+		if (this.boardView.hasOwnProperty('onSaveGameProgress')) {
+			this.boardView.onSaveGameProgress.attach(() => this.doSaveGameData());
 		}
 
 		if (this.boardView.hasOwnProperty('onRestoreGameData')) {
 			this.boardView.onRestoreGameData.attach(() => this.doStartRestoreData());
+		}
+
+		if (this.boardView.hasOwnProperty('onRestoreGameDataRejected')) {
+			this.boardView.onRestoreGameDataRejected.attach(() => this.doStartGame());
 		}
 	}
 
@@ -58,5 +62,9 @@ export default class GameController {
 
 	doStartRestoreData() {
 		this.gameModel.doRestoreGameData()
+	}
+
+	doStartGame() {
+		this.gameModel.init();
 	}
 }

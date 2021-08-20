@@ -1,7 +1,12 @@
 import Events from './eventsModel';
 import {player1, player2} from '../game';
 import {warningUnload, forbidClick} from './observerModel';
-import {createCardAnimation, endTurnAnimation, playSoundEffect} from '../animation_and_sound_effects/animation';
+import {
+	createCardAnimation,
+	endTurnAnimation,
+	playSoundEffect,
+	shakeAnimation
+} from '../animation_and_sound_effects/animation';
 
 export default class BoardView {
 	constructor(board, game, selector) {
@@ -93,9 +98,11 @@ export default class BoardView {
 
 		this.onSoundSwitch = new Events();
 
-		this.onSaveGameProgres = new Events();
+		this.onSaveGameProgress = new Events();
 
 		this.onRestoreGameData = new Events();
+
+		this.onRestoreGameDataRejected = new Events();
 
 		this.onConcede = new Events();
 
@@ -200,13 +207,18 @@ export default class BoardView {
 		this.boardModel.onCreateCardAnimation.attach((querySelector, amount) => this.renderCreateCardAnimation(querySelector, amount));
 
 		this.gameModel.onEndTurnAnimation.attach((btnSide, textInfo) => this.renderEndTurnAnimation(btnSide, textInfo));
+
+		this.gameModel.onGameStart.attach((restoreRequest) => this.init(restoreRequest));
+
+		this.gameModel.onRestoredGameFailed.attach(() => this.renderRestoreError());
+
+		this.gameModel.onSaveGameData.attach((state) => this.renderSaveGameResult(state));
 	}
 
 	// need for start render cards when page is loaded
-	init() {
-		if (localStorage.getItem('gameData')) {
+	init(restoreRequest) {
+		if (restoreRequest) {
 			this.renderRestoreNotification();
-			return;
 		} else {
 			this.onLoadCreate.notify();
 		}
@@ -233,6 +245,59 @@ export default class BoardView {
 		this.cardsChooseCounter.style = 'color: white';
 	};
 
+	renderCreateCardAnimation(querySelector, amount) {
+		createCardAnimation(querySelector, amount);
+	}
+
+	// подсветка выбранных карт
+	renderCardSelected(eventTarget) {
+		let target = eventTarget;
+
+		if (target !== this.deckWrapper) {
+			target.classList.toggle('card-to-select');
+		}
+
+		if (target.classList.contains('card-to-select')) {
+			playSoundEffect('.card-selected-audio');
+		}
+
+		let counter = document.getElementsByClassName('card-to-select').length;
+
+		let counterInfo = {};
+
+		counterInfo.number = counter;
+
+		if (counter > 8) {
+			counterInfo.color = 'red';
+		} else if (counter == 8) {
+			counterInfo.color = 'green';
+		} else if (counter > 0 && counter < 8) {
+			counterInfo.color = 'cyan';
+		} else {
+			counterInfo.color = 'white';
+		}
+
+		this.renderCardCounterInfo(counterInfo);
+	}
+
+	//анимация выбора только одной карты для игры в руке
+	renderCardSelectedInHand(eventTarget) {
+		let target = eventTarget;
+
+		if (target !== this.cardInHandField) {
+			target.classList.add('card-to-action');
+		}
+	}
+
+	//анимация выбора только одной карты для игры в руке
+	renderCardSelectedOutHand(eventTarget) {
+		let target = eventTarget;
+
+		if (target !== this.cardInHandField) {
+			target.classList.remove('card-to-action');
+		}
+	}
+
 	renderDeletedCards(cards, place) {
 
 		if (place == 'board' && cards.length > 0) {
@@ -258,12 +323,6 @@ export default class BoardView {
 		this.cardInHandField.removeChild(card);
 	}
 
-	renderCardCounterInfo(info) {
-		this.cardsChooseCounter.textContent = info.number;
-
-		this.cardsChooseCounter.style = `color: ${info.color}`;
-	};
-
 	renderBattlefield() {
 		this.deckWrapper.style.display = 'none';
 
@@ -271,6 +330,12 @@ export default class BoardView {
 
 		this.boardSelector.querySelector('.players-draw-info').style.display = 'none';
 	}
+
+	renderCardCounterInfo(info) {
+		this.cardsChooseCounter.textContent = info.number;
+
+		this.cardsChooseCounter.style = `color: ${info.color}`;
+	};
 
 	renderPlayerChooseInfo(text) {
 		this.boardSelector.querySelector('.players-draw-info__name').textContent = text;
@@ -324,10 +389,6 @@ export default class BoardView {
 		}
 	}
 
-	renderCreateCardAnimation(querySelector, amount) {
-		createCardAnimation(querySelector, amount);
-	}
-
 	renderEndTurnAnimation(btnSide, textInfo) {
 		endTurnAnimation(btnSide);
 
@@ -366,9 +427,9 @@ export default class BoardView {
 
 				break;
 			case 'save-progress':
-				this.renderBattleMenu();
+				// this.renderBattleMenu();
 
-				this.onSaveGameProgres.notify();
+				this.onSaveGameProgress.notify();
 
 				break;
 			case 'concede':
@@ -418,7 +479,7 @@ export default class BoardView {
 				this.playersOverlay.classList.add('hidden');
 				this.playersDeckClose.classList.remove('hidden');
 
-				this.onLoadCreate.notify();
+				this.onRestoreGameDataRejected.notify();
 
 				break;
 			case 'confirm-continue__accept':
@@ -427,14 +488,6 @@ export default class BoardView {
 				this.onRestoreGameData.notify();
 
 				break;
-		}
-	}
-
-	doConcede() {
-		if (this.gameModel.playerOneTurn) {
-			this.onConcede.notify('player1');
-		} else {
-			this.onConcede.notify('player2');
 		}
 	}
 
@@ -471,55 +524,6 @@ export default class BoardView {
 		this.cardsPlayField.classList.remove('pulse-animation');
 	}
 
-	// подсветка выбранных карт
-	renderCardSelected(eventTarget) {
-		let target = eventTarget;
-
-		if (target !== this.deckWrapper) {
-			target.classList.toggle('card-to-select');
-		}
-
-		if (target.classList.contains('card-to-select')) {
-			playSoundEffect('.card-selected-audio');
-		}
-
-		let counter = document.getElementsByClassName('card-to-select').length;
-
-		let counterInfo = {};
-
-		counterInfo.number = counter;
-
-		if (counter > 8) {
-			counterInfo.color = 'red';
-		} else if (counter == 8) {
-			counterInfo.color = 'green';
-		} else if (counter > 0 && counter < 8) {
-			counterInfo.color = 'cyan';
-		} else {
-			counterInfo.color = 'white';
-		}
-
-		this.renderCardCounterInfo(counterInfo);
-	}
-
-	//анимация выбора только одной карты для игры в руке
-	renderCardSelectedInHand(eventTarget) {
-		let target = eventTarget;
-
-		if (target !== this.cardInHandField) {
-			target.classList.add('card-to-action');
-		}
-	}
-
-	//анимация выбора только одной карты для игры в руке
-	renderCardSelectedOutHand(eventTarget) {
-		let target = eventTarget;
-
-		if (target !== this.cardInHandField) {
-			target.classList.remove('card-to-action');
-		}
-	}
-
 	renderPlayerCardCollection(target) {
 		if (target.classList.contains('player-1__pile-of-card') || target.classList.contains('player-2__pile-of-card')) {
 			this.playersOverlay.classList.remove('hidden');
@@ -533,6 +537,36 @@ export default class BoardView {
 			this.playersOverlay.classList.add('hidden');
 
 			playSoundEffect('.overlay-close-audio');
+		}
+	}
+
+	renderRestoreError() {
+		this.deckWrapper.textContent = 'Game restoration failed, please reload page or go back to choose menu and start new Game'
+	}
+
+	renderSaveGameResult(state) {
+		const iEl = document.createElement('i');
+
+		if(state) {
+			iEl.className = "fas fa-check save-progress-success";
+
+			setTimeout(() => this.renderBattleMenu(), 800);
+		} else {
+			iEl.className = "fas fa-times save-progress-failed";
+
+			shakeAnimation('.save-progress');
+		}
+
+		this.boardSelector.querySelector('.save-progress').appendChild(iEl);
+
+		setTimeout(() => this.boardSelector.querySelector('.save-progress').removeChild(iEl), 1500);
+	}
+
+	doConcede() {
+		if (this.gameModel.playerOneTurn) {
+			this.onConcede.notify('player1');
+		} else {
+			this.onConcede.notify('player2');
 		}
 	}
 }

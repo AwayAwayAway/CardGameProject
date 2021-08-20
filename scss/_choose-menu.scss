@@ -2,6 +2,9 @@
 @import "mixins";
 
 .wrapper-choose-menu {
+  position: relative;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   background: url("../images/backgrounds/warrior.jpg") center/cover no-repeat;

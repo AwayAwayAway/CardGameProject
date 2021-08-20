@@ -11,15 +11,18 @@ export default class Game {
 		this.playerOneTurn = true;
 		this.playerTwoTurn = false;
 
-		this.playerOneClass = null;    // сохраняет класс игрока будем реализовывать выбор скилов под класс
+		this.playerOneClass = null;
 		this.playerTwoClass = null;
 
 		this.playerOnePullOfCards = [];
 		this.playerTwoPullOfCards = [];
 
+		this.restoredGameData = null;
+
 		this.playersInfo = {};  //info from local storage about choose menu
 
 		this.dragCard = null;
+
 		this.tempCard = null; // карта которая играется
 
 		// событие выбор карт завершен
@@ -39,13 +42,25 @@ export default class Game {
 
 		// анимация конца хода
 		this.onEndTurnAnimation = new Events();
+
+		this.onGameStart = new Events();
+
+		this.onRestoredGameFailed = new Events();
+
+		this.onSaveGameData = new Events();
 	}
 
 	start() {
-		this.init();
+		if (window.location.hash.substr(1) === 'restoredGame') {
+			this.readGameDataFromServer();
+		} else {
+			this.init();
+		}
 	};
 
 	init() {
+		this.onGameStart.notify();
+
 		this.setPlayersChoiceInfo('playersInfo');
 		this.setPlayersClasses();
 		this.setPlayersNames();
@@ -95,9 +110,9 @@ export default class Game {
 		}
 	};
 
-	// линкуем player1 & player2 в gamemodel
+	// линкуем player1 & player2 в gameModel
 	setActivePassivePlayer() {
-		if(this.playerOneTurn) {
+		if (this.playerOneTurn) {
 			this.activePlayer = player1;
 			this.passivePlayer = player2;
 		} else {
@@ -152,12 +167,12 @@ export default class Game {
 	};
 
 	// передаем массив из выбранных согласно ID карты и класс выбранного персонажа для поиска в SkillCollection его типа карт
-	checkOnSelectedCards(datainfo, search) {
+	checkOnSelectedCards(dataInfo, search) {
 		let temp = [];
 
 		for (let i = 0; i < skillCollection[search].length; i++) {
-			for (let j = 0; j < datainfo.length; j++) {
-				if (skillCollection[search][i]['id'] == datainfo[j]) {
+			for (let j = 0; j < dataInfo.length; j++) {
+				if (skillCollection[search][i]['id'] == dataInfo[j]) {
 					temp.push(skillCollection[search][i]);
 				}
 			}
@@ -223,54 +238,67 @@ export default class Game {
 	};
 
 	saveGameData() {
-		const info = {
+		const savedInfo = {
 			playerOneTurn: this.playerOneTurn,
 			playerTwoTurn: this.playerTwoTurn,
 			playerOnePullOfCards: this.playerOnePullOfCards.map((element) => element.id),
 			playerTwoPullOfCards: this.playerTwoPullOfCards.map((element) => element.id),
 			activePlayerCardsHand: this.saveActivePlayerCardsHand(),
 			player1: player1.savePlayerData(),
-			player2: player2.savePlayerData()
-		}
+			player2: player2.savePlayerData(),
+			player1Name: this.playersInfo.playerOneName,
+			player2Name: this.playersInfo.playerTwoName,
+			player1Class: this.playersInfo.playerOneClass,
+			player2Class: this.playersInfo.playerTwoClass,
+		};
 
-		console.log(info);
-
-		localStorage.setItem('gameData', JSON.stringify(info));
+		this.saveGameDataToServer(savedInfo);
 	}
 
 	saveActivePlayerCardsHand() {
 		const cardInfo = document.querySelector('.card-in-hand-field');
-		const cardID = [...cardInfo.children].map((element) => element.dataset.info)
+		const cardID = [...cardInfo.children].map((element) => element.dataset.info);
 
-		return cardID
+		return cardID;
 	}
 
 	doRestoreGameData() {
-		const temp = localStorage.getItem('gameData');
-		const tempData = JSON.parse(temp);
+
 		const overlay = document.querySelector('.players-overlay');
 		const overlayClose = document.querySelector('.players-overlay__close');
 		const divEl = document.querySelector('.confirm-continue');
 		let activePlayerHand;
 
-		this.playerOneTurn = tempData.playerOneTurn;
-		this.playerTwoTurn = tempData.playerTwoTurn;
+		this.playerOneTurn = this.restoredGameData.playerOneTurn;
+		this.playerTwoTurn = this.restoredGameData.playerTwoTurn;
 
-		this.playerOnePullOfCards = this.checkOnSelectedCards(tempData.playerOnePullOfCards, this.playerOneClass);
-		this.playerTwoPullOfCards = this.checkOnSelectedCards(tempData.playerTwoPullOfCards, this.playerTwoClass);
+		this.playersInfo.playerOneClass = this.restoredGameData.player1Class;
+		this.playersInfo.playerTwoClass = this.restoredGameData.player2Class;
+		this.playersInfo.playerOneName = this.restoredGameData.player1Name;
+		this.playersInfo.playerTwoName = this.restoredGameData.player2Name;
 
-		if(this.playerOneTurn){
-			activePlayerHand = this.checkOnSelectedCards(tempData.activePlayerCardsHand, this.playerOneClass);
+
+		this.playerOnePullOfCards = this.checkOnSelectedCards(this.restoredGameData.playerOnePullOfCards, this.restoredGameData.player1Class);
+		this.playerTwoPullOfCards = this.checkOnSelectedCards(this.restoredGameData.playerTwoPullOfCards, this.restoredGameData.player2Class);
+
+		if (this.playerOneTurn) {
+			activePlayerHand = this.checkOnSelectedCards(this.restoredGameData.activePlayerCardsHand, this.restoredGameData.player1Class);
 		} else {
-			activePlayerHand = this.checkOnSelectedCards(tempData.activePlayerCardsHand, this.playerTwoClass);
+			activePlayerHand = this.checkOnSelectedCards(this.restoredGameData.activePlayerCardsHand, this.restoredGameData.player2Class);
 		}
 
 		this.setActivePassivePlayer();
 
 		this.setTextTurnInfo();
 
-		player1.doRestorePlayerData('player1');
-		player2.doRestorePlayerData('player2');
+		this.setPlayersClasses();
+
+		this.setPlayersNames();
+
+		this.setPlayersModels();
+
+		player1.doRestorePlayerData(this.restoredGameData, 'player1');
+		player2.doRestorePlayerData(this.restoredGameData, 'player2');
 
 		this.onSelectionEnd.notify(activePlayerHand);
 
@@ -278,6 +306,59 @@ export default class Game {
 
 		overlay.classList.add('hidden');
 		overlayClose.classList.remove('hidden');
+	}
+
+	saveGameDataToServer(savedGameData) {
+		fetch('https://parseapi.back4app.com/classes/CardGameContainer/QCWoJhzpd2', {
+			method: 'PUT',
+			headers: {
+				'X-Parse-Application-Id': 'uU4nbtVfuBneX95bxKyjBuyG82Wr3Wg1JrTjEYr7',
+				'X-Parse-REST-API-Key': 'UAnSqROzrtRZuMkgY3MgoEkhsp0040aUBca0dWGm',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				gameSaved: savedGameData
+			})
+		})
+			.then(res => {
+				if (res.ok) {
+					console.log('OK');
+
+					this.onSaveGameData.notify(true);
+				} else {
+					console.log('Not OK, save error');
+					this.onSaveGameData.notify(false);
+				}
+			});
+	}
+
+	readGameDataFromServer() {
+		let self = this;
+
+		fetch('https://parseapi.back4app.com/classes/CardGameContainer/', {
+			method: 'GET',
+			headers: {
+				'X-Parse-Application-Id': 'uU4nbtVfuBneX95bxKyjBuyG82Wr3Wg1JrTjEYr7',
+				'X-Parse-REST-API-Key': 'UAnSqROzrtRZuMkgY3MgoEkhsp0040aUBca0dWGm',
+			}
+		})
+			.then(res => {
+				if (res.ok) {
+					return res.json();
+				} else {
+					this.onRestoredGameFailed.notify();
+				}
+			})
+			.then(data => {
+				console.log(data);
+				if (data.results[0].gameSaved.hasOwnProperty('gameFinished')) {
+					self.init();
+				} else {
+					self.restoredGameData = data.results[0].gameSaved;
+
+					self.onGameStart.notify(true);
+				}
+			});
 	}
 }
 

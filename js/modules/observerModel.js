@@ -12,6 +12,8 @@ const endGame = mutations => {
 		proposePlayAgain();
 
 		forbidSaveConcede();
+
+		deleteSave();
 	}
 
 	if (mutations[0]['target'].classList.contains('player-2__hp-value') && mutations[0].target.childNodes[0].data <= 0) {
@@ -50,13 +52,11 @@ const hideInterfaceElements = () => {
 
 	boardView.playerOneCollection.classList.add('hidden');
 
-	boardView.playerOneCollection.classList.add('hidden');
+	boardView.playerTwoCollection.classList.add('hidden');
 
 	document.querySelector('.background-music-battlefield').pause();
 
 	playSoundEffect('.victory-audio');
-
-	localStorage.removeItem('gameData');
 }
 
 const proposePlayAgain = () => {
@@ -101,5 +101,29 @@ const warningUnload = event => {
 }
 
 const forbidClick = event => event.stopPropagation();
+
+const deleteSave = () => {
+	fetch('https://parseapi.back4app.com/classes/CardGameContainer/QCWoJhzpd2', {
+		method: 'PUT',
+		headers: {
+			'X-Parse-Application-Id': 'uU4nbtVfuBneX95bxKyjBuyG82Wr3Wg1JrTjEYr7',
+			'X-Parse-REST-API-Key': 'UAnSqROzrtRZuMkgY3MgoEkhsp0040aUBca0dWGm',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			gameSaved: {
+				gameFinished: true
+			}
+		})
+	})
+		.then(res => {
+			if (res.ok) {
+				console.log('OK, deleted')
+			} else {
+				//do something on fail
+				console.log('Not OK, error')
+			}
+		});
+}
 
 export {endGame, allowSaveConcede, warningUnload, forbidClick}

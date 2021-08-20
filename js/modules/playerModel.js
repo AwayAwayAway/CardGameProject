@@ -417,15 +417,12 @@ export default class Players {
 		}
 	}
 
-	doRestorePlayerData(player) {
-		const temp = localStorage.getItem('gameData');
-		const tempData = JSON.parse(temp);
-
-		this.healthPoints = tempData[player].healthPoints;
-		this.staminaPoints = tempData[player].staminaPoints;
-		this.defendPoints = tempData[player].defendPoints;
-		this.initialHP = tempData[player].initialHP;
-		this.initialDP = tempData[player].initialDP;
+	doRestorePlayerData(savedData, player) {
+		this.healthPoints = savedData[player].healthPoints;
+		this.staminaPoints = savedData[player].staminaPoints;
+		this.defendPoints = savedData[player].defendPoints;
+		this.initialHP = savedData[player].initialHP;
+		this.initialDP = savedData[player].initialDP;
 	}
 
 	concede() {

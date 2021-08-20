@@ -19,8 +19,8 @@ export default class PlayersController {
 			this.playersView.onUpdateInitialValue.attach(() => this.doUpdateInitialValue());
 		}
 
-		if (this.boardView.hasOwnProperty('onSaveGameProgres')) {
-			this.boardView.onSaveGameProgres.attach(() => this.doSavePlayerData());
+		if (this.boardView.hasOwnProperty('onSaveGameProgress')) {
+			this.boardView.onSaveGameProgress.attach(() => this.doSavePlayerData());
 		}
 
 		if (this.boardView.hasOwnProperty('onConcede')) {
