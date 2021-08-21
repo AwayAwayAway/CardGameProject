@@ -1,4 +1,3 @@
-@import "variables";
 @import "mixins";
 
 .player-1 {
@@ -47,7 +46,10 @@
   }
 
   @include desktop-big {
-    top: 42%;
+    width: 450px;
+    height: 450px;
+    top: 46%;
+    left: 14%;
   }
 
   &__stamina {
@@ -237,6 +239,11 @@
       width: 200px;
       height: 200px;
     }
+
+    @include desktop-big {
+      width: 450px;
+      height: 450px;
+    }
   }
 
   &__name {
@@ -374,78 +381,3 @@
   }
 }
 
-.not-enough-stamina-player-2 {
-  position: absolute;
-  width: 380px;
-  height: 121px;
-  top: -12%;
-  left: 23%;
-
-  @include mobile-landscape {
-    top: -26%;
-    left: -157%;
-  }
-
-  @include small-mobile-landscape {
-    top: -26%;
-    left: -157%;
-  }
-
-  &__first-bubble {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: white;
-
-    @include mobile-landscape {
-      left: 90%;
-    }
-
-    @include small-mobile-landscape {
-      left: 90%;
-    }
-  }
-
-  &__second-bubble {
-    position: absolute;
-    left: -11%;
-    bottom: 4%;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: white;
-
-    @include mobile-landscape {
-      left: 79%;
-    }
-
-    @include small-mobile-landscape {
-      left: 79%;
-    }
-  }
-
-  &__third-bubble {
-    position: absolute;
-    left: -62%;
-    width: 215px;
-    height: 106px;
-    border-radius: 50%;
-    background-color: white;
-    font-size: 1.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
-    @include mobile-landscape {
-      left: 29%;
-    }
-
-    @include small-mobile-landscape {
-      left: 29%;
-    }
-  }
-}

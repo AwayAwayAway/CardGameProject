@@ -11,9 +11,7 @@ import {
 export default class BoardView {
 	constructor(board, game, selector) {
 		this.boardModel = board;
-
 		this.gameModel = game;
-
 		this.boardSelector = selector;
 
 		this.deckWrapper = this.boardSelector.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
@@ -429,8 +427,6 @@ export default class BoardView {
 
 				break;
 			case 'save-progress':
-				// this.renderBattleMenu();
-
 				this.onSaveGameProgress.notify();
 
 				break;
@@ -479,6 +475,7 @@ export default class BoardView {
 				this.playersOverlay.removeChild(divEl);
 
 				this.playersOverlay.classList.add('hidden');
+
 				this.playersDeckClose.classList.remove('hidden');
 
 				this.onRestoreGameDataRejected.notify();

@@ -1,4 +1,3 @@
-@import "variables";
 @import "mixins";
 
 /* Start поле выбора карт и карт в руке */
@@ -95,9 +94,12 @@
     width: 5rem;
     height: 7rem;
   }
+
+  @include desktop-big {
+    width: 10rem;
+    height: 13rem;
+  }
 }
-
-
 
 .card-in-hand-field {
   position: absolute;

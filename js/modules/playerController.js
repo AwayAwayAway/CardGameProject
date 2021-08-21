@@ -38,17 +38,21 @@ export default class PlayersController {
 
 	doEndTurn() {
 		this.playerOneModel.endTurn();
+
 		this.playerOneModel.updateInitialValues();
+
 		this.playerTwoModel.updateInitialValues();
 	}
 
 	doUpdateInitialValue() {
 		this.playerOneModel.updateInitialValues();
+
 		this.playerTwoModel.updateInitialValues();
 	}
 
 	doSavePlayerData() {
 		this.playerOneModel.savePlayerData();
+
 		this.playerTwoModel.savePlayerData();
 	}
 

@@ -37,11 +37,11 @@ export default class BoardController {
 		}
 
 		if (this.player1.hasOwnProperty('onCardDraw')) {
-			this.player1.onCardDraw.attach((card) => this.doCreateCardInHand(card));
+			this.player1.onCardDraw.attach((card) => this.doSkillCreateCardInHand(card));
 		}
 
 		if (this.player2.hasOwnProperty('onCardDraw')) {
-			this.player2.onCardDraw.attach((card) => this.doCreateCardInHand(card));
+			this.player2.onCardDraw.attach((card) => this.doSkillCreateCardInHand(card));
 		}
 
 		if (this.player1.hasOwnProperty('onCardDiscard')) {
@@ -85,7 +85,7 @@ export default class BoardController {
 		this.boardModel.restoreHand();
 	}
 
-	doCreateCardInHand(card) {
+	doSkillCreateCardInHand(card) {
 		this.boardModel.createCards(card, 'hand', true);
 	}
 

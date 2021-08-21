@@ -6,7 +6,6 @@ import {
 } from '../animation_and_sound_effects/animation';
 import {animationCollectionImages} from './preloadImages';
 
-
 export default class PlayersView {
 	constructor(playerOneModel, playerTwoModel, gameModel, container) {
 		this.playerOneModel = playerOneModel;

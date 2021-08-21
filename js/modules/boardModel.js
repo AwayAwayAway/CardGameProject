@@ -75,6 +75,7 @@ export default class Board {
 		//делаем проверку чтобы карты в руке не повторялись
 		for (let i = 0; i < 4; i++) {                  // количество карт в руку
 			let n = Math.floor(Math.random() * 8);   // количество набранных карт
+
 			if (tempIndex.indexOf(n) == -1) {
 				tempIndex.push(n);
 			} else {
@@ -104,6 +105,7 @@ export default class Board {
 				element.className = 'cards cards-restored';
 				element.setAttribute('draggable', 'true')
 			});
+
 			this.currentHand.forEach((element) => this.cardInHand.appendChild(element));
 		}
 	}
@@ -115,12 +117,15 @@ export default class Board {
 		switch (place) {
 			case 'board':
 				orderToRemove = [...this.deckWrapper.children];
+
 				break;
 			case 'hand':
 				orderToRemove = [...this.cardInHand.children];
+
 				break;
 			case 'overlay':
 				orderToRemove = [...this.playersDeck.children];
+
 				break;
 		}
 
@@ -129,17 +134,16 @@ export default class Board {
 
 	//удаляем сыгранные карты из руки с проверкой
 	deletePlayedCard(condition, card) {
-		if (this.gameModel.tempCard.cost > this.gameModel.activePlayer.staminaPoints) {
-
-			return;
-		}
+		if (this.gameModel.tempCard.cost > this.gameModel.activePlayer.staminaPoints) { return; }
 
 		switch (condition) {
 			case 'playedCard':
 				this.onRemoveActionCard.notify(this.gameModel.dragCard);
+
 				break;
 			case 'randomCard':
 				this.onRemoveActionCard.notify(card);
+
 				break;
 		}
 	}

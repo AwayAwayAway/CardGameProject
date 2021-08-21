@@ -32,7 +32,7 @@ export default class Players {
 	}
 
 	updateView(state) {
-		if(state) {
+		if (state) {
 			this.onPlayerViewUpdate.notify('concede');
 		} else {
 			this.onPlayerViewUpdate.notify();
@@ -49,7 +49,7 @@ export default class Players {
 		if (this.gameModel.activePlayer.staminaPoints < this.gameModel.tempCard.cost) {
 			playSoundEffect('.card-grab-cancel-audio');
 
-			(this.gameModel.playerOneTurn) ? notEnoughStaminaAnimation('player1') : notEnoughStaminaAnimation()
+			(this.gameModel.playerOneTurn) ? notEnoughStaminaAnimation('player1') : notEnoughStaminaAnimation();
 
 			return;
 		}
@@ -78,7 +78,6 @@ export default class Players {
 			case 'defendDrawDiscard':
 				this.defendDrawDiscard(this.gameModel.tempCard);
 
-
 				break;
 			case 'defendAndAttack':
 				this.defendWithAttack(this.gameModel.tempCard);
@@ -100,25 +99,36 @@ export default class Players {
 	}
 
 	massiveRandomDraw(card, condition) {
-		let tempIndex = [];
+		let tempIndex = [...this.boardModel.cardInHand.children].map((element) => element.dataset.info);
+
+		const newTemp = tempIndex.map(element => parseInt(element, 10));
+
+		let pull = [...this.gameModel.playerOnePullOfCards].map((element) => element.id);
+
+		let onDrawArray = [];
 
 		//делаем проверку чтобы карты в руке не повторялись
 		for (let i = 0; i < card.effect - condition; i++) {                  // количество карт в руку
-			let n = Math.floor(Math.random() * 8);            // количество набранных карт
-			if (tempIndex.indexOf(n) === -1) {
-				tempIndex.push(n);
+			let n = Math.floor(Math.random() * pull.length);
+			// количество набранных карт
+			if (newTemp.indexOf(pull[n]) === -1 && onDrawArray.indexOf(pull[n]) === -1) {
+				onDrawArray.push(pull[n]);
 			} else {
 				i--;
 			}
 		}
 
 		if (this.gameModel.playerOneTurn) {
-			for (let i = 0; i < tempIndex.length; i++) {
-				this.onCardDraw.notify(this.gameModel.playerOnePullOfCards[tempIndex[i]]);
+			onDrawArray = this.gameModel.checkOnSelectedCards(onDrawArray, this.gameModel.playerOneClass);
+
+			for (let i = 0; i < onDrawArray.length; i++) {
+				this.onCardDraw.notify(onDrawArray[i]);
 			}
 		} else {
-			for (let i = 0; i < tempIndex.length; i++) {
-				this.onCardDraw.notify(this.gameModel.playerTwoPullOfCards[tempIndex[i]]);
+			onDrawArray = this.gameModel.checkOnSelectedCards(onDrawArray, this.gameModel.playerTwoClass);
+
+			for (let i = 0; i < onDrawArray.length; i++) {
+				this.onCardDraw.notify(onDrawArray[i]);
 			}
 		}
 
@@ -134,7 +144,7 @@ export default class Players {
 
 			playSoundEffect('.discard-card-audio');
 
-			setTimeout(() => this.onCardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300)
+			setTimeout(() => this.onCardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300);
 		}
 	}
 
@@ -145,7 +155,7 @@ export default class Players {
 
 			playSoundEffect('.discard-card-audio');
 
-			this.onCardDiscard.notify(element)
+			this.onCardDiscard.notify(element);
 		}
 	}
 
@@ -173,7 +183,6 @@ export default class Players {
 	sideEffectAttack(card) {
 		// some of cards have special side effects, so we do additional if check
 		// to make for them special methods
-
 		if (card.name == 'riddleWithHoles') {
 			this.gameModel.passivePlayer.healthPoints -= card.effect;
 
@@ -232,7 +241,6 @@ export default class Players {
 	attackDrawDiscard(card) {
 		// some of cards have special side effect, so we do additional if check
 		// to make for them special methods
-
 		if (this.gameModel.passivePlayer.defendPoints) {
 			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
 
@@ -249,8 +257,9 @@ export default class Players {
 		}
 
 		if (card.name == 'daggerThrow') {
-			setTimeout(() => this.randomCardDiscard(), 300)
-			setTimeout(() => this.randomCardDraw(), 800)
+			setTimeout(() => this.randomCardDiscard(), 300);
+
+			setTimeout(() => this.randomCardDraw(), 800);
 		}
 
 		if (card.name == 'quickSlash') {
@@ -262,7 +271,7 @@ export default class Players {
 
 			this.gameModel.activePlayer.defendPoints += sideEffect;
 
-			setTimeout(() => this.randomCardDraw(),600)
+			setTimeout(() => this.randomCardDraw(), 600);
 		}
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
@@ -343,7 +352,7 @@ export default class Players {
 
 		if (card.name == 'prepared') {
 			this.randomCardDiscard();
-			setTimeout(() =>this.randomCardDraw(), 300)
+			setTimeout(() => this.randomCardDraw(), 300);
 
 			return;
 		}
@@ -357,7 +366,7 @@ export default class Players {
 		}
 
 		if (card.name == 'survivor') {
-			setTimeout(() => this.randomCardDiscard(), 300)
+			setTimeout(() => this.randomCardDiscard(), 300);
 
 			this.gameModel.activePlayer.defendPoints += card.effect;
 		}
@@ -393,7 +402,7 @@ export default class Players {
 			let sideEffect = card.sideEffect();
 			this.gameModel.activePlayer.defendPoints += sideEffect;
 
-			setTimeout(() => this.massiveRandomDraw(card, 0), 300)
+			setTimeout(() => this.massiveRandomDraw(card, 0), 300);
 		}
 
 		if (card.name == 'thirdEye') {
@@ -414,7 +423,7 @@ export default class Players {
 			defendPoints: this.defendPoints,
 			initialHP: this.initialHP,
 			initialDP: this.initialDP
-		}
+		};
 	}
 
 	doRestorePlayerData(savedData, player) {
@@ -428,6 +437,6 @@ export default class Players {
 	concede() {
 		this.healthPoints = 0;
 
-		this.updateView('concede')
+		this.updateView('concede');
 	}
 }

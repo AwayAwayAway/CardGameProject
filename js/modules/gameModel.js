@@ -62,10 +62,15 @@ export default class Game {
 		this.onGameStart.notify();
 
 		this.setPlayersChoiceInfo('playersInfo');
+
 		this.setPlayersClasses();
+
 		this.setPlayersNames();
+
 		this.setPlayersModels();
+
 		this.setTextChooseInfo();
+
 		this.setActivePassivePlayer();
 	};
 
@@ -131,7 +136,9 @@ export default class Game {
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
 			playSoundEffect('.confirm-failed-audio');
+
 			shakeAnimation('.players-draw-info__accept', 'horizontal');
+
 			return;
 		}
 
@@ -185,9 +192,7 @@ export default class Game {
 		let counter = document.getElementsByClassName('card-to-select').length;
 
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
-		if (counter < 8 || counter >= 9) {
-			return;
-		}
+		if (counter < 8 || counter >= 9) { return; }
 
 		if (this.playerOnePullOfCards.length > 1 && this.playerTwoPullOfCards.length > 1) {
 			this.onSelectionEnd.notify();
@@ -263,7 +268,6 @@ export default class Game {
 	}
 
 	doRestoreGameData() {
-
 		const overlay = document.querySelector('.players-overlay');
 		const overlayClose = document.querySelector('.players-overlay__close');
 		const divEl = document.querySelector('.confirm-continue');
@@ -350,7 +354,6 @@ export default class Game {
 				}
 			})
 			.then(data => {
-				console.log(data);
 				if (data.results[0].gameSaved.hasOwnProperty('gameFinished')) {
 					self.init();
 				} else {

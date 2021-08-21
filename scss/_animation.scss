@@ -1,4 +1,3 @@
-@import "variables";
 @import "mixins";
 @import "keyframes";
 
@@ -30,7 +29,7 @@
   left: 0;
   z-index: 1000;
   height: 0;
-  width: 100%;
+  width: 100vw;
   background: black;
   animation: loadingBottom 1s ease-in-out forwards;
 }
@@ -92,6 +91,12 @@
     height: 14rem;
     animation: cardDrawAnimateMobilePort .2s linear forwards;
   }
+
+  @include desktop-big {
+    width: 10rem;
+    height: 13rem;
+    animation: cardDrawAnimateBigDesk .2s linear forwards;
+  }
 }
 
 .card-discard-animation {
@@ -141,17 +146,17 @@
   }
 
   @include mobile-portrait {
-    width: 400px;
-    height: 400px;
-    top: -10%;
-    animation: attackAnimateTablet 0.5s linear forwards;
+    width: 350px;
+    height: 350px;
+    top: 5%;
+    animation: attackAnimateMobPort 0.5s linear forwards;
   }
 
   @include small-mobile-portrait {
-    width: 400px;
-    height: 400px;
-    top: -10%;
-    animation: attackAnimateTablet 0.5s linear forwards;
+    width: 350px;
+    height: 350px;
+    top: 5%;
+    animation: attackAnimateMobPort 0.5s linear forwards;
   }
 }
 
@@ -159,7 +164,7 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 450px;
+  width: 550px;
   height: 550px;
   animation: smashAttack 0.5s linear forwards;
 
@@ -170,18 +175,19 @@
   }
 
   @include mobile-portrait {
-    width: 400px;
-    height: 400px;
-    top: -10%;
+    width: 350px;
+    height: 350px;
+    top: 1%;
     animation: smashAttack 0.5s linear forwards;
   }
 
   @include small-mobile-portrait {
-    width: 400px;
-    height: 400px;
-    top: -10%;
+    width: 350px;
+    height: 350px;
+    top: 1%;
     animation: smashAttack 0.5s linear forwards;
   }
+
 }
 
 .attack-right-animation {
@@ -205,15 +211,15 @@
     height: 150px;
   }
 
-  //@include mobile-portrait {
-  //  width: 150px;
-  //  height: 150px;
-  //}
-  //
-  //@include small-mobile-portrait {
-  //  width: 150px;
-  //  height: 150px;
-  //}
+  @include mobile-portrait {
+    width: 250px;
+    height: 250px;
+  }
+
+  @include small-mobile-portrait {
+    width: 250px;
+    height: 250px;
+  }
 }
 
 .warrior-ultimate-animation {

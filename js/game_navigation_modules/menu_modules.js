@@ -22,6 +22,7 @@ class MainMenu extends Menu {
 
 		this.aboutGame = document.querySelector('.about-button');
 
+
 		this.checkContinueCondition();
 
 		this.init('.wrapper-main-menu');
@@ -32,6 +33,7 @@ class MainMenu extends Menu {
 
 		[...this.mainElement.children].forEach((button) => {
 			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+
 			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
 		});
 
@@ -81,6 +83,7 @@ class MainMenu extends Menu {
 
 		divEl.appendChild(content);
 		divEl.appendChild(closeBtn);
+
 		this.mainElement.appendChild(divEl);
 
 		document.querySelector('.close-rule-btn').addEventListener('click', () => this.removeAboutRules());
@@ -92,6 +95,7 @@ class MainMenu extends Menu {
 
 	removeAboutRules() {
 		const divEl = document.querySelector('.players-overlay');
+
 		divEl.className = 'players-overlay fade-out-animation';
 
 		setTimeout(() => this.mainElement.removeChild(divEl), 500);
@@ -169,6 +173,7 @@ class ChooseMenu extends Menu {
 			//check if input is empty or didnt class choosed
 			if (!warningCheck || !regexCheck) {
 				this.alertEmptyName();
+
 				this.alertClass();
 
 				return;
@@ -297,9 +302,7 @@ class ChooseMenu extends Menu {
 		};
 
 		this.setBackground = function (event) {
-			if (event.target.className === 'options') {
-				return;
-			}
+			if (event.target.className === 'options') { return; }
 
 			this.removeStyles();
 

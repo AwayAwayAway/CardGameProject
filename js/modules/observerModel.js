@@ -88,15 +88,20 @@ const proposePlayAgain = () => {
 
 	choiceNo.addEventListener('click', () => {
 		window.removeEventListener('beforeunload', warningUnload);
+
 		boardView.playersTurnInfo.display= 'none';
+
 		divEl.style.display = 'none';
+
 		document.title = 'Main menu';
+
 		location.hash = decodeURIComponent('main-menu');
 	});
 }
 
 const warningUnload = event => {
 	event.preventDefault();
+
 	event.returnValue = '';
 }
 
@@ -120,7 +125,6 @@ const deleteSave = () => {
 			if (res.ok) {
 				console.log('OK, deleted')
 			} else {
-				//do something on fail
 				console.log('Not OK, error')
 			}
 		});
