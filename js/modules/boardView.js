@@ -130,7 +130,9 @@ export default class BoardView {
 			this.cardsPlayField.addEventListener('dragover', (event) => event.preventDefault());
 
 			// играем карты
-			this.cardsPlayField.addEventListener('drop', () => {
+			this.cardsPlayField.addEventListener('drop', (event) => {
+				event.preventDefault();
+
 				this.onDropCard.notify();
 
 				this.onDropCardAction.notify(this.gameModel.playerOneTurn);

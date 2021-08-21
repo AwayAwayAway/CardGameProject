@@ -3,7 +3,7 @@
 
 .player-2 {
   @extend .player-1;
-  left: -4%;
+  left: -8%;
 
   @include tablet-landscape {
     left: -10%;
