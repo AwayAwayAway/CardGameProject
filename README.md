@@ -42,3 +42,6 @@ What technologies are used here:
 * Webpack (devServer, MiniCssExtracter, css|sass|postcss loaders, babel)
 
 You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/) on GithubPages
+
+Contributing are welcome.
+You always can contact me on [twitter](https://twitter.com/Nikolay08474464) or email.
