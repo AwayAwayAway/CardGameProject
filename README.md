@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Card Builder Game</h1> 
+<h1 align="center">Card Builder Game</h1> 
 
 ## Intro
 Hey, my name is **Nick**, i'm a beginner Front-end Dev and  this is my first "big" project. 
@@ -19,7 +19,7 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 
 ## How to play
 
-<h2 style="text-align: center">You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)
+<h2 align="center">You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)</h3>
 
 ### Drag and Drop [Chrome, Opera, Firefox, Edge]:
 * **Drag** Card into "dropzone",
