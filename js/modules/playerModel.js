@@ -160,20 +160,7 @@ export default class Players {
 	}
 
 	standartAttack(card) {
-		if (this.gameModel.passivePlayer.defendPoints) {
-			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
-
-			if (test < 0) {
-				this.gameModel.passivePlayer.defendPoints = 0;
-
-				test = Math.abs(test);
-				this.gameModel.passivePlayer.healthPoints -= test;
-			} else {
-				this.gameModel.passivePlayer.defendPoints = test;
-			}
-		} else {
-			this.gameModel.passivePlayer.healthPoints -= card.effect;
-		}
+		this.attackThroughDefendPoints(card);
 
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
 
@@ -239,22 +226,7 @@ export default class Players {
 	};
 
 	attackDrawDiscard(card) {
-		// some of cards have special side effect, so we do additional if check
-		// to make for them special methods
-		if (this.gameModel.passivePlayer.defendPoints) {
-			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
-
-			if (test < 0) {
-				this.gameModel.passivePlayer.defendPoints = 0;
-
-				test = Math.abs(test);
-				this.gameModel.passivePlayer.healthPoints -= test;
-			} else {
-				this.gameModel.passivePlayer.defendPoints = test;
-			}
-		} else {
-			this.gameModel.passivePlayer.healthPoints -= card.effect;
-		}
+		this.attackThroughDefendPoints(card);
 
 		if (card.name == 'daggerThrow') {
 			setTimeout(() => this.randomCardDiscard(), 300);
@@ -325,20 +297,7 @@ export default class Players {
 	};
 
 	defendWithAttack(card) {
-		if (this.gameModel.passivePlayer.defendPoints) {
-			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
-
-			if (test < 0) {
-				this.gameModel.passivePlayer.defendPoints = 0;
-
-				test = Math.abs(test);
-				this.gameModel.passivePlayer.healthPoints -= test;
-			} else {
-				this.gameModel.passivePlayer.defendPoints = test;
-			}
-		} else {
-			this.gameModel.passivePlayer.healthPoints -= card.effect;
-		}
+		this.attackThroughDefendPoints(card)
 
 		this.gameModel.activePlayer.defendPoints += card.effect;
 		this.gameModel.activePlayer.staminaPoints -= card.cost;
@@ -415,6 +374,23 @@ export default class Players {
 
 		this.onCardActionAnimation.notify();
 	};
+
+	attackThroughDefendPoints(card) {
+		if (this.gameModel.passivePlayer.defendPoints) {
+			let test = this.gameModel.passivePlayer.defendPoints - card.effect;
+
+			if (test < 0) {
+				this.gameModel.passivePlayer.defendPoints = 0;
+
+				test = Math.abs(test);
+				this.gameModel.passivePlayer.healthPoints -= test;
+			} else {
+				this.gameModel.passivePlayer.defendPoints = test;
+			}
+		} else {
+			this.gameModel.passivePlayer.healthPoints -= card.effect;
+		}
+	}
 
 	savePlayerData() {
 		return {

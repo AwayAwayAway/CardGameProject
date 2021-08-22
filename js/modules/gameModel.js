@@ -128,8 +128,6 @@ export default class Game {
 
 	// пулим карты выбранные ироком на старте игры в gameControl, этими картами игроки будут играть дальше
 	definePlayersCardSet() {
-		let cards = document.querySelectorAll('.cards');
-
 		//счетчик выбранных карт
 		let counter = document.getElementsByClassName('card-to-select').length;
 
@@ -142,6 +140,15 @@ export default class Game {
 			return;
 		}
 
+		this.pushCardsIntoCollection()
+
+		this.setTurnPriority();
+
+		this.checkCardsSelectionEnd();
+	};
+
+	pushCardsIntoCollection() {
+		let cards = document.querySelectorAll('.cards');
 		let tempCardChoosePlayer = [];
 
 		//пушим карты 1го игрока в массив
@@ -153,25 +160,18 @@ export default class Game {
 			}
 
 			this.playerOnePullOfCards = this.checkOnSelectedCards(tempCardChoosePlayer, this.playerOneClass);
-		}
-
-		//пушим карты 2го игрока в массив
-		if (this.playerTwoTurn) {
+		} else {
 			for (let i = 0; i < cards.length; i++) {
 				if (cards[i].classList.contains('card-to-select')) {
 					tempCardChoosePlayer.push(cards[i].dataset.info);
 				}
 			}
+
 			this.playerTwoPullOfCards = this.checkOnSelectedCards(tempCardChoosePlayer, this.playerTwoClass);
 		}
 
 		playSoundEffect('.confirm-audio');
-
-		//меняем очередность выбора для игроков
-		this.setTurnPriority();
-
-		this.checkCardsSelectionEnd();
-	};
+	}
 
 	// передаем массив из выбранных согласно ID карты и класс выбранного персонажа для поиска в SkillCollection его типа карт
 	checkOnSelectedCards(dataInfo, search) {
@@ -184,6 +184,7 @@ export default class Game {
 				}
 			}
 		}
+
 		return temp;
 	};
 
@@ -192,7 +193,9 @@ export default class Game {
 		let counter = document.getElementsByClassName('card-to-select').length;
 
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
-		if (counter < 8 || counter >= 9) { return; }
+		if (counter < 8 || counter >= 9) {
+			return;
+		}
 
 		if (this.playerOnePullOfCards.length > 1 && this.playerTwoPullOfCards.length > 1) {
 			this.onSelectionEnd.notify();
@@ -216,8 +219,8 @@ export default class Game {
 		}
 	};
 
-	//конец хода меняет инфо о активном игроке и обновляет выносливость
-	turnEndsNextPlayerTurn() {
+	// устанавливаем приоритет хода игрока
+	setTurnPriority() {
 		if (this.playerOneTurn) {
 			this.playerOneTurn = false;
 			this.playerTwoTurn = true;
@@ -228,17 +231,6 @@ export default class Game {
 			this.playerTwoTurn = false;
 			this.activePlayer = player1;
 			this.passivePlayer = player2;
-		}
-	};
-
-	// устанавливаем приоритет хода игрока
-	setTurnPriority() {
-		if (this.playerOneTurn) {
-			this.playerOneTurn = false;
-			this.playerTwoTurn = true;
-		} else {
-			this.playerOneTurn = true;
-			this.playerTwoTurn = false;
 		}
 	};
 
@@ -275,13 +267,10 @@ export default class Game {
 
 		this.playerOneTurn = this.restoredGameData.playerOneTurn;
 		this.playerTwoTurn = this.restoredGameData.playerTwoTurn;
-
 		this.playersInfo.playerOneClass = this.restoredGameData.player1Class;
 		this.playersInfo.playerTwoClass = this.restoredGameData.player2Class;
 		this.playersInfo.playerOneName = this.restoredGameData.player1Name;
 		this.playersInfo.playerTwoName = this.restoredGameData.player2Name;
-
-
 		this.playerOnePullOfCards = this.checkOnSelectedCards(this.restoredGameData.playerOnePullOfCards, this.restoredGameData.player1Class);
 		this.playerTwoPullOfCards = this.checkOnSelectedCards(this.restoredGameData.playerTwoPullOfCards, this.restoredGameData.player2Class);
 
@@ -290,6 +279,9 @@ export default class Game {
 		} else {
 			activePlayerHand = this.checkOnSelectedCards(this.restoredGameData.activePlayerCardsHand, this.restoredGameData.player2Class);
 		}
+
+		player1.doRestorePlayerData(this.restoredGameData, 'player1');
+		player2.doRestorePlayerData(this.restoredGameData, 'player2');
 
 		this.setActivePassivePlayer();
 
@@ -300,9 +292,6 @@ export default class Game {
 		this.setPlayersNames();
 
 		this.setPlayersModels();
-
-		player1.doRestorePlayerData(this.restoredGameData, 'player1');
-		player2.doRestorePlayerData(this.restoredGameData, 'player2');
 
 		this.onSelectionEnd.notify(activePlayerHand);
 

@@ -51,7 +51,7 @@ export default class GameController {
 	}
 
 	doEndTurn() {
-		this.gameModel.turnEndsNextPlayerTurn();
+		this.gameModel.setTurnPriority();
 
 		this.gameModel.setTextTurnInfo();
 	}
