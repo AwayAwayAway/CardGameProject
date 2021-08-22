@@ -19,7 +19,7 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 
 ## How to play
 
-<h2 align="center">You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)</h3>
+<h2 align="center">You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/) </h2>
 
 ### Drag and Drop [Chrome, Opera, Firefox, Edge]:
 * **Drag** Card into "dropzone",
