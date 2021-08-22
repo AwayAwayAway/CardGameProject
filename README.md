@@ -19,8 +19,6 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 
 ## How to play
 
-## You can try [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)
-
 ### Drag and Drop [Chrome, Opera, Firefox, Edge]:
 * **Drag** Card into "dropzone",
 * **Drop** it within "dropzone" for activate card's effect
@@ -29,6 +27,8 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 * Touch card you want to play and just **swipe up**
 
 ![til](./images/battle.gif)
+
+## You can try [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)
 
 ## About project
 
