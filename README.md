@@ -1,4 +1,4 @@
-# Card Builder Game
+<h1 style="text-align: center">Card Builder Game</h1> 
 
 ## Intro
 Hey, my name is **Nick**, i'm a beginner Front-end Dev and  this is my first "big" project. 
@@ -19,6 +19,8 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 
 ## How to play
 
+<h2 style="text-align: center">You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)
+
 ### Drag and Drop [Chrome, Opera, Firefox, Edge]:
 * **Drag** Card into "dropzone",
 * **Drop** it within "dropzone" for activate card's effect
@@ -33,15 +35,13 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 The game is made as _Single Page Application_.
 What technologies are used here:
 
-* ES5, ES6 (destructuring, closures, array functions, rest pattern, modules, forEach, map etc.)
-* Mutation observer
-* SASS
-* OOP
-* MVC pattern
-* Fetch API (you can save your progress and continue from other device)
-* Webpack (devServer, MiniCssExtracter, css|sass|postcss loaders, babel)
-
-You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/) on GithubPages
+* **ES5, ES6** (destructuring, closures, array functions, rest pattern, modules, forEach, map etc.)
+* **Mutation observer**
+* **SASS**
+* **OOP**
+* **MVC pattern**
+* **Fetch API** (you can save your progress and continue from other device)
+* **Webpack** (devServer, MiniCssExtracter, css|sass|postcss loaders, babel)
 
 Contributing are welcome.
 You always can contact me on [twitter](https://twitter.com/Nikolay08474464) or email.
