@@ -1,4 +1,4 @@
-# Card Builder Game
+<h1 align="center">Card Builder Game</h1> 
 
 ## Intro
 Hey, my name is **Nick**, i'm a beginner Front-end Dev and  this is my first "big" project. 
@@ -28,20 +28,20 @@ The card requires _**Stamina**_ so be careful when choosing the card you want to
 
 ![til](./images/battle.gif)
 
+## You can try [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/)
+
 ## About project
 
 The game is made as _Single Page Application_.
 What technologies are used here:
 
-* ES5, ES6 (destructuring, closures, array functions, rest pattern, modules, forEach, map etc.)
-* Mutation observer
-* SASS
-* OOP
-* MVC pattern
-* Fetch API (you can save your progress and continue from other device)
-* Webpack (devServer, MiniCssExtracter, css|sass|postcss loaders, babel)
-
-You can try a [Live Demo](https://awayawayaway.github.io/MateevskiyGameProject/) on GithubPages
+* **ES5, ES6** (destructuring, closures, array functions, rest pattern, modules, forEach, map etc.)
+* **Mutation observer**
+* **SASS**
+* **OOP**
+* **MVC pattern**
+* **Fetch API** (you can save your progress and continue from other device)
+* **Webpack** (devServer, MiniCssExtracter, css|sass|postcss loaders, babel)
 
 Contributing are welcome.
 You always can contact me on [twitter](https://twitter.com/Nikolay08474464) or email.
