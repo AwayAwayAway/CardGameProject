@@ -1,4 +1,5 @@
 import {playPauseBackgroundAudio, playSoundEffect, shakeAnimation} from '../animation_and_sound_effects/animation.js';
+import {media} from '../preloadedMediaContent';
 
 export default class Menu {
 	static createMainMenu() {
@@ -32,9 +33,9 @@ class MainMenu extends Menu {
 		soundOffOn.addEventListener('click', playPauseBackgroundAudio);
 
 		[...this.mainElement.children].forEach((button) => {
-			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+			button.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover));
 
-			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+			button.addEventListener('click', () => playSoundEffect(media.audio.btnClick));
 		});
 
 		this.aboutGame.addEventListener('click', () => this.createAboutRules());
@@ -88,9 +89,9 @@ class MainMenu extends Menu {
 
 		document.querySelector('.close-rule-btn').addEventListener('click', () => this.removeAboutRules());
 
-		document.querySelector('.close-rule-btn').addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+		document.querySelector('.close-rule-btn').addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover));
 
-		document.querySelector('.close-rule-btn').addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+		document.querySelector('.close-rule-btn').addEventListener('click', () => playSoundEffect(media.audio.btnClick));
 	}
 
 	removeAboutRules() {
@@ -145,7 +146,7 @@ class ChooseMenu extends Menu {
 
 		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
 
-		[...options.children].forEach(hover => hover.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio')));
+		[...options.children].forEach(hover => hover.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover)));
 
 		//run function to choose character or  alert empty input name
 		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
@@ -159,8 +160,8 @@ class ChooseMenu extends Menu {
 		});
 
 		[...document.querySelectorAll('.btn')].forEach((button) => {
-			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
-			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+			button.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover));
+			button.addEventListener('click', () => playSoundEffect(media.audio.btnClick));
 		});
 		
 		// save name and model of character of each player
@@ -206,7 +207,7 @@ class ChooseMenu extends Menu {
 			playerOneTurn = false;
 			playerTwoTurn = true;
 
-			playSoundEffect('.confirm-audio');
+			playSoundEffect(media.audio.confirmSucces);
 
 			this.removeStyles();
 
@@ -215,7 +216,7 @@ class ChooseMenu extends Menu {
 
 		// alert for empty input
 		this.alertEmptyName = function () {
-			playSoundEffect('.confirm-failed-audio');
+			playSoundEffect(media.audio.confirmFailed);
 
 			shakeAnimation('.decision__btn', 'horizontal');
 
@@ -234,7 +235,7 @@ class ChooseMenu extends Menu {
 			if ([...options.children].some((child) => child.classList.contains('in-focus'))) {
 				return;
 			} else {
-				playSoundEffect('.confirm-failed-audio');
+				playSoundEffect(media.audio.confirmFailed);
 
 				shakeAnimation('.options', 'mix');
 			}
@@ -267,15 +268,15 @@ class ChooseMenu extends Menu {
 		this.startVisualAndSoundEffect = function (event) {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
-					playSoundEffect('.warrior-selected-audio');
+					playSoundEffect(media.audio.warriorSelected);
 
 					break;
 				case 'rogue':
-					playSoundEffect('.rogue-selected-audio');
+					playSoundEffect(media.audio.rogueSelected);
 
 					break;
 				case 'mage':
-					playSoundEffect('.mage-selected-audio');
+					playSoundEffect(media.audio.mageSelected);
 
 					break;
 			}

@@ -1,4 +1,3 @@
-import {skillCollectionImages, animationCollectionImages} from './modules/preloadImages';
 import {checkBackgroundAudio, loadingScreenAnimation} from './animation_and_sound_effects/animation.js';
 import '../scss/main.scss';
 

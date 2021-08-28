@@ -2,6 +2,7 @@ import Events from './eventsModel';
 import {skillCollection} from '../cards';
 import {player1, player2} from '../game';
 import {playSoundEffect, shakeAnimation} from '../animation_and_sound_effects/animation.js';
+import {media} from '../preloadedMediaContent';
 
 export default class Game {
 	constructor() {
@@ -133,7 +134,7 @@ export default class Game {
 
 		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
-			playSoundEffect('.confirm-failed-audio');
+			playSoundEffect(media.audio.confirmFailed);
 
 			shakeAnimation('.players-draw-info__accept', 'horizontal');
 
@@ -170,7 +171,7 @@ export default class Game {
 			this.playerTwoPullOfCards = this.checkOnSelectedCards(tempCardChoosePlayer, this.playerTwoClass);
 		}
 
-		playSoundEffect('.confirm-audio');
+		playSoundEffect(media.audio.confirmSucces);
 	}
 
 	// передаем массив из выбранных согласно ID карты и класс выбранного персонажа для поиска в SkillCollection его типа карт

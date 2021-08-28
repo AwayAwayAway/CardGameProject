@@ -1,5 +1,6 @@
 import {gameObserver, boardView} from '../game';
 import {playSoundEffect} from '../animation_and_sound_effects/animation';
+import {media} from '../preloadedMediaContent';
 
 const endGame = mutations => {
 	if (mutations[0]['target'].classList.contains('player-1__hp-value') && mutations[0].target.childNodes[0].data <= 0) {
@@ -56,7 +57,7 @@ const hideInterfaceElements = () => {
 
 	document.querySelector('.background-music-battlefield').pause();
 
-	playSoundEffect('.victory-audio');
+	playSoundEffect(media.audio.victory);
 }
 
 const proposePlayAgain = () => {

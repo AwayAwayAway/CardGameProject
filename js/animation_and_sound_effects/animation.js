@@ -1,4 +1,8 @@
 // animation through all menu loading black screen
+// import {audioCollection} from '../preloadMedia/preloadMedia';
+// import {media} from '../app';
+import {media} from '../preloadedMediaContent';
+
 const loadingScreenAnimation = target => {
 	switch (target) {
 		case 'mainMenuLoad':
@@ -36,8 +40,8 @@ const loadingScreenAnimation = target => {
 
 // starting play backgorundMusic
 const playPauseBackgroundAudio = () => {
-	const hash = window.location.hash;
-	const state = decodeURIComponent(hash.substr(1));
+	// const hash = window.location.hash;
+	const state = decodeURIComponent(window.location.hash.substr(1));
 	const soundOffOn = document.querySelector('.sound-icon');
 	let backAudio;
 
@@ -58,7 +62,7 @@ const playPauseBackgroundAudio = () => {
 	}
 };
 
-const checkBackgroundAudio = (querySelector) => {
+const checkBackgroundAudio = querySelector => {
 	const currentHash = decodeURIComponent(window.location.hash.substr(1));
 	const mainAudio = document.querySelector('.background-music-main-menu');
 	const audio = document.querySelector('.background-music-battlefield');
@@ -167,7 +171,7 @@ const createCardAnimation = (querySelector, amount) => {
 				} else {
 					elementAnim.children[i].classList.add('card-draw-animation');
 
-					playSoundEffect('.push-card-audio');
+					playSoundEffect(media.audio.pushCard);
 				}
 			}
 
@@ -176,7 +180,7 @@ const createCardAnimation = (querySelector, amount) => {
 			[...elementAnim.children].forEach((element, index) => setTimeout(() => {
 				element.classList.add('card-draw-animation');
 
-				playSoundEffect('.push-card-audio');
+				playSoundEffect(media.audio.pushCard);
 			}, 250 * index));
 
 			break;
@@ -220,7 +224,7 @@ const endTurnAnimation = side => {
 
 	setTimeout(() => turnAnnouncer.classList.remove('players-turn-info'), 2100);
 
-	setTimeout(() => button.classList.remove('end-turn-animation'), 1000);
+	setTimeout(() => button.classList.remove('end-turn-animation'), 2000);
 };
 
 const attackInDirectionAnimation = (querySelector, direction) => {
@@ -302,7 +306,7 @@ const multipleAttackAnimation = (querySelector, className, src, amountEffect) =>
 
 			window.navigator.vibrate([200]);
 
-			playSoundEffect('.strike-attack-audio');
+			playSoundEffect(media.audio.strikeAttack);
 		}, i * 300);
 	}
 
@@ -345,8 +349,8 @@ const ultimateSkillAnimation = (querySelector, className, src, audio) => {
 	}, 1850);
 };
 
-const playSoundEffect = querySelector => {
-	const soundEffect = document.querySelector(querySelector);
+const playSoundEffect = audio => {
+	const soundEffect = audio;
 
 	if (!soundEffect) { return; }
 

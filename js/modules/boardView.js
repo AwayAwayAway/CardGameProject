@@ -1,5 +1,6 @@
 import Events from './eventsModel';
 import {player1, player2} from '../game';
+import {media} from '../preloadedMediaContent';
 import {warningUnload, forbidClick} from './observerModel';
 import {
 	createCardAnimation,
@@ -42,7 +43,7 @@ export default class BoardView {
 
 				event.target.classList.add('touch-start-animation');
 
-				playSoundEffect('.drag-audio');
+				playSoundEffect(media.audio.cardGrab);
 
 				function closure() {
 					const coordinate = coordinateY;
@@ -53,7 +54,7 @@ export default class BoardView {
 
 						eventTarget.classList.remove('touch-start-animation');
 
-						playSoundEffect('.card-grab-cancel-audio');
+						playSoundEffect(media.audio.cardRelease);
 
 						if (comparison > 170) {
 							self.onDropCard.notify();
@@ -164,7 +165,7 @@ export default class BoardView {
 		this.soundOffOnIcon.addEventListener('click', () => this.onSoundSwitch.notify());
 
 		this.menuIcon.addEventListener('click', () => {
-			playSoundEffect('.btn-click-audio');
+			playSoundEffect(media.audio.btnClick);
 
 			this.renderBattleMenu();
 		});
@@ -172,9 +173,9 @@ export default class BoardView {
 		this.menu.addEventListener('click', (event) => this.navigateOnBattlefield(event.target));
 
 		[...this.menu.getElementsByTagName('li')].forEach((button) => {
-			button.addEventListener('mouseover', () => playSoundEffect('.btn-hover-audio'));
+			button.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover));
 
-			button.addEventListener('click', () => playSoundEffect('.btn-click-audio'));
+			button.addEventListener('click', () => playSoundEffect(media.audio.btnClick));
 		});
 
 		this.boardSelector.querySelector('.save-progress').addEventListener('click', forbidClick);
@@ -260,7 +261,7 @@ export default class BoardView {
 		}
 
 		if (target.classList.contains('card-to-select')) {
-			playSoundEffect('.card-selected-audio');
+			playSoundEffect(media.audio.cardSelected);
 		}
 
 		let counter = document.getElementsByClassName('card-to-select').length;
@@ -394,7 +395,7 @@ export default class BoardView {
 	renderEndTurnAnimation(btnSide, textInfo) {
 		endTurnAnimation(btnSide);
 
-		playSoundEffect('.end-turn-audio');
+		playSoundEffect(media.audio.endTurn);
 
 		this.playersTurnInfo.textContent = textInfo;
 	}
@@ -494,7 +495,7 @@ export default class BoardView {
 
 	//добавляем стили для перетаскивания
 	renderDragCardStart(eventTarget) {
-		playSoundEffect('.drag-audio');
+		playSoundEffect(media.audio.cardGrab);
 
 		if (eventTarget !== this.cardInHandField) {
 			setTimeout(() => eventTarget.classList.add('invisible'), 0);
@@ -504,7 +505,7 @@ export default class BoardView {
 	}
 
 	renderDragCardEnd(eventTarget) {
-		playSoundEffect('.card-grab-cancel-audio');
+		playSoundEffect(media.audio.cardRelease);
 
 		if (eventTarget !== this.cardInHandField) {
 			eventTarget.classList.remove('invisible');
@@ -530,14 +531,14 @@ export default class BoardView {
 			this.playersOverlay.classList.remove('hidden');
 			this.playersOverlay.classList.add('fade-in-pile-animation');
 
-			playSoundEffect('.overlay-open-audio');
+			playSoundEffect(media.audio.overlayOpen);
 		}
 
 		if (target.classList.contains('players-overlay__close')) {
 			this.playersOverlay.classList.remove('fade-in-pile-animation');
 			this.playersOverlay.classList.add('hidden');
 
-			playSoundEffect('.overlay-close-audio');
+			playSoundEffect(media.audio.overlayClose);
 		}
 	}
 

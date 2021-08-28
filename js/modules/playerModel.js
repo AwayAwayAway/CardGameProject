@@ -5,6 +5,7 @@ import {
 	discardCardAnimation,
 	notEnoughStaminaAnimation
 } from '../animation_and_sound_effects/animation.js';
+import {media} from '../preloadedMediaContent';
 
 export default class Players {
 	constructor(game, board) {
@@ -47,7 +48,7 @@ export default class Players {
 
 	doAction() {
 		if (this.gameModel.activePlayer.staminaPoints < this.gameModel.tempCard.cost) {
-			playSoundEffect('.card-grab-cancel-audio');
+			playSoundEffect(media.audio.cardRelease);
 
 			(this.gameModel.playerOneTurn) ? notEnoughStaminaAnimation('player1') : notEnoughStaminaAnimation();
 
@@ -142,7 +143,7 @@ export default class Players {
 		if (this.boardModel.cardInHand.children.length > 0) {
 			discardCardAnimation(this.boardModel.cardInHand.children[randomDiscard]);
 
-			playSoundEffect('.discard-card-audio');
+			playSoundEffect(media.audio.discardCard);
 
 			setTimeout(() => this.onCardDiscard.notify(this.boardModel.cardInHand.children[randomDiscard]), 300);
 		}
@@ -153,7 +154,7 @@ export default class Players {
 		if (this.boardModel.cardInHand.children.length > 0) {
 			discardCardAnimation(element);
 
-			playSoundEffect('.discard-card-audio');
+			playSoundEffect(media.audio.discardCard);
 
 			this.onCardDiscard.notify(element);
 		}
