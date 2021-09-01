@@ -116,6 +116,13 @@ export default class PlayersView {
 		let activePlayerUI;
 		let passivePlayerUI;
 		let direction;
+		const animationPromise = timer => {
+			const promise = new Promise((resolve, reject) => {
+				setTimeout(() => resolve(), timer);
+			})
+
+			return promise;
+		}
 
 		if (this.gameModel.playerOneTurn) {
 			activePlayerUI = '.player-1__model';
@@ -136,15 +143,18 @@ export default class PlayersView {
 
 				attackAnimation(passivePlayerUI, 'attack-animation', media.animation.warriorAttack);
 
-				setTimeout(() => {
+				animationPromise(200).then(() => {
 					shakeAnimation(passivePlayerUI);
 
 					playSoundEffect(media.audio.strikeAttack);
-				}, 200);
 
-				this.renderWholeUI(true, passivePlayerUI);
+					return 'true';
+				})
+					.then(() => {
+						this.renderWholeUI(true, passivePlayerUI);
 
-				this.onUpdateInitialValue.notify();
+						this.onUpdateInitialValue.notify();
+					})
 
 				break;
 			case 'defend_w':
@@ -173,17 +183,20 @@ export default class PlayersView {
 
 				attackAnimation(passivePlayerUI, 'smash-attack-animation', media.animation.smash);
 
-				setTimeout(() => {
+				animationPromise(200).then(() => {
 					shakeAnimation(passivePlayerUI);
 
 					playSoundEffect(media.audio.bashAttack);
-				}, 200);
 
-				this.renderWholeUI();
+					return 'true';
+				})
+					.then(() => {
+						this.renderWholeUI();
 
-				this.updateDamageNumbers(passivePlayerUI);
+						this.updateDamageNumbers(passivePlayerUI);
 
-				this.onUpdateInitialValue.notify();
+						this.onUpdateInitialValue.notify();
+					})
 
 				break;
 			case 'slice':
@@ -202,7 +215,7 @@ export default class PlayersView {
 
 				break;
 			case 'daggerThrow':
-				setTimeout(() => {
+				animationPromise(200).then(() => {
 					attackInDirectionAnimation(activePlayerUI, direction);
 
 					attackAnimation(passivePlayerUI, 'smash-attack-animation', media.animation.smash);
@@ -210,13 +223,16 @@ export default class PlayersView {
 					shakeAnimation(passivePlayerUI);
 
 					playSoundEffect(media.audio.bashAttack);
-				}, 200);
 
-				this.renderWholeUI();
+					return 'true';
+				})
+					.then(() => {
+						this.renderWholeUI();
 
-				this.updateDamageNumbers(passivePlayerUI);
+						this.updateDamageNumbers(passivePlayerUI);
 
-				this.onUpdateInitialValue.notify();
+						this.onUpdateInitialValue.notify();
+					})
 
 				break;
 			case 'anger':
@@ -224,15 +240,18 @@ export default class PlayersView {
 
 				standardAttackAnimation(passivePlayerUI, 'anger-attack-animation', media.animation.anger);
 
-				setTimeout(() => {
+				animationPromise(200).then(() => {
 					shakeAnimation(passivePlayerUI);
 
 					playSoundEffect(media.audio.anger);
-				}, 200);
 
-				this.renderWholeUI(true, passivePlayerUI);
+					return 'true';
+				})
+					.then(() => {
+						this.renderWholeUI(true, passivePlayerUI);
 
-				this.onUpdateInitialValue.notify();
+						this.onUpdateInitialValue.notify();
+					})
 
 				break;
 			case 'reachHeaven':
@@ -240,15 +259,18 @@ export default class PlayersView {
 
 				standardAttackAnimation(passivePlayerUI, 'anger-attack-animation', media.animation.reachHeaven);
 
-				setTimeout(() => {
+				animationPromise(200).then(() => {
 					shakeAnimation(passivePlayerUI);
 
 					playSoundEffect(media.audio.mageStrong);
-				}, 200);
 
-				this.renderWholeUI(true, passivePlayerUI);
+					return 'true';
+				})
+					.then(() => {
+						this.renderWholeUI(true, passivePlayerUI);
 
-				this.onUpdateInitialValue.notify();
+						this.onUpdateInitialValue.notify();
+					})
 
 				break;
 			case 'ironWave':
@@ -257,7 +279,7 @@ export default class PlayersView {
 
 				playSoundEffect(media.audio.defend);
 
-				setTimeout(() => {
+				animationPromise(400).then(() => {
 					attackInDirectionAnimation(activePlayerUI, direction);
 
 					standardAttackAnimation(passivePlayerUI, 'anger-attack-animation', media.animation.anger);
@@ -269,21 +291,24 @@ export default class PlayersView {
 					this.renderWholeUI(true, passivePlayerUI);
 
 					this.onUpdateInitialValue.notify();
-				}, 400);
+				})
 
 				break;
 			case 'bloodletting':
 				standardAttackAnimation(activePlayerUI, 'shield-animation', media.animation.bloodletting);
 
-				setTimeout(() => {
+				animationPromise(200).then(() => {
 					shakeAnimation(activePlayerUI);
 
 					playSoundEffect(media.audio.bloodletting);
-				}, 200);
 
-				this.renderViewHP();
+					return 'true';
+				})
+					.then(() => {
+						this.renderViewHP();
 
-				this.onUpdateInitialValue.notify();
+						this.onUpdateInitialValue.notify();
+					})
 
 				break;
 			case 'warcry':
@@ -316,7 +341,7 @@ export default class PlayersView {
 
 				this.onUpdateInitialValue.notify();
 
-				setTimeout(() => {
+				animationPromise(400).then(() => {
 					attackInDirectionAnimation(activePlayerUI, direction);
 
 					standardAttackAnimation(passivePlayerUI, 'anger-attack-animation', media.animation.mageEffect);
@@ -330,7 +355,7 @@ export default class PlayersView {
 					this.renderViewDef();
 
 					this.onUpdateInitialValue.notify();
-				}, 400);
+				})
 
 				break;
 			case 'perfectedStrike':
