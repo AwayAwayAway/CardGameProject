@@ -6,8 +6,8 @@ export default class Board {
 		this.gameModel = model;
 		this.currentHand = null;
 
-		this.deckWrapper = document.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
-		this.cardInHand = document.querySelector('.card-in-hand-field');              // field for cards in hand each player
+		this.deckWrapper = document.querySelector('.cards-choose-field');
+		this.cardInHand = document.querySelector('.card-in-hand-field');
 		this.playersDeck = document.querySelector('.players-overlay__cards');
 
 		this.onCreateCards = new Events();
@@ -16,7 +16,6 @@ export default class Board {
 		this.onCreateCardAnimation = new Events();
 	}
 
-	// создаем деку в начале игры для игрока согласно классу
 	createCardsForChoose(playerClassInfo) {
 		this.removeExtraCards('board');
 
@@ -66,15 +65,16 @@ export default class Board {
 		this.onCreateCards.notify(elDiv, appendPlace);
 	}
 
-	// кидаем карты в руку
 	pullRandomCardsInHand() {
 		this.removeExtraCards('hand');
 
 		let tempIndex = [];
 
-		//делаем проверку чтобы карты в руке не повторялись
-		for (let i = 0; i < 4; i++) {                  // количество карт в руку
-			let n = Math.floor(Math.random() * 8);   // количество набранных карт
+		// check on repeated cards
+		// amount cards in hand
+		for (let i = 0; i < 4; i++) {
+			// total amount chosen cards
+			let n = Math.floor(Math.random() * 8);
 
 			if (tempIndex.indexOf(n) == -1) {
 				tempIndex.push(n);
@@ -83,7 +83,7 @@ export default class Board {
 			}
 		}
 
-		// создаем карты в руке согласно игрока чей ход
+		// create cards in players hand depends which turn
 		if (this.gameModel.playerOneTurn) {
 			for (let i = 0; i < tempIndex.length; i++) {
 				this.createCards(this.gameModel.playerOnePullOfCards[tempIndex[i]], 'hand', true);
@@ -110,7 +110,6 @@ export default class Board {
 		}
 	}
 
-	// убираем лишние карты с доски или из руки
 	removeExtraCards(place) {
 		let orderToRemove = [];
 
@@ -132,7 +131,7 @@ export default class Board {
 		this.onRemoveCards.notify(orderToRemove, place);
 	}
 
-	//удаляем сыгранные карты из руки с проверкой
+	// delete played card if it pass check
 	deletePlayedCard(condition, card) {
 		if (this.gameModel.tempCard.cost > this.gameModel.activePlayer.staminaPoints) { return; }
 

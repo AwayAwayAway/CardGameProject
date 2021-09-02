@@ -108,10 +108,11 @@ export default class Players {
 
 		let onDrawArray = [];
 
-		//делаем проверку чтобы карты в руке не повторялись
-		for (let i = 0; i < card.effect - condition; i++) {                  // количество карт в руку
+		// check on repeated cards
+		for (let i = 0; i < card.effect - condition; i++) {
+			// amount cards in hand
 			let n = Math.floor(Math.random() * pull.length);
-			// количество набранных карт
+
 			if (newTemp.indexOf(pull[n]) === -1 && onDrawArray.indexOf(pull[n]) === -1) {
 				onDrawArray.push(pull[n]);
 			} else {
@@ -197,7 +198,7 @@ export default class Players {
 			return;
 		}
 
-		// some of cards havee common side effect so we can group it in one method
+		// some of cards have common side effect so we can group it in one method
 		if (card.sideEffect) {
 			let sideEffect = card.sideEffect();
 

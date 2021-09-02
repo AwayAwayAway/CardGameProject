@@ -6,8 +6,8 @@ import {media} from '../preloadedMediaContent';
 
 export default class Game {
 	constructor() {
-		this.activePlayer = null;               //активный игрок на данный момент кто будет наносить урон
-		this.passivePlayer = null;               //пассивный игрок на данный момент кто будет получать урон
+		this.activePlayer = null;
+		this.passivePlayer = null;
 
 		this.playerOneTurn = true;
 		this.playerTwoTurn = false;
@@ -20,11 +20,11 @@ export default class Game {
 
 		this.restoredGameData = null;
 
-		this.playersInfo = {};  //info from local storage about choose menu
+		this.playersInfo = {};
 
 		this.dragCard = null;
 
-		this.tempCard = null; // карта которая играется
+		this.tempCard = null;
 
 		// событие выбор карт завершен
 		this.onSelectionEnd = new Events();
@@ -75,31 +75,26 @@ export default class Game {
 		this.setActivePassivePlayer();
 	};
 
-	// забираем инфу о выборе игроками персонажей и их никнеймов и парсим json
 	setPlayersChoiceInfo(object) {
 		let temp = localStorage.getItem(object);
 
 		this.playersInfo = JSON.parse(temp);
 	};
 
-	// устанавливаем класы игроками из объекта
 	setPlayersClasses() {
 		this.playerOneClass = this.playersInfo.playerOneClass;
 
 		this.playerTwoClass = this.playersInfo.playerTwoClass;
 	};
 
-	// устанавливаем никнеймы игрокам из объекта
 	setPlayersNames() {
 		this.onUpdatePlayersNames.notify(this.playersInfo.playerOneName, this.playersInfo.playerTwoName);
 	};
 
-	// устанавливаем модельки игроков согласно выбору
 	setPlayersModels() {
 		this.onUpdatePlayersModels.notify(this.playersInfo.playerOneClass, this.playersInfo.playerTwoClass);
 	};
 
-	// показываем какой игрок выбирает карты
 	setTextChooseInfo() {
 		if (this.playerOneTurn) {
 			this.onChangePlayerInfo.notify(`${this.playersInfo.playerOneName} is choosing`);
@@ -116,7 +111,6 @@ export default class Game {
 		}
 	};
 
-	// линкуем player1 & player2 в gameModel
 	setActivePassivePlayer() {
 		if (this.playerOneTurn) {
 			this.activePlayer = player1;
@@ -127,12 +121,9 @@ export default class Game {
 		}
 	};
 
-	// пулим карты выбранные ироком на старте игры в gameControl, этими картами игроки будут играть дальше
 	definePlayersCardSet() {
-		//счетчик выбранных карт
 		let counter = document.getElementsByClassName('card-to-select').length;
 
-		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
 			playSoundEffect(media.audio.confirmFailed);
 
@@ -152,7 +143,6 @@ export default class Game {
 		let cards = document.querySelectorAll('.cards');
 		let tempCardChoosePlayer = [];
 
-		//пушим карты 1го игрока в массив
 		if (this.playerOneTurn) {
 			for (let i = 0; i < cards.length; i++) {
 				if (cards[i].classList.contains('card-to-select')) {
@@ -174,7 +164,6 @@ export default class Game {
 		playSoundEffect(media.audio.confirmSucces);
 	}
 
-	// передаем массив из выбранных согласно ID карты и класс выбранного персонажа для поиска в SkillCollection его типа карт
 	checkOnSelectedCards(dataInfo, search) {
 		let temp = [];
 
@@ -189,11 +178,9 @@ export default class Game {
 		return temp;
 	};
 
-	//проверяем игроки набрали карты скрываем меню выбора карт, открываем игровое поле
 	checkCardsSelectionEnd() {
 		let counter = document.getElementsByClassName('card-to-select').length;
 
-		// если выбрано больше или недобор указанных карт запрещает пулить в переменную
 		if (counter < 8 || counter >= 9) {
 			return;
 		}
@@ -209,7 +196,6 @@ export default class Game {
 		}
 	};
 
-	//узнаем какая карта была взята для игры и сыграна
 	initActionCard(eventTarget) {
 		this.dragCard = eventTarget;
 
@@ -220,7 +206,6 @@ export default class Game {
 		}
 	};
 
-	// устанавливаем приоритет хода игрока
 	setTurnPriority() {
 		if (this.playerOneTurn) {
 			this.playerOneTurn = false;

@@ -15,14 +15,14 @@ export default class BoardView {
 		this.gameModel = game;
 		this.boardSelector = selector;
 
-		this.deckWrapper = this.boardSelector.querySelector('.cards-choose-field');        // field for cards at the start when players are choosing
-		this.acceptChoiceBtn = this.boardSelector.querySelector('.players-draw-info__accept');               // player accept cards he chose
-		this.cardsChooseCounter = this.boardSelector.querySelector('.players-draw-info__count');             // counter for amount of cards have been chosen(needs for alert)
-		this.cardInHandField = this.boardSelector.querySelector('.card-in-hand-field');              // field for cards in hand each player
-		this.battleField = this.boardSelector.querySelector('.battle-field');            // play field
-		this.endTurnBtn = this.boardSelector.querySelector('.end-of-turn-btn');             // end turn button
+		this.deckWrapper = this.boardSelector.querySelector('.cards-choose-field');
+		this.acceptChoiceBtn = this.boardSelector.querySelector('.players-draw-info__accept');
+		this.cardsChooseCounter = this.boardSelector.querySelector('.players-draw-info__count');
+		this.cardInHandField = this.boardSelector.querySelector('.card-in-hand-field');
+		this.battleField = this.boardSelector.querySelector('.battle-field');
+		this.endTurnBtn = this.boardSelector.querySelector('.end-of-turn-btn');
 		this.playersTurnInfo = this.boardSelector.querySelector('.players-action');
-		this.cardsPlayField = this.boardSelector.querySelector('.play-field');           // area for cards to drop and play their actions
+		this.cardsPlayField = this.boardSelector.querySelector('.play-field');
 		this.soundOffOnIcon = this.boardSelector.querySelector('.sound-icon');
 		this.playersOverlay = this.boardSelector.querySelector('.players-overlay');
 		this.playersDeck = this.boardSelector.querySelector('.players-overlay__cards');
@@ -108,18 +108,14 @@ export default class BoardView {
 		if ('ontouchstart' in window) {
 			this.cardInHandField.addEventListener('touchstart', (event) => this.touchEvent(event));
 
-			// событие клик подстветка выбора карт
 			this.deckWrapper.addEventListener('touchstart', (event) => this.renderCardSelected(event));
 		} else {
-			// событие клик подстветка выбора карт
 			this.deckWrapper.addEventListener('click', (event) => this.renderCardSelected(event));
 
-			// анимация карт в руке при наведении
 			this.cardInHandField.addEventListener('mouseover', (event) => this.renderCardSelectedInHand(event.target));
 
 			this.cardInHandField.addEventListener('mouseout', (event) => this.renderCardSelectedOutHand(event.target));
 
-			// анимация карт при перетаскивании плюс узнаем какую карту перетавскиваем
 			this.cardInHandField.addEventListener('dragstart', (event) => this.renderDragCardStart(event.target));
 
 			this.cardInHandField.addEventListener('dragstart', (event) => this.onGrabCardStart.notify(event.target));
@@ -130,7 +126,6 @@ export default class BoardView {
 
 			this.cardsPlayField.addEventListener('dragover', (event) => event.preventDefault());
 
-			// играем карты
 			this.cardsPlayField.addEventListener('drop', (event) => {
 				event.preventDefault();
 
@@ -174,7 +169,6 @@ export default class BoardView {
 
 		[...this.menu.getElementsByTagName('li')].forEach((button) => {
 			button.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover));
-
 			button.addEventListener('click', () => playSoundEffect(media.audio.btnClick));
 		});
 
@@ -184,25 +178,18 @@ export default class BoardView {
 
 		window.addEventListener('beforeunload', warningUnload);
 
-		// событие this.gameModel проверяет набранны ли у игроков карты
 		this.gameModel.onSelectionEnd.attach(() => this.renderBattlefield());
 
-		// событие на отображение инфо кто выбирает карты
 		this.gameModel.onChangePlayerInfo.attach((text) => this.renderPlayerChooseInfo(text));
 
-		// событие на отображение никнеймов игроков
 		this.gameModel.onUpdatePlayersNames.attach((name1, name2) => this.renderPlayerName(name1, name2));
 
-		// событие на отображение моделек персонажей
 		this.gameModel.onUpdatePlayersModels.attach((modelPlayer1, modelPlayer2) => this.renderPlayerModels(modelPlayer1, modelPlayer2));
 
-		// this.boardModel создала карты надо их отобразить
 		this.boardModel.onCreateCards.attach((card, place) => this.renderCards(card, place));
 
-		// событие на удаление лишних карт
 		this.boardModel.onRemoveCards.attach((cards, place) => this.renderDeletedCards(cards, place));
 
-		// удаление сыгранной карты
 		this.boardModel.onRemoveActionCard.attach((card) => this.renderDeletedActionCard(card));
 
 		this.boardModel.onCreateCardAnimation.attach((querySelector, amount) => this.renderCreateCardAnimation(querySelector, amount));
@@ -250,7 +237,6 @@ export default class BoardView {
 		createCardAnimation(querySelector, amount);
 	}
 
-	// подсветка выбранных карт
 	renderCardSelected(event) {
 		event.preventDefault();
 
@@ -283,7 +269,6 @@ export default class BoardView {
 		this.renderCardCounterInfo(counterInfo);
 	}
 
-	//анимация выбора только одной карты для игры в руке
 	renderCardSelectedInHand(eventTarget) {
 		let target = eventTarget;
 
@@ -292,7 +277,6 @@ export default class BoardView {
 		}
 	}
 
-	//анимация выбора только одной карты для игры в руке
 	renderCardSelectedOutHand(eventTarget) {
 		let target = eventTarget;
 
@@ -493,7 +477,6 @@ export default class BoardView {
 		}
 	}
 
-	//добавляем стили для перетаскивания
 	renderDragCardStart(eventTarget) {
 		playSoundEffect(media.audio.cardGrab);
 

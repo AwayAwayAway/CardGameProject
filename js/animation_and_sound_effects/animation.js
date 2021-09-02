@@ -1,6 +1,3 @@
-// animation through all menu loading black screen
-// import {audioCollection} from '../preloadMedia/preloadMedia';
-// import {media} from '../app';
 import {media} from '../preloadedMediaContent';
 
 const loadingScreenAnimation = target => {
@@ -38,7 +35,6 @@ const loadingScreenAnimation = target => {
 	}
 };
 
-// starting play backgorundMusic
 const playPauseBackgroundAudio = () => {
 	// const hash = window.location.hash;
 	const state = decodeURIComponent(window.location.hash.substr(1));
@@ -128,7 +124,6 @@ const checkBackgroundAudio = querySelector => {
 	}
 };
 
-// shake display when character choosed
 const shakeAnimation = (queryElement, direction = 'horizontal') => {
 	const element = document.querySelector(queryElement);
 

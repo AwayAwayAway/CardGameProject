@@ -46,7 +46,7 @@ class MainMenu extends Menu {
 			<p>At start of your turn, new cards are drawn and your <span>Energy</span> is replenished.</p>
 			<p>Play defensive card to gain <span style="color:blue">Block</span><img src="./images/cards/warrior/defend_w.png" alt="card"> <span>Block</span> reduces incoming attack damage.</p>
 			<p>If you want to save your game, just use menu <i class="fas fa-bars"></i> and select "save progress" button.</p>
-		</div>`
+		</div>`;
 	}
 
 	checkContinueCondition() {
@@ -58,17 +58,17 @@ class MainMenu extends Menu {
 			}
 		})
 			.then(res => {
-				if(res.ok) {
+				if (res.ok) {
 					return res.json();
 				}
 			})
 			.then(data => {
-				if(data.results[0].gameSaved.hasOwnProperty('gameFinished')) {
+				if (data.results[0].gameSaved.hasOwnProperty('gameFinished')) {
 					document.querySelector('.continue-button').addEventListener('click', (event) => event.stopPropagation());
 
 					document.querySelector('.continue-button').style.color = 'grey';
 				}
-			})
+			});
 	}
 
 	createAboutRules() {
@@ -144,11 +144,10 @@ class ChooseMenu extends Menu {
 
 		options.addEventListener('click', (event) => this.setBackground(event));
 
-		options.addEventListener('click', (event) => this.startVisualAndSoundEffect(event));
+		options.addEventListener('click', (event) => this.startVisualEffects(event));
 
 		[...options.children].forEach(hover => hover.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover)));
 
-		//run function to choose character or  alert empty input name
 		applyChoose.addEventListener('click', () => this.playerChooseCharacter());
 
 		soundOffOn.addEventListener('click', playPauseBackgroundAudio);
@@ -163,27 +162,17 @@ class ChooseMenu extends Menu {
 			button.addEventListener('mouseover', () => playSoundEffect(media.audio.btnHover));
 			button.addEventListener('click', () => playSoundEffect(media.audio.btnClick));
 		});
-		
+
+		enterNameInput.addEventListener('focus', () => this.clearInput());
+
 		// save name and model of character of each player
 		this.playerChooseCharacter = function () {
-			const regexRule = /\w/;
-			const warningCheck = enterNameInput.value !== 'You forgot enter name';
-			const classCheck = [...options.children].some((child) => child.classList.contains('in-focus'));
-			const regexCheck = regexRule.test(enterNameInput.value);
+			const testResult = this.isValidUserName();
 
-			//check if input is empty or didnt class choosed
-			if (!warningCheck || !regexCheck) {
-				this.alertEmptyName();
+			const runAlert = this.runAlert(testResult);
 
-				this.alertClass();
-
-				return;
-			} else if (!classCheck) {
-				this.alertClass();
-
-				return;
-			}
-
+			if(runAlert) { return; }
+			
 			// help myself with 'data' attribute to set which character player choose
 			let temp = [...options.children].filter((child) => {
 				if (child.classList.contains('in-focus')) {
@@ -191,6 +180,118 @@ class ChooseMenu extends Menu {
 				}
 			});
 
+			this.recordPlayerChoose(temp);
+
+			this.removeStyles();
+
+			this.checkConditionToStartBattle();
+
+			playSoundEffect(media.audio.confirmSucces);
+		};
+
+		this.isValidUserName = function () {
+			const regexSymbols = /(\W+|\s+)/g;
+			const regexEmpty = /(^$)/g;
+			const regexNameLength = /(^[a-zA-Z0-9]{1,3}$)/g;
+			const regexWarnings = /(Enter your name)|(Name is too short)|(Use alphanumeric approach)/ig;
+			const classCheck = [...options.children].some((child) => child.classList.contains('in-focus'));
+
+			const testSymbols = regexSymbols.test(enterNameInput.value);
+			const testEmpty = regexEmpty.test(enterNameInput.value);
+			const testNameLength = regexNameLength.test(enterNameInput.value);
+			const testWarnings = regexWarnings.test(enterNameInput.value);
+
+			let testResult = null;
+
+			//check if input is empty or didnt class chosen
+			if(testWarnings) {
+				testResult = 'warning'
+			} else if (testSymbols) {
+				testResult = 'symbols';
+			} else if (testNameLength) {
+				testResult = 'short';
+			} else if (testEmpty) {
+				testResult = 'empty';
+			} else if (!classCheck) {
+				testResult = 'class';
+			}
+
+			return testResult;
+		}
+
+		this.runAlert = function (testResult) {
+			let condition = false;
+
+			switch (testResult) {
+				case 'warning':
+					this.alertNotification('warning');
+					condition = true;
+					break;
+				case 'symbols':
+					this.alertNotification('symbols');
+					condition = true;
+					break;
+				case 'short':
+					this.alertNotification('short');
+					condition = true;
+					break;
+				case 'empty':
+					this.alertNotification('empty');
+					condition = true;
+					break;
+				case 'class':
+					this.alertClassNotification();
+					condition = true;
+					break;
+			}
+
+			return condition;
+		}
+
+		// alert for empty input
+		this.alertNotification = function (type) {
+			playSoundEffect(media.audio.confirmFailed);
+
+			shakeAnimation('.decision__btn', 'horizontal');
+
+			let warningMessage;
+
+			switch (type){
+				case 'empty':
+					warningMessage = 'Enter your name';
+					break;
+				case 'short':
+					warningMessage = 'Name is too short';
+					break;
+				case 'symbols':
+					warningMessage = 'Use alphanumeric'
+					break;
+				case 'warning':
+					return;
+			}
+
+			enterNameInput.value = warningMessage;
+			enterNameInput.style.color = 'red';
+			enterNameInput.style.fontSize = '1.5rem';
+		};
+
+		this.clearInput = function () {
+			enterNameInput.value = '';
+			enterNameInput.style.color = 'black';
+			enterNameInput.style.fontSize = '2rem';
+		};
+
+		this.alertClassNotification = function () {
+			if ([...options.children].some((child) => child.classList.contains('in-focus'))) {
+				return;
+			} else {
+				playSoundEffect(media.audio.confirmFailed);
+
+				shakeAnimation('.options', 'mix');
+			}
+		};
+
+		this.recordPlayerChoose = function (temp) {
 			// record player's choose
 			if (playerOneTurn) {
 				playerOneName = enterNameInput.value.trim();
@@ -206,40 +307,7 @@ class ChooseMenu extends Menu {
 
 			playerOneTurn = false;
 			playerTwoTurn = true;
-
-			playSoundEffect(media.audio.confirmSucces);
-
-			this.removeStyles();
-
-			this.checkConditionToStartBattle();
-		};
-
-		// alert for empty input
-		this.alertEmptyName = function () {
-			playSoundEffect(media.audio.confirmFailed);
-
-			shakeAnimation('.decision__btn', 'horizontal');
-
-			enterNameInput.value = 'You forgot enter name';
-			enterNameInput.style.color = 'red';
-			enterNameInput.style.fontSize = '2rem';
-
-			setTimeout(() => {
-				enterNameInput.value = '';
-				enterNameInput.style.color = 'black';
-				enterNameInput.style.fontSize = '2rem';
-			}, 1000);
-		};
-
-		this.alertClass = function () {
-			if ([...options.children].some((child) => child.classList.contains('in-focus'))) {
-				return;
-			} else {
-				playSoundEffect(media.audio.confirmFailed);
-
-				shakeAnimation('.options', 'mix');
-			}
-		};
+		}
 
 		this.removeStyles = function () {
 			[...options.children].forEach((child) => {
@@ -265,7 +333,7 @@ class ChooseMenu extends Menu {
 		};
 
 		// function trigger audio and shake animation
-		this.startVisualAndSoundEffect = function (event) {
+		this.startVisualEffects = function (event) {
 			switch (event.target.className.split(' ')[0]) {
 				case 'warrior':
 					playSoundEffect(media.audio.warriorSelected);
@@ -303,7 +371,9 @@ class ChooseMenu extends Menu {
 		};
 
 		this.setBackground = function (event) {
-			if (event.target.className === 'options') { return; }
+			if (event.target.className === 'options') {
+				return;
+			}
 
 			this.removeStyles();
 
