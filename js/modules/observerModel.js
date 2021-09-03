@@ -17,7 +17,7 @@ const endGame = mutations => {
 		deleteSave();
 	}
 
-	if (mutations[0]['target'].classList.contains('player-2__hp-value') && mutations[0].target.childNodes[0].data <= 0) {
+	if (mutations[1]['target'].classList.contains('player-2__hp-value') && mutations[1].target.childNodes[0].data <= 0) {
 		boardView.playersTurnInfo.textContent = `${gameObserver.playersInfo.playerOneName} is a winner`;
 
 		boardView.playersTurnInfo.classList.add('win-info-animation');
@@ -27,6 +27,8 @@ const endGame = mutations => {
 		proposePlayAgain();
 
 		forbidSaveConcede();
+
+		deleteSave();
 	}
 }
 
