@@ -3,6 +3,10 @@ import {playSoundEffect} from '../animation_and_sound_effects/animation';
 import {media} from '../preloadedMediaContent';
 
 const endGame = mutations => {
+	let mutation;
+
+	(mutations[1]) ? mutation = mutations[1] : mutation = mutations[0]
+
 	if (mutations[0]['target'].classList.contains('player-1__hp-value') && mutations[0].target.childNodes[0].data <= 0) {
 		boardView.playersTurnInfo.textContent = `${gameObserver.playersInfo.playerTwoName} is a winner`;
 
@@ -17,7 +21,7 @@ const endGame = mutations => {
 		deleteSave();
 	}
 
-	if (mutations[1]['target'].classList.contains('player-2__hp-value') && mutations[1].target.childNodes[0].data <= 0) {
+	if (mutation['target'].classList.contains('player-2__hp-value')  && mutation.target.childNodes[0].data <= 0)  {
 		boardView.playersTurnInfo.textContent = `${gameObserver.playersInfo.playerOneName} is a winner`;
 
 		boardView.playersTurnInfo.classList.add('win-info-animation');

@@ -23,7 +23,6 @@ class MainMenu extends Menu {
 
 		this.aboutGame = document.querySelector('.about-button');
 
-
 		this.checkContinueCondition();
 
 		this.init('.wrapper-main-menu');

@@ -198,28 +198,25 @@ const endTurnAnimation = side => {
 
 	switch (side) {
 		case 'left':
-			setTimeout(() => {
-				button.style.removeProperty('right');
-				button.style.left = '2%';
-			}, 500);
+			button.style.removeProperty('right');
+			button.style.left = '2%';
 
 			break;
 		case 'right':
-			setTimeout(() => {
-				button.style.removeProperty('left');
-				button.style.right = '2%';
-			}, 500);
+
+			button.style.removeProperty('left');
+			button.style.right = '2%';
 
 			break;
 	}
 
 	button.style.display = 'flex';
 
-	setTimeout(() => button.classList.add('end-turn-animation'), 1300);
+	button.classList.add('end-turn-animation');
 
-	setTimeout(() => turnAnnouncer.classList.remove('players-turn-info'), 2100);
+	setTimeout(() => turnAnnouncer.classList.remove('players-turn-info'), 1600);
 
-	setTimeout(() => button.classList.remove('end-turn-animation'), 2000);
+	setTimeout(() => button.classList.remove('end-turn-animation'), 1900);
 };
 
 const attackInDirectionAnimation = (querySelector, direction) => {
@@ -244,7 +241,7 @@ const attackInDirectionAnimation = (querySelector, direction) => {
 const blockAnimation = (querySelector, className, src) => {
 	const block = document.querySelector(`.${className}`);
 
-	if(block) {
+	if (block) {
 		block.parentElement.removeChild(block);
 	}
 
@@ -267,7 +264,7 @@ const attackAnimation = (querySelector, className, src) => {
 
 	window.navigator.vibrate([400]);
 
-	setTimeout(() => container.removeChild(image), 600);
+	setTimeout(() => (image) ? container.removeChild(image) : '', 600);
 };
 
 const standardAttackAnimation = (querySelector, className, src) => {
@@ -280,7 +277,7 @@ const standardAttackAnimation = (querySelector, className, src) => {
 
 	window.navigator.vibrate([400]);
 
-	setTimeout(() => container.removeChild(image), 400);
+	setTimeout(() => (image) ? container.removeChild(image) : '', 400);
 };
 
 const multipleAttackAnimation = (querySelector, className, src, amountEffect) => {
@@ -305,7 +302,7 @@ const multipleAttackAnimation = (querySelector, className, src, amountEffect) =>
 		}, i * 300);
 	}
 
-	setTimeout(() => container.removeChild(image), 1300);
+	setTimeout(() => (image) ? container.removeChild(image) : '', 1300);
 };
 
 const ultimateSkillAnimation = (querySelector, className, src, audio) => {
@@ -347,7 +344,9 @@ const ultimateSkillAnimation = (querySelector, className, src, audio) => {
 const playSoundEffect = audio => {
 	const soundEffect = audio;
 
-	if (!soundEffect) { return; }
+	if (!soundEffect) {
+		return;
+	}
 
 	soundEffect.currentTime = 0;
 

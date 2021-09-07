@@ -141,7 +141,7 @@ export default class PlayersView {
 			case 'quickSlash':
 				attackInDirectionAnimation(activePlayerUI, direction);
 
-				attackAnimation(passivePlayerUI, 'attack-animation', media.animation.warriorAttack);
+				attackAnimation(passivePlayerUI, 'attack-animation', media.animation.warriorSlash);
 
 				animationPromise(200).then(() => {
 					shakeAnimation(passivePlayerUI);

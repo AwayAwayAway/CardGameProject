@@ -59,7 +59,8 @@ export default class Media {
 			smash: './images/attack-effects/smash.png',
 			warriorAttack: './images/attack-effects/warrior-attack.png',
 			warriorSmash: './images/attack-effects/warrior-smash.png',
-			defend: './images/icons/icon_Block.png'
+			defend: './images/icons/icon_Block.png',
+			warriorSlash: './images/attack-effects/warrior-second-attack.png'
 		};
 
 		this.audioCollectionLinks = {

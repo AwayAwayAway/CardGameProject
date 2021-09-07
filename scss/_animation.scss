@@ -35,7 +35,7 @@
 }
 
 .players-turn-info {
-  animation: playersTurnInfoAnimate 2s ease-in-out forwards;
+  animation: playersTurnInfoAnimate 1.5s ease-in-out forwards;
 }
 
 .shake-x {
@@ -54,7 +54,7 @@
 }
 
 .end-turn-animation {
-  animation: endTurnAnimate .7s linear forwards;
+  animation: endTurnAnimate 1.9s linear forwards;
 }
 
 .card-draw-animation {
@@ -127,8 +127,8 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 450px;
-  height: 550px;
+  width: 400px;
+  height: 400px;
   animation: attackAnimate 0.5s linear forwards;
 
   @include tablet-portrait {
@@ -164,8 +164,8 @@
   position: absolute;
   top: -16%;
   left: -6%;
-  width: 550px;
-  height: 550px;
+  width: 400px;
+  height: 400px;
   animation: smashAttack 0.5s linear forwards;
 
   @include mobile-landscape {
